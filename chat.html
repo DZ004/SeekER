@@ -30,7 +30,8 @@
         </div>
     </div>
     
-    // Your Firebase configuration (same as before)
+    <script>
+        // Your Firebase configuration (replace with your actual config)
         const firebaseConfig = {
             apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
             authDomain: "ccon-agent.firebaseapp.com",
@@ -51,6 +52,10 @@
             if (!user) {
                 // User is not signed in, redirect to login page
                 window.location.href = 'login.html'; // Replace with your login page URL
+            } else {
+                // User is signed in, display messages and scores
+                displayMessages();
+                displayScores(user.uid);
             }
         });
 
@@ -86,26 +91,18 @@
             });
         }
 
-        // Initialize message display
-        displayMessages();
-
-        // Listen for Enter key press in message input to send message
-        document.getElementById('messageInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
+        // Function to display scores
+        function displayScores(userId) {
+            const scoresRef = database.ref('scores').child(userId);
+            scoresRef.on('value', (snapshot) => {
+                const scores = snapshot.val();
+                if (scores) {
+                    document.getElementById('dailyScore').textContent = scores.daily || 0;
+                    document.getElementById('weeklyScore').textContent = scores.weekly || 0;
+                    document.getElementById('monthlyScore').textContent = scores.monthly || 0;
+                }
+            });
+        }
     </script>
-</head>
-<body>
-    <div class="container">
-        <div class="chat">
-            <div id="messages" class="messages"></div>
-            <div class="input-box">
-                <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
-                <button onclick="sendMessage()" class="send-button">Send</button>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
