@@ -1,69 +1,77 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-}
+/* Only styles for adminpanel.html */
 
-.container {
+.admin-panel {
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
-.chat {
-    width: 400px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    overflow: hidden;
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
 }
 
-.messages {
-    height: 300px;
-    overflow-y: scroll;
-    padding: 10px;
+.sidebar h2 {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.message {
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
     margin-bottom: 10px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    background-color: #f0f0f0;
 }
 
-.input-box {
-    display: flex;
-    align-items: center;
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
     padding: 10px;
-    border-top: 1px solid #e0e0e0;
+    border-radius: 5px;
 }
 
-.message-input {
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+.main-content {
     flex: 1;
-    padding: 8px;
+    padding: 20px;
+}
+
+.main-content h1 {
+    margin-bottom: 20px;
+}
+
+.message-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
-    outline: none;
+    resize: vertical;
 }
 
-.send-button {
-    padding: 8px 20px;
-    margin-left: 10px;
-    background-color: #007bff;
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    outline: none;
 }
 
-.send-button:hover {
-    background-color: #0056b3;
-}
-
-.send-button:active {
-    background-color: #004999;
+button:hover {
+    background-color: #45a049;
 }
