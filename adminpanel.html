@@ -9,29 +9,38 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <script src="script.js"></script>
+     <!-- Emoji Picker -->
     <link href="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.css" rel="stylesheet">
-
+    
 </head>
 <body>
-    <div class="container">
-        <h1>Admin Panel</h1>
-        <label for="userSelect">Select User:</label>
-        <select id="userSelect">
-            <!-- Options will be populated dynamically -->
-        </select>
-        <br>
-        <textarea id="messageInput" placeholder="Type your message..." rows="4"></textarea>
-        <br>
-        <button onclick="sendMessage()">Send Message</button>
-         <!-- Emoji Picker -->
-        <emoji-picker id="emojiPicker" emoji-limit="6"></emoji-picker>
-        <br>
-        <button onclick="sendMessage()">Send Message</button>
+    <div class="admin-panel">
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li><a href="adminpanel.html">Send Message</a></li>
+                <li><a href="viewmessages.html">View Messages</a></li>
+                <!-- Add more links or options as needed -->
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Send Message to User</h1>
+            <div class="message-form">
+                <label for="userSelect">Select User:</label>
+                <select id="userSelect">
+                    <!-- Options will be populated dynamically -->
+                </select>
+                <br>
+                <textarea id="messageInput" placeholder="Type your message..." rows="4"></textarea>
+                <br>
+                <!-- Emoji Picker -->
+                <emoji-picker id="emojiPicker" emoji-limit="6"></emoji-picker>
+                <br>
+                <button onclick="sendMessage()">Send Message</button>
+            </div>
+        </div>
     </div>
     <!-- Emoji Picker Library -->
     <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.js"></script>
-
-    </div>
 </body>
 </html>
-
