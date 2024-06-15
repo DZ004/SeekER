@@ -1,103 +1,49 @@
-/* Only styles for adminpanel.html */
-
-.admin-panel {
-    display: flex;
-    height: 100vh;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-}
-
-.sidebar h2 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.sidebar ul {
-    list-style-type: none;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
     padding: 0;
-}
-
-.sidebar ul li {
-    margin-bottom: 10px;
-}
-
-.sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.sidebar ul li a:hover {
-    background-color: #555;
-}
-
-.main-content {
-    flex: 1;
-    padding: 20px;
-}
-
-.main-content h1 {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.message-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* Added margin-top for spacing */
-}
-
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
 }
 
 .container {
     max-width: 800px;
-    margin: 20px auto; /* Adjusted margin for centering */
-    padding: 20px;
+    margin: 20px auto;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
 }
 
-h1, h2 {
+.chat {
+    flex: 1; /* Take remaining space */
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
     text-align: center;
-    color: #333;
 }
 
-#messagesContainer {
-    margin-top: 20px;
+.chat-header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.messages {
+    flex: 1; /* Grow to fill available space */
+    max-height: 400px; /* Limit height for scroll */
+    overflow-y: auto; /* Enable scroll */
     border: 1px solid #ccc;
-    padding: 10px;
     border-radius: 5px;
-    background-color: #f9f9f9; /* Lighter background for messages */
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
 }
 
 .message {
@@ -110,4 +56,57 @@ h1, h2 {
 .message strong {
     color: #333;
     font-weight: bold;
+}
+
+.input-box {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.message-input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.send-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.send-button:hover {
+    background-color: #45a049;
+}
+
+.stats {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-left: 20px; /* Spacing between chat and stats */
+}
+
+.stats h2 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.score {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
+
+.score p {
+    margin: 5px 0;
 }
