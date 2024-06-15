@@ -1,5 +1,26 @@
-/* Only styles for adminpanel.html */
+/* General styles for all pages */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
 
+.container {
+    max-width: 800px;
+    margin: 20px auto; /* Centering container */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Specific styles for adminpanel.html */
 .admin-panel {
     display: flex;
     height: 100vh;
@@ -76,20 +97,6 @@ button {
 
 button:hover {
     background-color: #45a049;
-}
-
-.container {
-    max-width: 800px;
-    margin: 20px auto; /* Adjusted margin for centering */
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1, h2 {
-    text-align: center;
-    color: #333;
 }
 
 #messagesContainer {
