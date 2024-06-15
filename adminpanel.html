@@ -1,1 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel</h1>
+        <label for="userSelect">Select User:</label>
+        <select id="userSelect">
+            <!-- Options will be populated dynamically -->
+        </select>
+        <br>
+        <textarea id="messageInput" placeholder="Type your message..." rows="4"></textarea>
+        <br>
+        <button onclick="sendMessage()">Send Message</button>
+    </div>
+</body>
+</html>
 
