@@ -109,6 +109,132 @@ button:hover {
 
 .message {
     padding: 10px;
+
+    /* General styles for adminpanel.html */
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the entire admin panel */
+.admin-panel {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding and border in width/height */
+    height: 100%; /* Full height of the sidebar */
+    overflow-y: auto; /* Enable scrolling if content exceeds sidebar height */
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+/* Main content styles */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding and border in width/height */
+    height: 100%; /* Full height of the main content */
+    overflow-y: auto; /* Enable scrolling if content exceeds main content height */
+}
+
+.main-content h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Message form styles */
+.message-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Emoji Picker styles */
+#emojiPicker {
+    margin-top: 10px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .admin-panel {
+        flex-direction: column; /* Stack sidebar on top of main content on smaller screens */
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto; /* Auto height to fit content */
+        overflow-y: visible; /* Allow content to expand outside if needed */
+        text-align: center;
+    }
+
+    .main-content {
+        width: 100%;
+        height: auto; /* Auto height to fit content */
+        overflow-y: visible; /* Allow content to expand outside if needed */
+    }
+}
+
     margin-bottom: 10px;
     background-color: #e0e0e0;
     border-radius: 5px;
