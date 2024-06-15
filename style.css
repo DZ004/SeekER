@@ -1,3 +1,10 @@
+/* Global reset and basic styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -8,69 +15,47 @@ body {
 .container {
     max-width: 800px;
     margin: 20px auto;
+    padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
 }
 
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Styles for chat.html */
 .chat {
-    flex: 1; /* Take remaining space */
-    border-right: 1px solid #ccc;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-}
-
-.chat-header {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.chat-header h1 {
-    font-size: 24px;
-    color: #333;
-    margin: 0;
+    align-items: center;
 }
 
 .messages {
-    flex: 1; /* Grow to fill available space */
-    max-height: 400px; /* Limit height for scroll */
-    overflow-y: auto; /* Enable scroll */
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     background-color: #f9f9f9;
-    margin-bottom: 20px;
-}
-
-.message {
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-}
-
-.message strong {
-    color: #333;
-    font-weight: bold;
 }
 
 .input-box {
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding-top: 10px;
+    margin-top: 20px;
 }
 
 .message-input {
     flex: 1;
     padding: 10px;
-    margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
+    margin-right: 10px;
 }
 
 .send-button {
@@ -80,7 +65,6 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
 }
 
 .send-button:hover {
@@ -88,25 +72,22 @@ body {
 }
 
 .stats {
-    width: 300px;
+    margin-top: 20px;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-left: 20px; /* Spacing between chat and stats */
-}
-
-.stats h2 {
-    margin-bottom: 10px;
-    text-align: center;
 }
 
 .score {
-    font-size: 16px;
-    color: #333;
-    text-align: center;
+    margin-top: 10px;
 }
 
 .score p {
-    margin: 5px 0;
+    margin-bottom: 5px;
+}
+
+.score span {
+    font-weight: bold;
+    color: #4CAF50;
 }
