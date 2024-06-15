@@ -58,10 +58,13 @@ function fetchUsers() {
     });
 }
 
-// Function to send a message to a selected user
+// Firebase initialization and configuration (already defined in your script.js)
+
+// Function to send a message
 function sendMessage() {
     const userId = document.getElementById('userSelect').value;
-    const message = document.getElementById('messageInput').value.trim();
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value.trim(); // Trim to remove leading/trailing whitespace
 
     if (userId && message) {
         const sender = 'Admin'; // Set sender as admin or whoever is sending the message
@@ -71,11 +74,30 @@ function sendMessage() {
             text: message,
             timestamp: firebase.database.ServerValue.TIMESTAMP
         });
-        alert('Message sent successfully!');
-        document.getElementById('messageInput').value = ''; // Clear message input
+        messageInput.value = ''; // Clear message input
     } else {
         alert('Please select a user and enter a message.');
     }
+}
+
+// Fetch users function to populate userSelect options
+function fetchUsers() {
+    const userSelect = document.getElementById('userSelect');
+
+    // Clear existing options
+    userSelect.innerHTML = '';
+
+    // Fetch users from Firebase (assuming users are stored under 'users' node)
+    database.ref('users').once('value', (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const userId = childSnapshot.key;
+            const userData = childSnapshot.val();
+            const option = document.createElement('option');
+            option.value = userId;
+            option.textContent = userData.displayName || userData.email;
+            userSelect.appendChild(option);
+        });
+    });
 }
 
 // Call fetchUsers on page load to populate userSelect options
@@ -83,10 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchUsers();
 });
 
-
-// Function to display messages
-function displayMessages() {
-    const messagesRef = database.ref('messages');
+// Function to display messages for a specific user
+function displayUserMessages(userId) {
+    const messagesRef = database.ref(`users/${userId}/messages`);
     messagesRef.on('child_added', (snapshot) => {
         const message = snapshot.val();
         const messageElement = document.createElement('div');
@@ -97,14 +118,14 @@ function displayMessages() {
     });
 }
 
-// Initialize message display
-displayMessages();
-
 // Listen for Enter key press in message input to send message
 document.getElementById('messageInput').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         sendMessage();
- // Emoji Picker Initialization
+    }
+});
+
+// Emoji Picker Initialization
 const emojiPicker = document.getElementById('emojiPicker');
 const messageInput = document.getElementById('messageInput');
 
