@@ -13,10 +13,13 @@
 <body>
     <div class="container">
         <div class="chat">
-            <h1>Welcome, Worker!</h1>
+            <div class="chat-header">
+                <h1>Welcome, Worker!</h1>
+            </div>
             <div id="messages" class="messages"></div>
             <div class="input-box">
                 <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
+                <emoji-picker id="emojiPicker" emoji-limit="6"></emoji-picker>
                 <button onclick="sendMessage()" class="send-button">Send</button>
             </div>
         </div>
@@ -30,6 +33,9 @@
         </div>
     </div>
     
+    <!-- Emoji Picker Library -->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.js"></script>
+
     <script>
         // Your Firebase configuration (replace with your actual config)
         const firebaseConfig = {
