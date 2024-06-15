@@ -1,3 +1,4 @@
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
   authDomain: "ccon-agent.firebaseapp.com",
@@ -14,7 +15,7 @@ const database = firebase.database();
 
 function sendMessage() {
     const message = document.getElementById('messageInput').value;
-    if (message) {
+    if (message.trim() !== '') { // Added trim() to ensure only non-empty messages are sent
         const messagesRef = database.ref('messages');
         messagesRef.push({
             text: message
