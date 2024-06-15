@@ -2,7 +2,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
   authDomain: "ccon-agent.firebaseapp.com",
-  databaseURL: "https://ccon-agent-default-rtdb.firebaseio.com", // Replace with your Firebase Realtime Database URL
+  databaseURL: "https://ccon-agent.firebaseio.com", // Replace with your Firebase Realtime Database URL
   projectId: "ccon-agent",
   storageBucket: "ccon-agent.appspot.com",
   messagingSenderId: "359769265591",
