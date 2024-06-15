@@ -123,7 +123,6 @@ document.getElementById('messageInput').addEventListener('keypress', function (e
     if (e.key === 'Enter') {
         sendMessage();
     }
-});
 
 // Emoji Picker Initialization
 const emojiPicker = document.getElementById('emojiPicker');
@@ -133,3 +132,5 @@ emojiPicker.addEventListener('emoji-click', (event) => {
     const emoji = event.detail.unicode;
     messageInput.value += emoji; // Append emoji to the message input
 });
+
+
