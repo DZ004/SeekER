@@ -11,61 +11,54 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 const database = firebase.database();
+const auth = firebase.auth();
 
 // Check if user is logged in or not
 firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        // User is signed in
-        window.location.href = 'index.html'; // Redirect to main chat interface if logged in
-    } else {
-        // User is not signed in
-        console.log('User is not logged in');
+    if (!user) {
+        // User is not signed in, redirect to login page
+        window.location.href = 'login.html'; // Replace with your login page URL
     }
 });
 
-// Handle login form submission
-const loginForm = document.getElementById('loginForm');
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = loginForm.email.value;
-    const password = loginForm.password.value;
-
-    // Firebase login
-    auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Logged in successfully, redirect to main page or perform other actions
-            window.location.href = 'index.html'; // Redirect to main chat interface
-        })
-        .catch((error) => {
-            // Handle errors
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            document.getElementById('loginError').innerText = errorMessage;
-        });
-});
-
+// Function to send a message
 function sendMessage() {
-    const message = document.getElementById('messageInput').value;
-    if (message.trim() !== '') { // Added trim() to ensure only non-empty messages are sent
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value.trim(); // Trim to remove leading/trailing whitespace
+
+    if (message !== '') {
+        const sender = firebase.auth().currentUser.email;
         const messagesRef = database.ref('messages');
         messagesRef.push({
+            sender: sender,
             text: message
         });
-        document.getElementById('messageInput').value = '';
+        messageInput.value = '';
+    } else {
+        alert('Please enter a message.');
     }
 }
 
+// Function to display messages
 function displayMessages() {
     const messagesRef = database.ref('messages');
     messagesRef.on('child_added', (snapshot) => {
-        const message = snapshot.val().text;
-        const messageElement = document.createElement('p');
-        messageElement.innerText = message;
+        const message = snapshot.val();
+        const messageElement = document.createElement('div');
+        messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
         document.getElementById('messages').appendChild(messageElement);
+        // Scroll to the bottom of the messages div
+        document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
     });
 }
 
 // Initialize message display
 displayMessages();
+
+// Listen for Enter key press in message input to send message
+document.getElementById('messageInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+});
