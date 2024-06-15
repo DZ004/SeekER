@@ -40,6 +40,50 @@ function sendMessage() {
     }
 }
 
+// Firebase initialization and configuration (already defined in your script.js)
+
+// Function to fetch registered users
+function fetchUsers() {
+    const usersRef = database.ref('users');
+    usersRef.on('value', (snapshot) => {
+        const users = snapshot.val();
+        const userSelect = document.getElementById('userSelect');
+        userSelect.innerHTML = '<option value="">Select a user</option>';
+        for (let key in users) {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = users[key].email; // Assuming user data structure has email field
+            userSelect.appendChild(option);
+        }
+    });
+}
+
+// Function to send a message to a selected user
+function sendMessage() {
+    const userId = document.getElementById('userSelect').value;
+    const message = document.getElementById('messageInput').value.trim();
+
+    if (userId && message) {
+        const sender = 'Admin'; // Set sender as admin or whoever is sending the message
+        const messagesRef = database.ref(`users/${userId}/messages`);
+        messagesRef.push({
+            sender: sender,
+            text: message,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+        alert('Message sent successfully!');
+        document.getElementById('messageInput').value = ''; // Clear message input
+    } else {
+        alert('Please select a user and enter a message.');
+    }
+}
+
+// Call fetchUsers on page load to populate userSelect options
+document.addEventListener('DOMContentLoaded', function() {
+    fetchUsers();
+});
+
+
 // Function to display messages
 function displayMessages() {
     const messagesRef = database.ref('messages');
