@@ -123,6 +123,24 @@ document.getElementById('messageInput').addEventListener('keypress', function (e
     if (e.key === 'Enter') {
         sendMessage();
     }
+// Function to fetch and display messages
+function fetchMessages() {
+    const messagesRef = database.ref('messages');
+    messagesRef.on('value', (snapshot) => {
+        const messages = snapshot.val();
+        document.getElementById('messagesList').innerHTML = ''; // Clear previous messages
+
+        for (let key in messages) {
+            if (messages.hasOwnProperty(key)) {
+                const message = messages[key];
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
+                document.getElementById('messagesList').appendChild(messageElement);
+            }
+        }
+    });
+}
 
 // Emoji Picker Initialization
 const emojiPicker = document.getElementById('emojiPicker');
