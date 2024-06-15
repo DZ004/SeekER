@@ -1,2 +1,0 @@
-# CConAgent
-CCon Agent Website
