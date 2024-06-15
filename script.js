@@ -151,4 +151,26 @@ emojiPicker.addEventListener('emoji-click', (event) => {
     messageInput.value += emoji; // Append emoji to the message input
 });
 
+    // Function to fetch and display messages
+function fetchMessages() {
+    const messagesRef = database.ref('messages');
+    messagesRef.on('value', (snapshot) => {
+        const messages = snapshot.val();
+        document.getElementById('messagesList').innerHTML = ''; // Clear previous messages
+
+        for (let key in messages) {
+            if (messages.hasOwnProperty(key)) {
+                const message = messages[key];
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
+                document.getElementById('messagesList').appendChild(messageElement);
+            }
+        }
+    });
+}
+
+// Call fetchMessages on page load to populate messages
+document.addEventListener('DOMContentLoaded', fetchMessages);
+
 
