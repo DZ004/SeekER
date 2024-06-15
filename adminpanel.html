@@ -9,6 +9,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <script src="script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.css" rel="stylesheet">
+
 </head>
 <body>
     <div class="container">
@@ -21,6 +23,14 @@
         <textarea id="messageInput" placeholder="Type your message..." rows="4"></textarea>
         <br>
         <button onclick="sendMessage()">Send Message</button>
+         <!-- Emoji Picker -->
+        <emoji-picker id="emojiPicker" emoji-limit="6"></emoji-picker>
+        <br>
+        <button onclick="sendMessage()">Send Message</button>
+    </div>
+    <!-- Emoji Picker Library -->
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.js"></script>
+
     </div>
 </body>
 </html>
