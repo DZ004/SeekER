@@ -106,3 +106,11 @@ document.getElementById('messageInput').addEventListener('keypress', function (e
         sendMessage();
     }
 });
+// Emoji Picker Initialization
+const emojiPicker = document.getElementById('emojiPicker');
+const messageInput = document.getElementById('messageInput');
+
+emojiPicker.addEventListener('emoji-click', (event) => {
+    const emoji = event.detail.unicode;
+    messageInput.value += emoji; // Append emoji to the message input
+});
