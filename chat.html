@@ -10,13 +10,29 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <script src="script.js"></script>
 </head>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script>
-        // Your Firebase configuration (same as before)
+<body>
+    <div class="container">
+        <div class="chat">
+            <h1>Welcome, Worker!</h1>
+            <div id="messages" class="messages"></div>
+            <div class="input-box">
+                <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
+                <button onclick="sendMessage()" class="send-button">Send</button>
+            </div>
+        </div>
+        <div class="stats">
+            <h2>Your Scores</h2>
+            <div class="score">
+                <p>Daily Score: <span id="dailyScore">0</span></p>
+                <p>Weekly Score: <span id="weeklyScore">0</span></p>
+                <p>Monthly Score: <span id="monthlyScore">0</span></p>
+            </div>
+        </div>
+    </div>
+    
+    // Your Firebase configuration (same as before)
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
+            apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
             authDomain: "ccon-agent.firebaseapp.com",
             databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
             projectId: "ccon-agent",
