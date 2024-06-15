@@ -104,9 +104,7 @@ displayMessages();
 document.getElementById('messageInput').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         sendMessage();
-    }
-});
-// Emoji Picker Initialization
+ // Emoji Picker Initialization
 const emojiPicker = document.getElementById('emojiPicker');
 const messageInput = document.getElementById('messageInput');
 
