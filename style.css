@@ -1,20 +1,86 @@
-/* Global reset and basic styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
+/* Only styles for adminpanel.html */
+
+.admin-panel {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style-type: none;
     padding: 0;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.main-content h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.message-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Added margin-top for spacing */
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
 }
 
 .container {
     max-width: 800px;
-    margin: 20px auto;
+    margin: 20px auto; /* Adjusted margin for centering */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -26,68 +92,22 @@ h1, h2 {
     color: #333;
 }
 
-/* Styles for chat.html */
-.chat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.messages {
-    width: 100%;
-    max-height: 400px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #f9f9f9;
-}
-
-.input-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#messagesContainer {
     margin-top: 20px;
-}
-
-.message-input {
-    flex: 1;
-    padding: 10px;
     border: 1px solid #ccc;
+    padding: 10px;
     border-radius: 5px;
-    margin-right: 10px;
+    background-color: #f9f9f9; /* Lighter background for messages */
 }
 
-.send-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #e0e0e0;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-.send-button:hover {
-    background-color: #45a049;
-}
-
-.stats {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.score {
-    margin-top: 10px;
-}
-
-.score p {
-    margin-bottom: 5px;
-}
-
-.score span {
+.message strong {
+    color: #333;
     font-weight: bold;
-    color: #4CAF50;
 }
