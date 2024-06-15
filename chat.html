@@ -3,19 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Chat Interface</title>
+    <title>Chat Interface</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <h1>User Chat Interface</h1>
-    <div id="messages"></div>
-    <div id="messageInputContainer">
-        <input type="text" id="messageInput" placeholder="Type a message...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
-
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Your Firebase configuration (same as before)
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "ccon-agent.firebaseapp.com",
+            databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "ccon-agent",
+            storageBucket: "ccon-agent.appspot.com",
+            messagingSenderId: "359769265591",
+            appId: "1:359769265591:web:ecff5a5934c60717a3c432"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // Check if user is logged in or not
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                // User is not signed in, redirect to login page
+                window.location.href = 'login.html'; // Replace with your login page URL
+            }
+        });
+
+        // Function to send a message
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim(); // Trim to remove leading/trailing whitespace
+
+            if (message !== '') {
+                const sender = firebase.auth().currentUser.email;
+                const messagesRef = database.ref('messages');
+                messagesRef.push({
+                    sender: sender,
+                    text: message
+                });
+                messageInput.value = '';
+            } else {
+                alert('Please enter a message.');
+            }
+        }
+
+        // Function to display messages
+        function displayMessages() {
+            const messagesRef = database.ref('messages');
+            messagesRef.on('child_added', (snapshot) => {
+                const message = snapshot.val();
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
+                document.getElementById('messages').appendChild(messageElement);
+                // Scroll to the bottom of the messages div
+                document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+            });
+        }
+
+        // Initialize message display
+        displayMessages();
+
+        // Listen for Enter key press in message input to send message
+        document.getElementById('messageInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="chat">
+            <div id="messages" class="messages"></div>
+            <div class="input-box">
+                <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
+                <button onclick="sendMessage()" class="send-button">Send</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
