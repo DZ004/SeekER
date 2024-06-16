@@ -19,6 +19,12 @@ firebase.auth().onAuthStateChanged((user) => {
     if (!user) {
         // User is not signed in, redirect to login page
         window.location.href = 'login.html'; // Replace with your login page URL
+    } else {
+        // User is signed in, display messages and scores
+        fetchUsers();
+        displayUserMessages(user.uid);
+        fetchMessages();
+        displayScores(user.uid);
     }
 });
 
@@ -32,15 +38,14 @@ function sendMessage() {
         const messagesRef = database.ref('messages');
         messagesRef.push({
             sender: sender,
-            text: message
+            text: message,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
         });
         messageInput.value = '';
     } else {
         alert('Please enter a message.');
     }
 }
-
-// Firebase initialization and configuration (already defined in your script.js)
 
 // Function to fetch registered users
 function fetchUsers() {
@@ -58,60 +63,14 @@ function fetchUsers() {
     });
 }
 
-// Firebase initialization and configuration (already defined in your script.js)
-
-// Function to send a message
-function sendMessage() {
-    const userId = document.getElementById('userSelect').value;
-    const messageInput = document.getElementById('messageInput');
-    const message = messageInput.value.trim(); // Trim to remove leading/trailing whitespace
-
-    if (userId && message) {
-        const sender = 'Admin'; // Set sender as admin or whoever is sending the message
-        const messagesRef = database.ref(`users/${userId}/messages`);
-        messagesRef.push({
-            sender: sender,
-            text: message,
-            timestamp: firebase.database.ServerValue.TIMESTAMP
-        });
-        messageInput.value = ''; // Clear message input
-    } else {
-        alert('Please select a user and enter a message.');
-    }
-}
-
-// Fetch users function to populate userSelect options
-function fetchUsers() {
-    const userSelect = document.getElementById('userSelect');
-
-    // Clear existing options
-    userSelect.innerHTML = '';
-
-    // Fetch users from Firebase (assuming users are stored under 'users' node)
-    database.ref('users').once('value', (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-            const userId = childSnapshot.key;
-            const userData = childSnapshot.val();
-            const option = document.createElement('option');
-            option.value = userId;
-            option.textContent = userData.displayName || userData.email;
-            userSelect.appendChild(option);
-        });
-    });
-}
-
-// Call fetchUsers on page load to populate userSelect options
-document.addEventListener('DOMContentLoaded', function() {
-    fetchUsers();
-});
-
 // Function to display messages for a specific user
 function displayUserMessages(userId) {
     const messagesRef = database.ref(`users/${userId}/messages`);
     messagesRef.on('child_added', (snapshot) => {
         const message = snapshot.val();
         const messageElement = document.createElement('div');
-        messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
+        messageElement.classList.add('message');
+        messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
         document.getElementById('messages').appendChild(messageElement);
         // Scroll to the bottom of the messages div
         document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
@@ -123,6 +82,8 @@ document.getElementById('messageInput').addEventListener('keypress', function (e
     if (e.key === 'Enter') {
         sendMessage();
     }
+});
+
 // Function to fetch and display messages
 function fetchMessages() {
     const messagesRef = database.ref('messages');
@@ -142,6 +103,33 @@ function fetchMessages() {
     });
 }
 
+// Call fetchUsers on page load to populate userSelect options
+document.addEventListener('DOMContentLoaded', function() {
+    fetchUsers();
+});
+
+// Function to display scores
+function displayScores(userId) {
+    const scoresRef = database.ref('scores').child(userId);
+    scoresRef.on('value', (snapshot) => {
+        const scores = snapshot.val();
+        if (scores) {
+            document.getElementById('dailyScore').textContent = scores.daily || 0;
+            document.getElementById('weeklyScore').textContent = scores.weekly || 0;
+            document.getElementById('monthlyScore').textContent = scores.monthly || 0;
+        }
+    });
+}
+
+// Function to logout
+function logout() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = 'login.html'; // Replace with your login page URL
+    }).catch((error) => {
+        console.error('Logout error:', error);
+    });
+}
+
 // Emoji Picker Initialization
 const emojiPicker = document.getElementById('emojiPicker');
 const messageInput = document.getElementById('messageInput');
@@ -151,26 +139,5 @@ emojiPicker.addEventListener('emoji-click', (event) => {
     messageInput.value += emoji; // Append emoji to the message input
 });
 
-    // Function to fetch and display messages
-function fetchMessages() {
-    const messagesRef = database.ref('messages');
-    messagesRef.on('value', (snapshot) => {
-        const messages = snapshot.val();
-        document.getElementById('messagesList').innerHTML = ''; // Clear previous messages
-
-        for (let key in messages) {
-            if (messages.hasOwnProperty(key)) {
-                const message = messages[key];
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message');
-                messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
-                document.getElementById('messagesList').appendChild(messageElement);
-            }
-        }
-    });
-}
-
 // Call fetchMessages on page load to populate messages
 document.addEventListener('DOMContentLoaded', fetchMessages);
-
-
