@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CCon Agent Chat</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chat-style.css">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Emoji Picker Library -->
     <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.js"></script>
 
@@ -121,6 +121,33 @@
                 console.error('Logout error:', error);
             });
         }
-    </script>
-</body>
-</html>
+
+        // Emoji Picker Initialization
+        const emojiPicker = document.getElementById('emojiPicker');
+        const messageInput = document.getElementById('messageInput');
+
+        emojiPicker.addEventListener('emoji-click', (event) => {
+            const emoji = event.detail.unicode;
+            messageInput.value += emoji; // Append emoji to the message input
+        });
+
+        // Listen for Enter key press in message input to send message
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Call fetchMessages on page load to populate messages
+        document.addEventListener('DOMContentLoaded', fetchMessages);
+
+        // Function to fetch and display messages
+        function fetchMessages() {
+            const messagesRef = database.ref('messages');
+            messagesRef.on('value', (snapshot) => {
+                const messages = snapshot.val();
+                document.getElementById('messagesList').innerHTML = ''; // Clear previous messages
+
+                for (let key in messages) {
+                    if (messages.hasOwnProperty(key)) {
+  
