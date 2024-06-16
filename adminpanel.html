@@ -38,9 +38,17 @@
                 <br>
                 <button onclick="sendMessage()">Send Message</button>
             </div>
+
+            <h1>Notes</h1>
+            <div class="notes-section">
+                <textarea id="notesInput" placeholder="Write your notes here..." rows="10"></textarea>
+                <br>
+                <button onclick="saveNotes()">Save Notes</button>
+            </div>
         </div>
     </div>
     <!-- Emoji Picker Library -->
     <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.js"></script>
+    <script src="notes.js"></script> <!-- Script for notes functionality -->
 </body>
 </html>
