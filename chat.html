@@ -8,6 +8,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="script.js"></script>
 </head>
 <body>
@@ -15,6 +16,7 @@
         <div class="chat">
             <div class="chat-header">
                 <h1>Welcome, Worker!</h1>
+                <button onclick="logout()" class="logout-button">Logout</button>
             </div>
             <div id="messages" class="messages"></div>
             <div class="input-box">
@@ -75,7 +77,8 @@
                 const messagesRef = database.ref('messages');
                 messagesRef.push({
                     sender: sender,
-                    text: message
+                    text: message,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
                 messageInput.value = '';
             } else {
@@ -90,7 +93,7 @@
                 const message = snapshot.val();
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
-                messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
+                messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text} <span class="timestamp">${new Date(message.timestamp).toLocaleTimeString()}</span>`;
                 document.getElementById('messages').appendChild(messageElement);
                 // Scroll to the bottom of the messages div
                 document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
@@ -107,6 +110,15 @@
                     document.getElementById('weeklyScore').textContent = scores.weekly || 0;
                     document.getElementById('monthlyScore').textContent = scores.monthly || 0;
                 }
+            });
+        }
+
+        // Function to logout
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'login.html'; // Replace with your login page URL
+            }).catch((error) => {
+                console.error('Logout error:', error);
             });
         }
     </script>
