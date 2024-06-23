@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Home - Your Platform</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Your Platform</div>
+            <div id="creatorName" class="creator-name"></div> <!-- Display creator's name -->
+            <ul class="nav-links">
+                <li><a href="creator-home.html">Home</a></li>
+                <li><a href="messages.html">Messages</a></li>
+                <li><a href="content.html">Content</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="creator-profile">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <div class="profile-picture">
+                        <img src="profile-picture.jpg" alt="Profile Picture">
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="displayName">Display Name</h2>
+                        <p id="bio">Bio description goes here.</p>
+                    </div>
+                </div>
+                <div class="edit-profile-button">
+                    <button onclick="toggleEditProfile()">Edit Profile</button>
+                </div>
+            </div>
+            <div id="editProfileForm" style="display: none;">
+                <form id="profileForm">
+                    <label for="displayName">Display Name:</label>
+                    <input type="text" id="displayName" name="displayName" required><br>
+                    <label for="bio">Bio:</label>
+                    <textarea id="bio" name="bio" rows="4"></textarea><br>
+                    <button type="submit">Save Changes</button>
+                    <button type="button" onclick="cancelEditProfile()">Cancel</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>Recent Content</h2>
+            <div class="content-items">
+                <!-- Sample content items, replace with dynamic data -->
+                <div class="content-item">
+                    <img src="content1.jpg" alt="Content 1">
+                    <p>Title of Content 1</p>
+                </div>
+                <div class="content-item">
+                    <img src="content2.jpg" alt="Content 2">
+                    <p>Title of Content 2</p>
+                </div>
+                <div class="content-item">
+                    <img src="content3.jpg" alt="Content 3">
+                    <p>Title of Content 3</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script> <!-- Include your custom scripts -->
+</body>
+</html>
