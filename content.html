@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content - Your Platform</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
 </head>
 <body>
     <header>
@@ -48,6 +52,15 @@
                     </div>
                 </div>
                 <!-- Add more content items as needed -->
+
+                <!-- Upload Form -->
+                <div class="content-item upload-form">
+                    <h3>Upload New Content</h3>
+                    <input type="file" id="fileInput">
+                    <button onclick="uploadImage()">Upload Image</button>
+                    <div id="progress"></div>
+                    <div id="imageURL"></div>
+                </div>
             </div>
         </section>
     </main>
@@ -58,6 +71,51 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script> <!-- Include your custom scripts -->
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+            authDomain: "seeker-928e7.firebaseapp.com",
+            projectId: "seeker-928e7",
+            storageBucket: "seeker-928e7.appspot.com",
+            messagingSenderId: "652562231057",
+            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+
+        // Function to handle file upload
+        function uploadImage() {
+            const file = document.getElementById('fileInput').files[0];
+            const storageRef = storage.ref();
+            const imagesRef = storageRef.child('images/' + file.name);
+
+            const uploadTask = imagesRef.put(file);
+
+            // Update progress bar
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    document.getElementById('progress').innerHTML = `Upload Progress: ${progress.toFixed(2)}%`;
+                },
+                (error) => {
+                    console.error('Error uploading image:', error);
+                },
+                () => {
+                    // Upload completed successfully, get download URL
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        document.getElementById('imageURL').innerHTML = `<img src="${downloadURL}" alt="Uploaded Image">`;
+                    });
+                }
+            );
+        }
+
+        // Function to logout (replace with your existing logout function)
+        function logout() {
+            // Implement your logout logic here
+            console.log('Logout clicked');
+        }
+    </script>
 </body>
 </html>
