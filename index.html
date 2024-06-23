@@ -24,40 +24,6 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth(app);
         const db = firebase.firestore(app);
-
-        // Function to handle user signup
-        const userSignupForm = document.querySelector('#userSignupForm');
-        userSignupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = userSignupForm['email'].value;
-            const password = userSignupForm['password'].value;
-
-            try {
-                const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                console.log('Successfully signed up:', userCredential.user);
-                // Redirect to user dashboard or desired page
-                window.location.assign('dashboard-user.html');
-            } catch (error) {
-                document.querySelector('#userSignupError').textContent = error.message;
-            }
-        });
-
-        // Function to handle creator signup
-        const creatorSignupForm = document.querySelector('#creatorSignupForm');
-        creatorSignupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = creatorSignupForm['creatorEmail'].value;
-            const password = creatorSignupForm['creatorPassword'].value;
-
-            try {
-                const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                console.log('Successfully signed up as creator:', userCredential.user);
-                // Redirect to creator dashboard or desired page
-                window.location.assign('dashboard-creator.html');
-            } catch (error) {
-                document.querySelector('#creatorSignupError').textContent = error.message;
-            }
-        });
     </script>
 </head>
 <body>
@@ -69,7 +35,7 @@
                 <li><a href="explore.html">Explore</a></li>
                 <li><a href="pricing.html">Pricing</a></li>
                 <li><a href="login.html">Login</a></li>
-                <li><a href="#" class="btn-signup">Sign Up</a></li>
+                <li><a href="creator-signup.html" class="btn-signup">Creator Sign Up</a></li> <!-- Added Creator Sign Up button -->
             </ul>
         </nav>
     </header>
@@ -84,28 +50,11 @@
             </div>
         </section>
 
-        <!-- Signup Section -->
-        <section class="signup">
-            <div class="signup-container">
-                <h2>Sign Up</h2>
-                <!-- User Signup Form -->
-                <form id="userSignupForm">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                    <button type="submit">Sign Up as User</button>
-                    <p id="userSignupError" class="error-message"></p>
-                </form>
-                <!-- Creator Signup Form -->
-                <form id="creatorSignupForm">
-                    <label for="creatorEmail">Creator Email:</label>
-                    <input type="email" id="creatorEmail" name="creatorEmail" required>
-                    <label for="creatorPassword">Creator Password:</label>
-                    <input type="password" id="creatorPassword" name="creatorPassword" required>
-                    <button type="submit">Sign Up as Creator</button>
-                    <p id="creatorSignupError" class="error-message"></p>
-                </form>
+        <!-- Explore Section -->
+        <section class="explore">
+            <h2>Explore</h2>
+            <div id="dataContainer">
+                <!-- Content will be dynamically added here -->
             </div>
         </section>
     </main>
