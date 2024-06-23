@@ -11,10 +11,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script>
         // Your web app's Firebase configuration
-        import { initializeApp } from 'firebase/app';
-        import { getAuth } from 'firebase/auth';
-        import { getFirestore } from 'firebase/firestore';
-
         const firebaseConfig = {
             apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
             authDomain: "ccon-agent.firebaseapp.com",
@@ -25,23 +21,22 @@
         };
 
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth(app);
+        const db = firebase.firestore(app);
 
         // Example function to fetch and display data from Firestore
         function displayData() {
-            const collectionRef = collection(db, 'collectionName');
-            onSnapshot(collectionRef, (snapshot) => {
-                snapshot.forEach(doc => {
+            const collectionRef = db.collection('collectionName'); // Replace 'collectionName' with your actual collection name
+            collectionRef.onSnapshot((snapshot) => {
+                snapshot.forEach((doc) => {
                     const data = doc.data();
                     console.log(data);
                     // Example: Display data on the webpage
-                    // Replace with your specific logic
-                    const container = document.getElementById('dataContainer');
+                    const dataContainer = document.getElementById('dataContainer');
                     const element = document.createElement('div');
                     element.textContent = JSON.stringify(data);
-                    container.appendChild(element);
+                    dataContainer.appendChild(element);
                 });
             });
         }
