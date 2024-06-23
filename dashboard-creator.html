@@ -8,7 +8,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -23,25 +23,21 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const database = firebase.database();
+        const db = firebase.firestore();
 
         // Function to fetch and display messages for the creator
         function fetchMessages() {
-            const messagesRef = database.ref('messages'); // Adjust 'messages' based on your database structure
-            messagesRef.on('value', (snapshot) => {
-                const messages = snapshot.val();
-                // Clear previous messages
-                document.getElementById('messagesContainer').innerHTML = '';
-                // Display each message
-                for (let key in messages) {
-                    if (messages.hasOwnProperty(key)) {
-                        const message = messages[key];
-                        const messageElement = document.createElement('div');
-                        messageElement.classList.add('message');
-                        messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
-                        document.getElementById('messagesContainer').appendChild(messageElement);
-                    }
-                }
+            const messagesRef = db.collection('messages'); // Update to 'messages' based on your Firestore structure
+            messagesRef.onSnapshot((snapshot) => {
+                const messages = snapshot.docs.map(doc => doc.data());
+                const messagesContainer = document.getElementById('messagesContainer');
+                messagesContainer.innerHTML = ''; // Clear previous messages
+                messages.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
+                    messagesContainer.appendChild(messageElement);
+                });
             });
         }
 
@@ -58,6 +54,81 @@
                 console.error('Logout error:', error);
             });
         }
+
+        // Function to fetch and display creator's profile information
+        function fetchProfileInfo() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const userId = user.uid;
+                const profileRef = db.collection('creators').doc(userId);
+
+                profileRef.get().then((doc) => {
+                    if (doc.exists) {
+                        const profileData = doc.data();
+                        document.getElementById('profileInfo').innerHTML = `
+                            <p><strong>Display Name:</strong> ${profileData.displayName}</p>
+                            <p><strong>Email:</strong> ${user.email}</p>
+                            <p><strong>Bio:</strong> ${profileData.bio || 'Not provided'}</p>
+                        `;
+                        document.getElementById('displayName').value = profileData.displayName || '';
+                        document.getElementById('bio').value = profileData.bio || '';
+                    } else {
+                        console.log('No profile data found');
+                    }
+                }).catch((error) => {
+                    console.error('Error fetching profile:', error);
+                });
+            } else {
+                console.log('User not logged in');
+            }
+        }
+
+        // Call fetchProfileInfo on page load to display profile information
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchProfileInfo();
+        });
+
+        // Function to toggle between displaying profile info and editing form
+        function toggleEditProfile() {
+            document.getElementById('profileInfo').style.display = 'none';
+            document.getElementById('editProfileForm').style.display = 'block';
+            document.getElementById('editProfileBtn').style.display = 'none';
+        }
+
+        // Function to cancel editing profile
+        function cancelEditProfile() {
+            document.getElementById('profileInfo').style.display = 'block';
+            document.getElementById('editProfileForm').style.display = 'none';
+            document.getElementById('editProfileBtn').style.display = 'block';
+        }
+
+        // Function to save edited profile information
+        const profileForm = document.querySelector('#profileForm');
+        profileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const userId = user.uid;
+                const displayName = profileForm['displayName'].value;
+                const bio = profileForm['bio'].value;
+
+                const profileRef = db.collection('creators').doc(userId);
+                profileRef.set({
+                    displayName: displayName,
+                    bio: bio
+                }, { merge: true })
+                .then(() => {
+                    console.log('Profile updated successfully');
+                    fetchProfileInfo(); // Update displayed profile information
+                    cancelEditProfile(); // Hide edit form and show profile info
+                })
+                .catch((error) => {
+                    console.error('Error updating profile:', error);
+                });
+            } else {
+                console.log('User not logged in');
+            }
+        });
     </script>
 </head>
 <body>
@@ -83,6 +154,26 @@
             </div>
         </section>
 
+        <!-- Profile Section -->
+        <section class="profile">
+            <h2>Profile</h2>
+            <div id="profileInfo">
+                <!-- Profile information will be dynamically added here -->
+            </div>
+            <div id="editProfileForm" style="display: none;">
+                <h3>Edit Profile</h3>
+                <form id="profileForm">
+                    <label for="displayName">Display Name:</label>
+                    <input type="text" id="displayName" name="displayName" required><br>
+                    <label for="bio">Bio:</label>
+                    <textarea id="bio" name="bio" rows="4"></textarea><br>
+                    <button type="submit">Save Changes</button>
+                    <button type="button" onclick="cancelEditProfile()">Cancel</button>
+                </form>
+            </div>
+            <button id="editProfileBtn" onclick="toggleEditProfile()" style="display: block;">Edit Profile</button>
+        </section>
+
         <!-- Other sections (Content, Analytics, etc.) can be added here -->
     </main>
 
@@ -96,4 +187,3 @@
     <script src="scripts.js"></script>
 </body>
 </html>
-
