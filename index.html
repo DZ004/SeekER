@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Moderation Interface</title>
+    <title>SeekER - Discover Exclusive Content</title>
     <link rel="stylesheet" href="style.css"> <!-- Ensure you have a style.css file for your styling -->
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script>
         // Your web app's Firebase configuration
+        import { initializeApp } from 'firebase/app';
+        import { getAuth } from 'firebase/auth';
+        import { getFirestore } from 'firebase/firestore';
+
         const firebaseConfig = {
             apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
             authDomain: "ccon-agent.firebaseapp.com",
-            databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
             projectId: "ccon-agent",
             storageBucket: "ccon-agent.appspot.com",
             messagingSenderId: "359769265591",
@@ -21,61 +25,71 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const auth = firebase.auth();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // Function to send a message
-        function sendMessage() {
-            const messageInput = document.getElementById('messageInput');
-            const message = messageInput.value.trim(); // Trim to remove leading/trailing whitespace
-
-            if (message !== '') {
-                const sender = firebase.auth().currentUser.email;
-                const messagesRef = database.ref('messages');
-                messagesRef.push({
-                    sender: sender,
-                    text: message
+        // Example function to fetch and display data from Firestore
+        function displayData() {
+            const collectionRef = collection(db, 'collectionName');
+            onSnapshot(collectionRef, (snapshot) => {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    console.log(data);
+                    // Example: Display data on the webpage
+                    // Replace with your specific logic
+                    const container = document.getElementById('dataContainer');
+                    const element = document.createElement('div');
+                    element.textContent = JSON.stringify(data);
+                    container.appendChild(element);
                 });
-                messageInput.value = '';
-            } else {
-                alert('Please enter a message.');
-            }
-        }
-
-        // Function to display messages
-        function displayMessages() {
-            const messagesRef = database.ref('messages');
-            messagesRef.on('child_added', (snapshot) => {
-                const message = snapshot.val();
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message');
-                messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
-                document.getElementById('messages').appendChild(messageElement);
-                // Scroll to the bottom of the messages div
-                document.getElementById('messageContainer').scrollTop = document.getElementById('messageContainer').scrollHeight;
             });
         }
 
-        // Initialize message display
-        displayMessages();
-
-        // Listen for Enter key press in message input to send message
-        document.getElementById('messageInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
+        // Call function to display data (example)
+        displayData();
     </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Chat Moderation Interface</h1>
-        <div id="messageContainer">
-            <div id="messages"></div>
+    <header>
+        <nav>
+            <div class="logo">SeekER</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Explore</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#" class="btn-signup">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to SeekER</h1>
+                <p>Discover exclusive content from your favorite creators.</p>
+                <a href="#" class="btn-primary">Get Started</a>
+            </div>
+        </section>
+
+        <!-- Explore Section -->
+        <section class="explore">
+            <h2>Explore</h2>
+            <div id="dataContainer">
+                <!-- Content will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 SeekER. All rights reserved.</p>
         </div>
-        <input type="text" id="messageInput" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
+    </footer>
+
+    <!-- Add your custom scripts -->
+    <script src="scripts.js"></script>
 </body>
 </html>
