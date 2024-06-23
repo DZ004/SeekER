@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard</title>
+    <link rel="stylesheet" href="style.css"> <!-- Include your custom CSS file -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+            authDomain: "seeker-928e7.firebaseapp.com",
+            projectId: "seeker-928e7",
+            storageBucket: "seeker-928e7.appspot.com",
+            messagingSenderId: "652562231057",
+            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // Function to fetch and display messages for the creator
+        function fetchMessages() {
+            const messagesRef = database.ref('messages'); // Adjust 'messages' based on your database structure
+            messagesRef.on('value', (snapshot) => {
+                const messages = snapshot.val();
+                // Clear previous messages
+                document.getElementById('messagesContainer').innerHTML = '';
+                // Display each message
+                for (let key in messages) {
+                    if (messages.hasOwnProperty(key)) {
+                        const message = messages[key];
+                        const messageElement = document.createElement('div');
+                        messageElement.classList.add('message');
+                        messageElement.innerHTML = `<strong>${message.sender}</strong>: ${message.text}`;
+                        document.getElementById('messagesContainer').appendChild(messageElement);
+                    }
+                }
+            });
+        }
+
+        // Call fetchMessages on page load to display initial messages
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchMessages();
+        });
+
+        // Function to logout the creator
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html'; // Redirect to login page
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Creator Dashboard</div>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Messages</a></li>
+                <li><a href="#">Content</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Messages Section -->
+        <section class="messages">
+            <h2>Messages</h2>
+            <div id="messagesContainer">
+                <!-- Messages will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Other sections (Content, Analytics, etc.) can be added here -->
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Add your custom scripts -->
+    <script src="scripts.js"></script>
+</body>
+</html>
 
