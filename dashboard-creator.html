@@ -44,6 +44,7 @@
         // Call fetchMessages on page load to display initial messages
         document.addEventListener('DOMContentLoaded', function() {
             fetchMessages();
+            displayCreatorName(); // Display creator's name in the header
         });
 
         // Function to logout the creator
@@ -129,12 +130,22 @@
                 console.log('User not logged in');
             }
         });
+
+        // Function to display creator's name in the header
+        function displayCreatorName() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const userName = user.displayName || user.email; // Use displayName if available, otherwise email
+                document.getElementById('creatorName').textContent = userName;
+            }
+        }
     </script>
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">Creator Dashboard</div>
+            <div id="creatorName" class="creator-name"></div> <!-- Display creator's name -->
             <ul class="nav-links">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Messages</a></li>
