@@ -24,25 +24,6 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth(app);
         const db = firebase.firestore(app);
-
-        // Example function to fetch and display data from Firestore
-        function displayData() {
-            const collectionRef = db.collection('collectionName'); // Replace 'collectionName' with your actual collection name
-            collectionRef.onSnapshot((snapshot) => {
-                snapshot.forEach((doc) => {
-                    const data = doc.data();
-                    console.log(data);
-                    // Example: Display data on the webpage
-                    const dataContainer = document.getElementById('dataContainer');
-                    const element = document.createElement('div');
-                    element.textContent = JSON.stringify(data);
-                    dataContainer.appendChild(element);
-                });
-            });
-        }
-
-        // Call function to display data (example)
-        displayData();
     </script>
 </head>
 <body>
@@ -50,10 +31,10 @@
         <nav>
             <div class="logo">SeekER</div>
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Explore</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="login.html">Login</a></li>
                 <li><a href="#" class="btn-signup">Sign Up</a></li>
             </ul>
         </nav>
@@ -88,3 +69,4 @@
     <script src="scripts.js"></script>
 </body>
 </html>
+
