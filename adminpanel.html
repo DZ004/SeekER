@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="style-adminpanel.css"> <!-- Use a specific CSS file for adminpanel.html -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles-adminpanel.css"> <!-- Specific CSS for admin panel -->
+    <link rel="stylesheet" href="styles.css"> <!-- Your main CSS file -->
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Main JavaScript file -->
     <!-- Emoji Picker -->
     <link href="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.css" rel="stylesheet">
 </head>
@@ -44,13 +44,15 @@
                 <textarea id="notesInput" placeholder="Write your notes here..." rows="10"></textarea>
                 <br>
                 <button onclick="saveNotes()">Save Notes</button>
-                   <!-- New section to display online worker count -->
-    <div class="online-workers">
-        <h2>Online Workers: <span id="onlineWorkersCount">0</span></h2>
-    </div>
+            </div>
+
+            <!-- Online workers count section -->
+            <div class="online-workers">
+                <h2>Online Workers: <span id="onlineWorkersCount">0</span></h2>
             </div>
         </div>
     </div>
+
     <!-- Emoji Picker Library -->
     <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@3.0.0/dist/picker.js"></script>
     <script src="notes.js"></script> <!-- Script for notes functionality -->
