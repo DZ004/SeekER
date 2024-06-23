@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - Your Platform</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Your Platform</div>
+            <div id="creatorName" class="creator-name"></div> <!-- Display creator's name -->
+            <ul class="nav-links">
+                <li><a href="creator-home.html">Home</a></li>
+                <li><a href="messages.html">Messages</a></li>
+                <li><a href="content.html">Content</a></li>
+                <li><a href="analytics.html">Analytics</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="messages-container">
+            <aside class="sidebar">
+                <h2>Conversations</h2>
+                <ul class="conversation-list">
+                    <!-- Sample conversation list, replace with dynamic data -->
+                    <li class="conversation-item">
+                        <a href="#" onclick="openConversation('user1')">User 1</a>
+                    </li>
+                    <li class="conversation-item">
+                        <a href="#" onclick="openConversation('user2')">User 2</a>
+                    </li>
+                    <!-- Add more conversation items as needed -->
+                </ul>
+            </aside>
+
+            <section class="message-section">
+                <div class="message-header">
+                    <h2>Messages</h2>
+                    <div id="currentConversation" class="current-conversation"></div> <!-- Display current conversation -->
+                </div>
+                <div class="message-list" id="messageList">
+                    <!-- Messages will be dynamically added here -->
+                </div>
+                <form id="messageForm" class="message-form">
+                    <textarea id="messageInput" rows="3" placeholder="Type your message..."></textarea><br>
+                    <button type="submit">Send</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script> <!-- Include your custom scripts -->
+</body>
+</html>
