@@ -9,6 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -24,6 +25,7 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        const storage = firebase.storage();
 
         // Function to fetch and display messages for the creator
         function fetchMessages() {
@@ -139,6 +141,33 @@
                 document.getElementById('creatorName').textContent = userName;
             }
         }
+
+        // Function to handle file upload for content
+        function uploadContentImage() {
+            const file = document.getElementById('fileInput').files[0];
+            const storageRef = storage.ref();
+            const imagesRef = storageRef.child('images/' + file.name);
+
+            const uploadTask = imagesRef.put(file);
+
+            // Update progress bar
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload Progress: ${progress.toFixed(2)}%`);
+                },
+                (error) => {
+                    console.error('Error uploading image:', error);
+                },
+                () => {
+                    // Upload completed successfully, get download URL
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                        // You can save the downloadURL to Firestore or perform other actions
+                    });
+                }
+            );
+        }
     </script>
 </head>
 <body>
@@ -185,7 +214,14 @@
             <button id="editProfileBtn" onclick="toggleEditProfile()" style="display: block;">Edit Profile</button>
         </section>
 
-        <!-- Other sections (Content, Analytics, etc.) can be added here -->
+        <!-- Content Upload Section -->
+        <section class="content-upload">
+            <h2>Upload Content Image</h2>
+            <input type="file" id="fileInput">
+            <button onclick="uploadContentImage()">Upload Image</button>
+        </section>
+
+        <!-- Other sections (Analytics, etc.) can be added here -->
     </main>
 
     <footer>
@@ -195,6 +231,4 @@
     </footer>
 
     <!-- Add your custom scripts -->
-    <script src="scripts.js"></script>
-</body>
-</html>
+    <script src="scripts.js
