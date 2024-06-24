@@ -12,6 +12,21 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+            authDomain: "seeker-928e7.firebaseapp.com",
+            projectId: "seeker-928e7",
+            storageBucket: "seeker-928e7.appspot.com",
+            messagingSenderId: "652562231057",
+            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+    </script>
     <style>
         /* General body styling */
         body {
@@ -270,4 +285,24 @@
                     <label for="editBio">Bio:</label>
                     <textarea id="editBio" name="bio" rows="4"></textarea><br>
                     <button type="submit">Save Changes</button>
-                    <button type="button"
+                    <button type="button" onclick="cancelEditProfile()">Cancel</button>
+                </form>
+            </div>
+
+            <div class="content">
+                <h2>Your Content</h2>
+                <div class="content-items">
+                    <!-- Content items dynamically generated here -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            &copy; 2024 Your Platform. All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Your custom JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
