@@ -6,148 +6,173 @@
     <title>Creator Dashboard - Your Platform</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
     <!-- Include Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <style>
-        /* Updated CSS for enhanced dashboard appearance */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background-color: #f8f9fa;
-}
-
-header {
-    width: 100%;
-    background: #ffffff;
-    color: #333333;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-}
-
-.nav-links li {
-    margin-right: 20px;
-}
-
-.nav-links li a {
-    color: #333333;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.nav-links li a:hover {
-    background-color: #f0f0f0;
-}
-
-.sidebar {
-    width: 250px;
-    background: #ffffff;
-    padding: 15px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    height: 100vh;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar .profile {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #f0f0f0;
-}
-
-.sidebar .profile img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 15px;
-}
-
-.sidebar .nav-links {
-    flex-direction: column;
-}
-
-.sidebar .nav-links li {
-    margin-bottom: 10px;
-}
-
-.main-content {
-    flex: 1;
-    margin-left: 250px;
-    margin-top: 60px;
-    padding: 20px;
-}
-
-/* Add more styles for other sections as needed */
-
-        .profile-header .profile-picture img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #007bff;
-        }
-        .profile-header {
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: space-between;
+            background-color: #f8f9fa;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar .profile {
+            display: flex;
             align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .sidebar .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .nav-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .nav-links li a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .nav-links li a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sidebar .nav-links li a i {
+            margin-right: 10px;
+        }
+
+        /* Main content styling */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .content {
             background: #ffffff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
+
+        .content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #333333;
+        }
+
+        .content-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .content-item {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .content-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Profile header styling */
+        .profile-header {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-info .profile-picture img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #007bff;
+        }
+
         .profile-details {
             margin-left: 20px;
         }
+
         .profile-details h2 {
             margin: 0;
             font-size: 1.5em;
             color: #333333;
         }
+
         .profile-details p {
             margin: 5px 0 0;
             color: #666666;
         }
-        .edit-profile-button button {
-            padding: 10px 20px;
-            background: #007bff;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .edit-profile-button button:hover {
-            background: #0056b3;
-        }
+
+        /* Edit profile form styling */
         #editProfileForm {
             background: #ffffff;
             padding: 20px;
@@ -155,11 +180,13 @@ header {
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             margin-bottom: 20px;
         }
+
         #editProfileForm form label {
             display: block;
             margin-top: 10px;
             color: #333333;
         }
+
         #editProfileForm form input,
         #editProfileForm form textarea {
             width: 100%;
@@ -168,6 +195,7 @@ header {
             border: 1px solid #cccccc;
             border-radius: 5px;
         }
+
         #editProfileForm form button {
             margin-top: 10px;
             padding: 10px 20px;
@@ -177,44 +205,12 @@ header {
             border-radius: 5px;
             cursor: pointer;
         }
+
         #editProfileForm form button:hover {
             background: #0056b3;
         }
-        .content {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .content h2 {
-            margin-top: 0;
-            font-size: 1.5em;
-            color: #333333;
-        }
-        /* Updated content section */
-.content-items {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-}
 
-.content-item {
-    background: #ffffff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.content-item:hover {
-    transform: translateY(-5px);
-}
-
-.content-item img {
-    width: 100%;
-    border-radius: 8px;
-}
-
+        /* Footer styling */
         footer {
             text-align: center;
             padding: 20px;
@@ -230,188 +226,47 @@ header {
 </head>
 <body>
     <div class="sidebar">
-    <div class="profile">
-        <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
-        <span id="creatorName" class="creator-name"></span>
+        <div class="profile">
+            <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
+            <span id="creatorName" class="creator-name"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="creator-home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+            <li><a href="content.html"><i class="fas fa-photo-video"></i> Content</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="subscribers.html"><i class="fas fa-users"></i> Subscribers</a></li>
+            <li><a href="earnings.html"><i class="fas fa-dollar-sign"></i> Earnings</a></li>
+            <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
     </div>
-    <ul class="nav-links">
-        <li><a href="creator-home.html"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
-        <li><a href="content.html"><i class="fas fa-photo-video"></i> Content</a></li>
-        <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
-        <li><a href="subscribers.html"><i class="fas fa-users"></i> Subscribers</a></li>
-        <li><a href="earnings.html"><i class="fas fa-dollar-sign"></i> Earnings</a></li>
-        <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-    </ul>
-</div>
+
     <div class="main-content">
         <header>
             <div class="logo">Your Platform</div>
         </header>
+
         <main>
-            <section class="creator-profile">
-                <div class="profile-header">
-                    <div class="profile-info">
-                        <div class="profile-picture">
-                            <img src="default-profile.png" alt="Profile Picture" id="mainProfilePicture">
-                        </div>
-                        <div class="profile-details">
-                            <h2 id="profileDisplayName">Display Name</h2>
-                            <p id="profileBio">Bio description goes here.</p>
-                        </div>
+            <section class="profile-header">
+                <div class="profile-info">
+                    <div class="profile-picture">
+                        <img src="default-profile.png" alt="Profile Picture" id="mainProfilePicture">
                     </div>
-                    <div class="edit-profile-button">
-                        <button onclick="toggleEditProfile()">Edit Profile</button>
+                    <div class="profile-details">
+                        <h2 id="profileDisplayName">Display Name</h2>
+                        <p id="profileBio">Bio description goes here.</p>
                     </div>
                 </div>
-                <div id="editProfileForm" style="display: none;">
-                    <form id="profileForm">
-                        <label for="editDisplayName">Display Name:</label>
-                        <input type="text" id="editDisplayName" name="displayName" required><br>
-                        <label for="editBio">Bio:</label>
-                        <textarea id="editBio" name="bio" rows="4"></textarea><br>
-                        <button type="submit">Save Changes</button>
-                        <button type="button" onclick="cancelEditProfile()">Cancel</button>
-                    </form>
+                <div class="edit-profile-button">
+                    <button onclick="toggleEditProfile()">Edit Profile</button>
                 </div>
             </section>
 
-            <section class="content">
-                <h2>Recent Content</h2>
-                <div class="content-items">
-                    <!-- Sample content items, replace with dynamic data -->
-                    <div class="content-item">
-                        <img src="content1.jpg" alt="Content 1">
-                        <p>Title of Content 1</p>
-                    </div>
-                    <div class="content-item">
-                        <img src="content2.jpg" alt="Content 2">
-                        <p>Title of Content 2</p>
-                    </div>
-                    <div class="content-item">
-                        <img src="content3.jpg" alt="Content 3">
-                        <p>Title of Content 3</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <div class="footer-content">
-                <p>&copy; 2024 Your Company. All rights reserved.</p>
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        // Your Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
-            authDomain: "seeker-928e7.firebaseapp.com",
-            projectId: "seeker-928e7",
-            storageBucket: "seeker-928e7.appspot.com",
-            messagingSenderId: "652562231057",
-            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Function to display creator's name and profile picture in the header
-        function displayCreatorNameAndPicture() {
-            const user = firebase.auth().currentUser;
-            if (user) {
-                const userName = user.displayName || user.email; // Use displayName if available, otherwise email
-                const userProfilePicture = user.photoURL || 'default-profile.png'; // Use photoURL if available, otherwise default
-                document.getElementById('creatorName').textContent = userName;
-                document.getElementById('profilePicture').src = userProfilePicture;
-                document.getElementById('mainProfilePicture').src = userProfilePicture;
-            }
-        }
-
-        // Function to toggle between displaying profile info and editing form
-        function toggleEditProfile() {
-            document.getElementById('editProfileForm').style.display = 'block';
-            document.getElementById('profileDisplayName').style.display = 'none';
-            document.getElementById('profileBio').style.display = 'none';
-        }
-
-        // Function to cancel editing profile
-        function cancelEditProfile() {
-            document.getElementById('editProfileForm').style.display = 'none';
-            document.getElementById('profileDisplayName').style.display = 'block';
-            document.getElementById('profileBio').style.display = 'block';
-        }
-
-        // Function to fetch and display creator's profile information
-        function fetchProfileInfo() {
-            const user = firebase.auth().currentUser;
-            if (user) {
-                const userId = user.uid;
-                const profileRef = db.collection('creators').doc(userId);
-
-                profileRef.get().then((doc) => {
-                    if (doc.exists) {
-                        const profileData = doc.data();
-                        document.getElementById('profileDisplayName').textContent = profileData.displayName || '';
-                        document.getElementById('profileBio').textContent = profileData.bio || '';
-                        document.getElementById('editDisplayName').value = profileData.displayName || '';
-                        document.getElementById('editBio').value = profileData.bio || '';
-                    } else {
-                        console.log('No profile data found');
-                    }
-                }).catch((error) => {
-                    console.error('Error fetching profile:', error);
-                });
-            } else {
-                console.log('User not logged in');
-            }
-        }
-
-        // Function to save edited profile information
-        const profileForm = document.querySelector('#profileForm');
-        profileForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const user = firebase.auth().currentUser;
-            if (user) {
-                const userId = user.uid;
-                const displayName = profileForm['displayName'].value;
-                const bio = profileForm['bio'].value;
-
-                const profileRef = db.collection('creators').doc(userId);
-                profileRef.set({
-                    displayName: displayName,
-                    bio: bio
-                }, { merge: true })
-                .then(() => {
-                    console.log('Profile updated successfully');
-                    fetchProfileInfo(); // Update displayed profile information
-                    cancelEditProfile(); // Hide edit form and show profile info
-                })
-                .catch((error) => {
-                    console.error('Error updating profile:', error);
-                });
-            } else {
-                console.log('User not logged in');
-            }
-        });
-
-        // Call fetchProfileInfo on page load to display profile information
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchProfileInfo();
-            displayCreatorNameAndPicture();
-        });
-
-        // Function to logout (replace with your existing logout function)
-        function logout() {
-            auth.signOut().then(() => {
-                window.location.href = 'login.html'; // Redirect to login page
-            }).catch((error) => {
-                console.error('Logout error:', error);
-            });
-        }
-    </script>
-</body>
-</html>
+            <div id="editProfileForm" style="display: none;">
+                <form id="profileForm">
+                    <label for="editDisplayName">Display Name:</label>
+                    <input type="text" id="editDisplayName" name="displayName" required><br>
+                    <label for="editBio">Bio:</label>
+                    <textarea id="editBio" name="bio" rows="4"></textarea><br>
+                    <button type="submit">Save Changes</button>
+                    <button type="button"
