@@ -31,6 +31,14 @@
             const password = creatorSignupForm['creatorPassword'].value;
 
             try {
+                // Validate email and password format before creating account
+                if (!isValidEmail(email)) {
+                    throw new Error('Please enter a valid email address.');
+                }
+                if (!isValidPassword(password)) {
+                    throw new Error('Password must be at least 6 characters long.');
+                }
+
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 console.log('Successfully signed up as creator:', userCredential.user);
                 // Redirect to creator dashboard or desired page
@@ -39,6 +47,17 @@
                 document.querySelector('#creatorSignupError').textContent = error.message;
             }
         });
+
+        // Function to validate email format
+        function isValidEmail(email) {
+            const re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        // Function to validate password length
+        function isValidPassword(password) {
+            return password.length >= 6;
+        }
     </script>
 </head>
 <body>
@@ -50,7 +69,7 @@
                 <li><a href="explore.html">Explore</a></li>
                 <li><a href="pricing.html">Pricing</a></li>
                 <li><a href="login.html">Login</a></li>
-                <li><a href="creator-signup.html" class="btn-signup">Creator Sign Up</a></li> <!-- Optional: Keep the button active -->
+                <li><a href="creator-signup.html" class="btn-signup active">Creator Sign Up</a></li> <!-- Optional: Keep the button active -->
             </ul>
         </nav>
     </header>
