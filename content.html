@@ -3,71 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content - Your Platform</title>
+    <title>Content - SeekER</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f8f9fa;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar .profile {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .sidebar .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .nav-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .nav-links li a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .nav-links li a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sidebar .nav-links li a i {
+            margin-right: 10px;
+        }
+
+        /* Main content styling */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .content {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #333333;
+        }
+
+        .content-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .content-item {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .content-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .content-details h3 {
+            margin: 10px 0 5px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .content-details p {
+            margin: 0;
+            color: #666;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #cccccc;
+            padding: 20px;
+        }
+
+        .upload-form h3 {
+            margin: 0 0 10px;
+            color: #666;
+        }
+
+        .upload-form input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        .upload-form button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .upload-form button:hover {
+            background: #0056b3;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            color: #666666;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Your Platform</div>
-            <div id="creatorName" class="creator-name"></div> <!-- Display creator's name -->
-            <ul class="nav-links">
-                <li><a href="creator-home.html">Home</a></li>
-                <li><a href="messages.html">Messages</a></li>
-                <li><a href="content.html">Content</a></li>
-                <li><a href="analytics.html">Analytics</a></li>
-                <li><a href="#" onclick="logout()">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="sidebar">
+        <div class="profile">
+            <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
+            <span id="creatorName" class="creator-name"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="creator-home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+            <li><a href="content.html"><i class="fas fa-photo-video"></i> Content</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="subscribers.html"><i class="fas fa-users"></i> Subscribers</a></li>
+            <li><a href="earnings.html"><i class="fas fa-dollar-sign"></i> Earnings</a></li>
+            <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="dashboard-creator.html"><i class="fas fa-tachometer-alt"></i> Creator Dashboard</a></li>
+        </ul>
+    </div>
 
-    <main>
-        <section class="content-grid">
-            <h2>Content Library</h2>
-            <div class="grid-container">
-                <!-- Sample content items, replace with dynamic data -->
-                <div class="content-item">
-                    <img src="content1.jpg" alt="Content 1">
-                    <div class="content-details">
-                        <h3>Title of Content 1</h3>
-                        <p>Description of Content 1</p>
-                    </div>
-                </div>
-                <div class="content-item">
-                    <img src="content2.jpg" alt="Content 2">
-                    <div class="content-details">
-                        <h3>Title of Content 2</h3>
-                        <p>Description of Content 2</p>
-                    </div>
-                </div>
-                <div class="content-item">
-                    <img src="content3.jpg" alt="Content 3">
-                    <div class="content-details">
-                        <h3>Title of Content 3</h3>
-                        <p>Description of Content 3</p>
-                    </div>
-                </div>
-                <!-- Add more content items as needed -->
+    <div class="main-content">
+        <header>
+            <div class="logo">SeekER</div>
+        </header>
 
-                <!-- Upload Form -->
-                <div class="content-item upload-form">
-                    <h3>Upload New Content</h3>
-                    <input type="file" id="fileInput">
-                    <button onclick="uploadImage()">Upload Image</button>
-                    <div id="progress"></div>
-                    <div id="imageURL"></div>
+        <main>
+            <section class="content-grid">
+                <h2>Content Library</h2>
+                <div class="content-items">
+                    <!-- Sample content items, replace with dynamic data -->
+                    <div class="content-item">
+                        <img src="content1.jpg" alt="Content 1">
+                        <div class="content-details">
+                            <h3>Title of Content 1</h3>
+                            <p>Description of Content 1</p>
+                        </div>
+                    </div>
+                    <div class="content-item">
+                        <img src="content2.jpg" alt="Content 2">
+                        <div class="content-details">
+                            <h3>Title of Content 2</h3>
+                            <p>Description of Content 2</p>
+                        </div>
+                    </div>
+                    <div class="content-item">
+                        <img src="content3.jpg" alt="Content 3">
+                        <div class="content-details">
+                            <h3>Title of Content 3</h3>
+                            <p>Description of Content 3</p>
+                        </div>
+                    </div>
+                    <!-- Add more content items as needed -->
+
+                    <!-- Upload Form -->
+                    <div class="content-item upload-form">
+                        <h3>Upload New Content</h3>
+                        <input type="file" id="fileInput">
+                        <button onclick="uploadImage()">Upload Image</button>
+                        <div id="progress"></div>
+                        <div id="imageURL"></div>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+        </main>
+    </div>
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2024 Your Company. All rights reserved.</p>
+            <p>&copy; 2024 SeekER. All rights reserved.</p>
         </div>
     </footer>
 
