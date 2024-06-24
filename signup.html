@@ -72,6 +72,23 @@
             box-sizing: border-box;
         }
 
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .checkbox-input {
+            width: auto;
+            margin-right: 10px;
+        }
+
         button[type="submit"] {
             padding: 12px 30px;
             background-color: #333;
@@ -84,6 +101,26 @@
 
         button[type="submit"]:hover {
             background-color: #555;
+        }
+
+        .redirect-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .redirect-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #555;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .redirect-button:hover {
+            background-color: #777;
         }
 
         footer {
@@ -111,8 +148,16 @@
             <input type="email" id="email" name="email" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <div class="checkbox-container">
+                <input type="checkbox" id="age-checkbox" class="checkbox-input" required>
+                <label for="age-checkbox" class="checkbox-label">I confirm that I am 18 years old or older.</label>
+            </div>
             <button type="submit">Sign Up</button>
         </form>
+        <div class="redirect-buttons">
+            <a href="home.html" class="redirect-button">Continue to SeekER</a>
+            <a href="index.html" class="redirect-button">Back to Home</a>
+        </div>
     </section>
 </main>
 
