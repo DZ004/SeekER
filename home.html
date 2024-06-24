@@ -3,70 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to OnlyFans</title>
+    <title>OnlyFans - Home</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Ensure style.css contains the necessary styles for the introducing page -->
     <style>
-        /* Additional specific styles for introducing page */
+        /* Additional styles specific to home.html */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        }
+
+        .hero {
+            background-image: url('https://via.placeholder.com/1500x600');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
             text-align: center;
+            padding: 100px 20px;
         }
-        
-        .introducing-content {
-            max-width: 800px;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
+
+        .hero h1 {
             font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #333;
+            margin-bottom: 20px;
         }
-        
-        p {
+
+        .hero p {
             font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #555;
+            margin-bottom: 40px;
         }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-            text-align: left;
-        }
-        
-        .feature {
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature h2 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-        
-        .feature p {
-            font-size: 1rem;
-            color: #666;
-        }
-        
-        .signup-button {
+
+        .cta-button {
             display: inline-block;
             padding: 15px 30px;
             background-color: #333;
@@ -74,113 +41,180 @@
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
         }
-        
-        .signup-button:hover {
+
+        .cta-button:hover {
             background-color: #555;
         }
-        
-        .posts {
-            margin-top: 60px;
-            display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-        
-        .post {
+
+        .featured-creators {
+            padding: 40px 20px;
             background-color: #fff;
-            border-radius: 10px;
+            text-align: center;
+        }
+
+        .creator {
+            display: inline-block;
+            width: calc(25% - 20px);
+            margin: 10px;
+            text-align: left;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
-        .post img {
+
+        .creator img {
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
         }
-        
-        .post-content {
+
+        .creator-info {
             padding: 20px;
         }
-        
-        .post-title {
-            font-size: 1.3rem;
+
+        .creator-name {
+            font-size: 1.2rem;
             margin-bottom: 10px;
             color: #333;
         }
-        
-        .post-description {
+
+        .creator-description {
             font-size: 1rem;
             color: #666;
+        }
+
+        .creator-actions {
+            margin-top: 10px;
+        }
+
+        .subscribe-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .subscribe-button:hover {
+            background-color: #45a049;
+        }
+
+        .community {
+            background-color: #f9f9f9;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .community h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .community-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .community-buttons a {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .community-buttons a:hover {
+            background-color: #555;
         }
     </style>
 </head>
 <body>
 
-<div class="introducing-content">
-    <h1>Welcome to OnlyFans</h1>
-    <p>Discover, subscribe, and engage with your favorite creators.</p>
-    
-    <div class="features">
-        <div class="feature">
-            <h2>Create Content</h2>
-            <p>Produce exclusive content and connect with your audience.</p>
-        </div>
-        <div class="feature">
-            <h2>Monetize Your Fanbase</h2>
-            <p>Earn money from subscriptions and tips from your supporters.</p>
-        </div>
-        <div class="feature">
-            <h2>Community Interaction</h2>
-            <p>Engage with fans through messaging, posts, and exclusive offers.</p>
-        </div>
-        <div class="feature">
-            <h2>Secure and Private</h2>
-            <p>Control your content distribution and manage privacy settings.</p>
-        </div>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Welcome to OnlyFans</h1>
+        <p>Explore exclusive content from your favorite creators</p>
+        <a href="#featured-creators" class="cta-button">Get Started</a>
     </div>
-    
-    <a href="signup.html" class="signup-button">Sign Up for Free</a>
-    
-    <div class="posts">
-        <div class="post">
-            <img src="https://via.placeholder.com/300x200" alt="Post Image">
-            <div class="post-content">
-                <h3 class="post-title">Exclusive Content Title</h3>
-                <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem, id tincidunt ex efficitur nec.</p>
-                <a href="#" class="button">View Post</a>
+</section>
+
+<!-- Featured Creators Section -->
+<section id="featured-creators" class="featured-creators">
+    <div class="container">
+        <h2>Featured Creators</h2>
+        <div class="creators">
+            <div class="creator">
+                <img src="https://via.placeholder.com/400x200" alt="Creator 1">
+                <div class="creator-info">
+                    <h3 class="creator-name">Creator Name</h3>
+                    <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                    <div class="creator-actions">
+                        <button class="subscribe-button">Subscribe</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="post">
-            <img src="https://via.placeholder.com/300x200" alt="Post Image">
-            <div class="post-content">
-                <h3 class="post-title">Behind-the-Scenes Access</h3>
-                <p class="post-description">Curabitur ullamcorper ligula vitae urna lacinia, vitae vehicula nisi molestie. Sed at ante in velit egestas.</p>
-                <a href="#" class="button">View Post</a>
+            <div class="creator">
+                <img src="https://via.placeholder.com/400x200" alt="Creator 2">
+                <div class="creator-info">
+                    <h3 class="creator-name">Creator Name</h3>
+                    <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                    <div class="creator-actions">
+                        <button class="subscribe-button">Subscribe</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="post">
-            <img src="https://via.placeholder.com/300x200" alt="Post Image">
-            <div class="post-content">
-                <h3 class="post-title">Special Offers and Discounts</h3>
-                <p class="post-description">Phasellus ultrices neque sit amet neque luctus aliquam. Fusce molestie ullamcorper odio, ac elementum dolor malesuada eget.</p>
-                <a href="#" class="button">View Post</a>
+            <div class="creator">
+                <img src="https://via.placeholder.com/400x200" alt="Creator 3">
+                <div class="creator-info">
+                    <h3 class="creator-name">Creator Name</h3>
+                    <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                    <div class="creator-actions">
+                        <button class="subscribe-button">Subscribe</button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="post">
-            <img src="https://via.placeholder.com/300x200" alt="Post Image">
-            <div class="post-content">
-                <h3 class="post-title">Live Streaming Events</h3>
-                <p class="post-description">Vivamus rutrum dui ac turpis tincidunt, et tristique ex cursus. Nulla facilisi. In pretium ligula nec quam cursus.</p>
-                <a href="#" class="button">View Post</a>
+            <div class="creator">
+                <img src="https://via.placeholder.com/400x200" alt="Creator 4">
+                <div class="creator-info">
+                    <h3 class="creator-name">Creator Name</h3>
+                    <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                    <div class="creator-actions">
+                        <button class="subscribe-button">Subscribe</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- Community Section -->
+<section class="community">
+    <div class="container">
+        <h2>Join Our Community</h2>
+        <div class="community-buttons">
+            <a href="#">Explore Feed</a>
+            <a href="#">Start Creating</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2024 OnlyFans. All rights reserved.</p>
+    </div>
+</footer>
 
 </body>
 </html>
