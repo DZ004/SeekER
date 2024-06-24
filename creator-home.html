@@ -9,18 +9,40 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <style>
+        /* Add custom CSS to style the profile picture */
+        .profile-header .profile-picture img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .nav-links .profile {
+            display: flex;
+            align-items: center;
+        }
+        .nav-links .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">Your Platform</div>
-            <div id="creatorName" class="creator-name"></div> <!-- Display creator's name -->
             <ul class="nav-links">
                 <li><a href="creator-home.html">Home</a></li>
                 <li><a href="messages.html">Messages</a></li>
                 <li><a href="content.html">Content</a></li>
                 <li><a href="analytics.html">Analytics</a></li>
                 <li><a href="#" onclick="logout()">Logout</a></li>
+                <li class="profile">
+                    <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
+                    <span id="creatorName" class="creator-name"></span>
+                </li>
             </ul>
         </nav>
     </header>
@@ -30,7 +52,7 @@
             <div class="profile-header">
                 <div class="profile-info">
                     <div class="profile-picture">
-                        <img src="profile-picture.jpg" alt="Profile Picture">
+                        <img src="default-profile.png" alt="Profile Picture" id="mainProfilePicture">
                     </div>
                     <div class="profile-details">
                         <h2 id="profileDisplayName">Display Name</h2>
@@ -95,12 +117,15 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Function to display creator's name in the header
-        function displayCreatorName() {
+        // Function to display creator's name and profile picture in the header
+        function displayCreatorNameAndPicture() {
             const user = firebase.auth().currentUser;
             if (user) {
                 const userName = user.displayName || user.email; // Use displayName if available, otherwise email
+                const userProfilePicture = user.photoURL || 'default-profile.png'; // Use photoURL if available, otherwise default
                 document.getElementById('creatorName').textContent = userName;
+                document.getElementById('profilePicture').src = userProfilePicture;
+                document.getElementById('mainProfilePicture').src = userProfilePicture;
             }
         }
 
@@ -174,7 +199,7 @@
         // Call fetchProfileInfo on page load to display profile information
         document.addEventListener('DOMContentLoaded', function() {
             fetchProfileInfo();
-            displayCreatorName();
+            displayCreatorNameAndPicture();
         });
 
         // Function to logout (replace with your existing logout function)
