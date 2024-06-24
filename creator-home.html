@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creator Home - Your Platform</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
 <body>
     <header>
@@ -29,8 +33,8 @@
                         <img src="profile-picture.jpg" alt="Profile Picture">
                     </div>
                     <div class="profile-details">
-                        <h2 id="displayName">Display Name</h2>
-                        <p id="bio">Bio description goes here.</p>
+                        <h2 id="profileDisplayName">Display Name</h2>
+                        <p id="profileBio">Bio description goes here.</p>
                     </div>
                 </div>
                 <div class="edit-profile-button">
@@ -39,10 +43,10 @@
             </div>
             <div id="editProfileForm" style="display: none;">
                 <form id="profileForm">
-                    <label for="displayName">Display Name:</label>
-                    <input type="text" id="displayName" name="displayName" required><br>
-                    <label for="bio">Bio:</label>
-                    <textarea id="bio" name="bio" rows="4"></textarea><br>
+                    <label for="editDisplayName">Display Name:</label>
+                    <input type="text" id="editDisplayName" name="displayName" required><br>
+                    <label for="editBio">Bio:</label>
+                    <textarea id="editBio" name="bio" rows="4"></textarea><br>
                     <button type="submit">Save Changes</button>
                     <button type="button" onclick="cancelEditProfile()">Cancel</button>
                 </form>
@@ -75,6 +79,112 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script> <!-- Include your custom scripts -->
+    <script>
+        // Your Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+            authDomain: "seeker-928e7.firebaseapp.com",
+            projectId: "seeker-928e7",
+            storageBucket: "seeker-928e7.appspot.com",
+            messagingSenderId: "652562231057",
+            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Function to display creator's name in the header
+        function displayCreatorName() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const userName = user.displayName || user.email; // Use displayName if available, otherwise email
+                document.getElementById('creatorName').textContent = userName;
+            }
+        }
+
+        // Function to toggle between displaying profile info and editing form
+        function toggleEditProfile() {
+            document.getElementById('editProfileForm').style.display = 'block';
+            document.getElementById('profileDisplayName').style.display = 'none';
+            document.getElementById('profileBio').style.display = 'none';
+        }
+
+        // Function to cancel editing profile
+        function cancelEditProfile() {
+            document.getElementById('editProfileForm').style.display = 'none';
+            document.getElementById('profileDisplayName').style.display = 'block';
+            document.getElementById('profileBio').style.display = 'block';
+        }
+
+        // Function to fetch and display creator's profile information
+        function fetchProfileInfo() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const userId = user.uid;
+                const profileRef = db.collection('creators').doc(userId);
+
+                profileRef.get().then((doc) => {
+                    if (doc.exists) {
+                        const profileData = doc.data();
+                        document.getElementById('profileDisplayName').textContent = profileData.displayName || '';
+                        document.getElementById('profileBio').textContent = profileData.bio || '';
+                        document.getElementById('editDisplayName').value = profileData.displayName || '';
+                        document.getElementById('editBio').value = profileData.bio || '';
+                    } else {
+                        console.log('No profile data found');
+                    }
+                }).catch((error) => {
+                    console.error('Error fetching profile:', error);
+                });
+            } else {
+                console.log('User not logged in');
+            }
+        }
+
+        // Function to save edited profile information
+        const profileForm = document.querySelector('#profileForm');
+        profileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const userId = user.uid;
+                const displayName = profileForm['displayName'].value;
+                const bio = profileForm['bio'].value;
+
+                const profileRef = db.collection('creators').doc(userId);
+                profileRef.set({
+                    displayName: displayName,
+                    bio: bio
+                }, { merge: true })
+                .then(() => {
+                    console.log('Profile updated successfully');
+                    fetchProfileInfo(); // Update displayed profile information
+                    cancelEditProfile(); // Hide edit form and show profile info
+                })
+                .catch((error) => {
+                    console.error('Error updating profile:', error);
+                });
+            } else {
+                console.log('User not logged in');
+            }
+        });
+
+        // Call fetchProfileInfo on page load to display profile information
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchProfileInfo();
+            displayCreatorName();
+        });
+
+        // Function to logout (replace with your existing logout function)
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html'; // Redirect to login page
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
