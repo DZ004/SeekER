@@ -12,6 +12,100 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <style>
         /* Additional styles specific to subscribers page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar .profile {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .sidebar .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .nav-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .nav-links li a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .nav-links li a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sidebar .nav-links li a i {
+            margin-right: 10px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .content {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #333333;
+        }
+
+        .subscribers-list {
+            /* Specific styles for the subscriber list */
+        }
+
         .subscriber-item {
             display: flex;
             align-items: center;
@@ -42,21 +136,36 @@
         .subscriber-actions button:hover {
             background-color: #0056b3;
         }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            color: #666666;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <!-- Sidebar content -->
+        <!-- Sidebar content (profile, navigation links) -->
         <div class="profile">
             <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
             <span id="creatorName" class="creator-name"></span>
         </div>
         <ul class="nav-links">
-            <li><a href="dashboard-creator.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="creator-home.html"><i class="fas fa-home"></i> Home</a></li>
             <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
             <li><a href="content.html"><i class="fas fa-photo-video"></i> Content</a></li>
             <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="subscribers.html"><i class="fas fa-users"></i> Subscribers</a></li>
+            <li><a href="earnings.html"><i class="fas fa-dollar-sign"></i> Earnings</a></li>
             <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="dashboard-creator.html"><i class="fas fa-tachometer-alt"></i> Creator Dashboard</a></li>
         </ul>
     </div>
 
@@ -75,9 +184,7 @@
         </main>
 
         <footer>
-            <div class="footer-content">
-                <p>&copy; 2024 Your Company. All rights reserved.</p>
-            </div>
+            <p>&copy; 2024 Your Company. All rights reserved.</p>
         </footer>
     </div>
 
