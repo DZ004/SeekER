@@ -22,6 +22,7 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth(app);
+        const db = firebase.firestore();
 
         // Function to handle creator signup
         const creatorSignupForm = document.querySelector('#creatorSignupForm');
@@ -29,35 +30,30 @@
             e.preventDefault();
             const email = creatorSignupForm['creatorEmail'].value;
             const password = creatorSignupForm['creatorPassword'].value;
+            const displayName = creatorSignupForm['creatorDisplayName'].value;
+            const bio = creatorSignupForm['creatorBio'].value;
+            const subscriptionPlan = creatorSignupForm['subscriptionPlan'].value;
 
             try {
-                // Validate email and password format before creating account
-                if (!isValidEmail(email)) {
-                    throw new Error('Please enter a valid email address.');
-                }
-                if (!isValidPassword(password)) {
-                    throw new Error('Password must be at least 6 characters long.');
-                }
-
+                // Create user with email and password
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                
+                // Save additional creator info to Firestore
+                const userId = userCredential.user.uid;
+                await db.collection('creators').doc(userId).set({
+                    displayName: displayName,
+                    bio: bio,
+                    subscriptionPlan: subscriptionPlan
+                });
+
                 console.log('Successfully signed up as creator:', userCredential.user);
+
                 // Redirect to creator dashboard or desired page
                 window.location.assign('dashboard-creator.html');
             } catch (error) {
                 document.querySelector('#creatorSignupError').textContent = error.message;
             }
         });
-
-        // Function to validate email format
-        function isValidEmail(email) {
-            const re = /\S+@\S+\.\S+/;
-            return re.test(email);
-        }
-
-        // Function to validate password length
-        function isValidPassword(password) {
-            return password.length >= 6;
-        }
     </script>
 </head>
 <body>
@@ -69,7 +65,7 @@
                 <li><a href="explore.html">Explore</a></li>
                 <li><a href="pricing.html">Pricing</a></li>
                 <li><a href="login.html">Login</a></li>
-                <li><a href="creator-signup.html" class="btn-signup active">Creator Sign Up</a></li> <!-- Optional: Keep the button active -->
+                <li><a href="creator-signup.html" class="btn-signup">Creator Sign Up</a></li> <!-- Optional: Keep the button active -->
             </ul>
         </nav>
     </header>
@@ -82,10 +78,20 @@
                 <p>Create and share exclusive content with your audience!</p>
                 <!-- Creator Signup Form -->
                 <form id="creatorSignupForm">
+                    <label for="creatorDisplayName">Display Name:</label>
+                    <input type="text" id="creatorDisplayName" name="creatorDisplayName" required>
                     <label for="creatorEmail">Email:</label>
                     <input type="email" id="creatorEmail" name="creatorEmail" required>
                     <label for="creatorPassword">Password:</label>
                     <input type="password" id="creatorPassword" name="creatorPassword" required>
+                    <label for="creatorBio">Bio:</label>
+                    <textarea id="creatorBio" name="creatorBio" rows="4" required></textarea>
+                    <label for="subscriptionPlan">Subscription Plan:</label>
+                    <select id="subscriptionPlan" name="subscriptionPlan">
+                        <option value="free">Free</option>
+                        <option value="basic">Basic ($10/month)</option>
+                        <option value="premium">Premium ($20/month)</option>
+                    </select>
                     <button type="submit" class="btn-primary">Sign Up as Creator</button>
                     <p id="creatorSignupError" class="error-message"></p>
                 </form>
