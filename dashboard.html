@@ -1,1 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeekER - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to dashboard.html */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .dashboard-header .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dashboard-header .actions a, .dashboard-header .actions button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dashboard-header .actions a:hover, .dashboard-header .actions button:hover {
+            background-color: #45a049;
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            flex: 1;
+            min-width: calc(50% - 20px);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .subscription, .message {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .subscription:last-child, .message:last-child {
+            border-bottom: none;
+        }
+
+        .subscription .actions, .message .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .subscription .actions a, .message .actions a, .subscription .actions button, .message .actions button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .subscription .actions a:hover, .message .actions a:hover, .subscription .actions button:hover, .message .actions button:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <h1>Dashboard</h1>
+        <div class="actions">
+            <a href="#">Edit Profile</a>
+            <button>Logout</button>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- Account Overview Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Account Overview</h2>
+            </div>
+            <div class="card-content">
+                <p><strong>Username:</strong> johndoe</p>
+                <p><strong>Email:</strong> johndoe@example.com</p>
+                <p><strong>Membership:</strong> Premium</p>
+                <p><strong>Joined:</strong> January 1, 2024</p>
+            </div>
+        </div>
+
+        <!-- Recent Subscriptions Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Recent Subscriptions</h2>
+            </div>
+            <div class="card-content">
+                <div class="subscription">
+                    <span>Creator 1</span>
+                    <div class="actions">
+                        <a href="#">View Profile</a>
+                        <button>Unsubscribe</button>
+                    </div>
+                </div>
+                <div class="subscription">
+                    <span>Creator 2</span>
+                    <div class="actions">
+                        <a href="#">View Profile</a>
+                        <button>Unsubscribe</button>
+                    </div>
+                </div>
+                <div class="subscription">
+                    <span>Creator 3</span>
+                    <div class="actions">
+                        <a href="#">View Profile</a>
+                        <button>Unsubscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Messages</h2>
+            </div>
+            <div class="card-content">
+                <div class="message">
+                    <span>Message from Creator 1</span>
+                    <div class="actions">
+                        <a href="#">View</a>
+                        <button>Reply</button>
+                    </div>
+                </div>
+                <div class="message">
+                    <span>Message from Creator 2</span>
+                    <div class="actions">
+                        <a href="#">View</a>
+                        <button>Reply</button>
+                    </div>
+                </div>
+                <div class="message">
+                    <span>Message from Creator 3</span>
+                    <div class="actions">
+                        <a href="#">View</a>
+                        <button>Reply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Settings</h2>
+            </div>
+            <div class="card-content">
+                <p><a href="#">Change Password</a></p>
+                <p><a href="#">Payment Methods</a></p>
+                <p><a href="#">Privacy Settings</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
 
