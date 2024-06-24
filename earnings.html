@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard - Your Platform</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f8f9fa;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background: #ffffff;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar .profile {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .sidebar .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .nav-links li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .nav-links li a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar .nav-links li a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .sidebar .nav-links li a i {
+            margin-right: 10px;
+        }
+
+        /* Main content styling */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+
+        .content {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #333333;
+        }
+
+        .content-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .content-item {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .content-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Profile header styling */
+        .profile-header {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-info .profile-picture img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #007bff;
+        }
+
+        .profile-details {
+            margin-left: 20px;
+        }
+
+        .profile-details h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333333;
+        }
+
+        .profile-details p {
+            margin: 5px 0 0;
+            color: #666666;
+        }
+
+        /* Edit profile form styling */
+        #editProfileForm {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        #editProfileForm form label {
+            display: block;
+            margin-top: 10px;
+            color: #333333;
+        }
+
+        #editProfileForm form input,
+        #editProfileForm form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+
+        #editProfileForm form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #editProfileForm form button:hover {
+            background: #0056b3;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            color: #666666;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 250px);
+            margin-left: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile">
+            <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
+            <span id="creatorName" class="creator-name"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="creator-home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+            <li><a href="content.html"><i class="fas fa-photo-video"></i> Content</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="subscribers.html"><i class="fas fa-users"></i> Subscribers</a></li>
+            <li><a href="earnings.html"><i class="fas fa-dollar-sign"></i> Earnings</a></li>
+            <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="logo">Your Platform</div>
+        </header>
+
+        <main>
+            <section class="profile-header">
+                <div class="profile-info">
+                    <div class="profile-picture">
+                        <img src="default-profile.png" alt="Profile Picture" id="mainProfilePicture">
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="profileDisplayName">Display Name</h2>
+                        <p id="profileBio">Bio description goes here.</p>
+                    </div>
+                </div>
+                <div class="edit-profile-button">
+                    <button onclick="toggleEditProfile()">Edit Profile</button>
+                </div>
+            </section>
+
+            <div id="editProfileForm" style="display: none;">
+                <form id="profileForm">
+                    <label for="editDisplayName">Display Name:</label>
+                    <input type="text" id="editDisplayName" name="displayName" required><br>
+                    <label for="editBio">Bio:</label>
+                    <textarea id="editBio" name="bio" rows="4"></textarea><br>
+                    <button type="submit">Save Changes</button>
+                    <button type="button" onclick="cancelEditProfile()">Cancel</button>
+                </form>
+            </div>
+
+            <section class="content">
+                <h2>Recent
