@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribers - Your Platform</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <style>
+        /* Additional styles specific to subscribers page */
+        .subscriber-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .subscriber-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .subscriber-details {
+            flex: 1;
+        }
+
+        .subscriber-actions button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .subscriber-actions button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <!-- Sidebar content (as previously defined) -->
+        <!-- Include your profile section and navigation links here -->
+    </div>
+    <div class="main-content">
+        <header>
+            <div class="logo">Your Platform</div>
+            <!-- Header content (as previously defined) -->
+        </header>
+        <main>
+            <section class="content">
+                <h2>Subscribers</h2>
+                <div id="subscribersList" class="subscribers-list">
+                    <!-- Subscriber list will be dynamically populated here -->
+                </div>
+            </section>
+        </main>
+        <footer>
+            <!-- Footer content (as previously defined) -->
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+            authDomain: "seeker-928e7.firebaseapp.com",
+            projectId: "seeker-928e7",
+            storageBucket: "seeker-928e7.appspot.com",
+            messagingSenderId: "652562231057",
+            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Function to fetch subscribers and display them
+        function fetchSubscribers() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const userId = user.uid;
+                const subscribersRef = db.collection('subscribers').where('creatorId', '==', userId);
+
+                subscribersRef.get().then((querySnapshot) => {
+                    const subscribersList = document.getElementById('subscribersList');
+                    subscribersList.innerHTML = ''; // Clear previous content
+
+                    querySnapshot.forEach((doc) => {
+                        const subscriberData = doc.data();
+                        const subscriberItem = `
+                            <div class="subscriber-item">
+                                <img src="${subscriberData.profilePicture || 'default-profile.png'}" alt="Subscriber">
+                                <div class="subscriber-details">
+                                    <h3>${subscriberData.displayName}</h3>
+                                    <p>Email: ${subscriberData.email}</p>
+                                </div>
+                                <div class="subscriber-actions">
+                                    <button onclick="sendMessage('${subscriberData.uid}')">Message</button>
+                                </div>
+                            </div>
+                        `;
+                        subscribersList.innerHTML += subscriberItem;
+                    });
+                }).catch((error) => {
+                    console.error('Error fetching subscribers:', error);
+                });
+            } else {
+                console.log('User not logged in');
+            }
+        }
+
+        // Function to send a message to a subscriber (example function, replace with actual messaging logic)
+        function sendMessage(subscriberUid) {
+            console.log(`Sending message to subscriber with UID: ${subscriberUid}`);
+            // Implement your messaging logic here
+        }
+
+        // Call fetchSubscribers on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchSubscribers();
+        });
+
+        // Function to handle logout (replace with your existing logout function)
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'login.html'; // Redirect to login page
+            }).catch((error) => {
+                console.error('Logout error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
