@@ -26,6 +26,19 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+
+        // Logout function
+        function logout() {
+            auth.signOut().then(() => {
+                // Sign-out successful.
+                console.log("User signed out");
+                // Redirect or handle UI update as needed
+                window.location.href = "login.html"; // Redirect to login page or another page
+            }).catch((error) => {
+                // An error happened.
+                console.error("Sign out error", error);
+            });
+        }
     </script>
     <style>
         /* General body styling */
@@ -243,7 +256,7 @@
     <div class="sidebar">
         <div class="profile">
             <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
-            <span id="creatorName" class="creator-name"></span>
+            <span id="creatorName" class="creator-name">Username</span>
         </div>
         <ul class="nav-links">
             <li><a href="creator-home.html"><i class="fas fa-home"></i> Home</a></li>
