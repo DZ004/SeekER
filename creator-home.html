@@ -16,27 +16,39 @@
             margin: 0;
             padding: 0;
             display: flex;
+            background-color: #f8f9fa;
         }
         header {
             width: 100%;
-            background: #333;
-            color: white;
+            background: #ffffff;
+            color: #333333;
             padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
         }
         .nav-links {
             list-style: none;
             padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
         }
         .nav-links li {
-            display: inline;
             margin-right: 20px;
         }
         .nav-links li a {
-            color: white;
+            color: #333333;
             text-decoration: none;
+            font-weight: bold;
         }
         .profile {
             display: flex;
@@ -49,14 +61,31 @@
             margin-right: 10px;
         }
         .sidebar {
-            width: 200px;
-            background: #f4f4f4;
+            width: 250px;
+            background: #ffffff;
             padding: 15px;
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             height: 100vh;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar .profile {
+            margin-bottom: 20px;
+        }
+        .sidebar .nav-links {
+            flex-direction: column;
+        }
+        .sidebar .nav-links li {
+            margin-bottom: 10px;
         }
         .main-content {
             flex: 1;
+            margin-left: 250px;
+            margin-top: 60px;
             padding: 20px;
         }
         .profile-header .profile-picture img {
@@ -64,6 +93,83 @@
             height: 100px;
             border-radius: 50%;
             object-fit: cover;
+            border: 2px solid #007bff;
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .profile-details {
+            margin-left: 20px;
+        }
+        .profile-details h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #333333;
+        }
+        .profile-details p {
+            margin: 5px 0 0;
+            color: #666666;
+        }
+        .edit-profile-button button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .edit-profile-button button:hover {
+            background: #0056b3;
+        }
+        #editProfileForm {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        #editProfileForm form label {
+            display: block;
+            margin-top: 10px;
+            color: #333333;
+        }
+        #editProfileForm form input,
+        #editProfileForm form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+        #editProfileForm form button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #editProfileForm form button:hover {
+            background: #0056b3;
+        }
+        .content {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .content h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            color: #333333;
         }
         .content-items {
             display: flex;
@@ -73,10 +179,25 @@
             margin-right: 10px;
             margin-bottom: 10px;
             width: 150px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .content-item img {
             width: 100%;
-            border-radius: 10px;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            color: #666666;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 250px);
+            margin-left: 250px;
         }
     </style>
 </head>
