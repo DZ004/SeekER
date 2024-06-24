@@ -5,6 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messages - Your Platform</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to your custom CSS -->
+    <style>
+        /* Additional styles specific to messages page */
+        .messages-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 10px;
+        }
+
+        .conversation-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .conversation-item {
+            margin-bottom: 10px;
+        }
+
+        .conversation-item a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .conversation-item a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .message-section {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .message-header h2 {
+            margin: 0;
+        }
+
+        .message-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message-form textarea {
+            resize: none;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .message-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .message-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -12,7 +103,7 @@
             <div class="logo">Your Platform</div>
             <div id="creatorName" class="creator-name"></div> <!-- Display creator's name -->
             <ul class="nav-links">
-                <li><a href="creator-home.html">Home</a></li>
+                <li><a href="dashboard-creator.html">Home</a></li>
                 <li><a href="messages.html">Messages</a></li>
                 <li><a href="content.html">Content</a></li>
                 <li><a href="analytics.html">Analytics</a></li>
@@ -60,5 +151,59 @@
     </footer>
 
     <script src="scripts.js"></script> <!-- Include your custom scripts -->
+    <script>
+        // Sample function to open conversation (replace with actual logic)
+        function openConversation(userId) {
+            document.getElementById('currentConversation').textContent = `Conversation with ${userId}`;
+            // Fetch messages for the selected user and display them
+            // Sample: Displaying messages for demonstration
+            const messageList = document.getElementById('messageList');
+            messageList.innerHTML = `
+                <div class="message">
+                    <div class="message-sender">User 1</div>
+                    <div class="message-content">Hello, how are you?</div>
+                </div>
+                <div class="message">
+                    <div class="message-sender">You</div>
+                    <div class="message-content">I'm good, thanks!</div>
+                </div>
+                <div class="message">
+                    <div class="message-sender">User 1</div>
+                    <div class="message-content">Can you send me the details?</div>
+                </div>
+                <!-- Add more messages as needed -->
+            `;
+            // Scroll to bottom of message list
+            messageList.scrollTop = messageList.scrollHeight;
+        }
+
+        // Sample function to send message (replace with actual messaging logic)
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const messageInput = document.getElementById('messageInput').value;
+            if (messageInput.trim() === '') {
+                alert('Please enter a message.');
+                return;
+            }
+            const messageList = document.getElementById('messageList');
+            const message = `
+                <div class="message">
+                    <div class="message-sender">You</div>
+                    <div class="message-content">${messageInput}</div>
+                </div>
+            `;
+            messageList.innerHTML += message;
+            // Clear input field after sending message
+            document.getElementById('messageInput').value = '';
+            // Scroll to bottom of message list
+            messageList.scrollTop = messageList.scrollHeight;
+        });
+
+        // Function to handle logout (replace with your existing logout function)
+        function logout() {
+            // Implement your logout logic here
+            console.log('Logout clicked');
+        }
+    </script>
 </body>
 </html>
