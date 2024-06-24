@@ -3,56 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore - SeekER</title>
-    <link rel="stylesheet" href="style.css"> <!-- Ensure you have a style.css file for your styling -->
-    <!-- Optional: Add any additional styles specific to explore.html -->
+    <title>SeekER - Explore</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles specific to explore.html */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .post {
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .post img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .post-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .post-actions button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .post-actions button:hover {
+            background-color: #45a049;
+        }
+
+        .post-actions a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .post-actions a:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">SeekER</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#">Explore</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="#">Login</a></li>
-                <li><a href="#" class="btn-signup">Sign Up</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section class="explore">
-            <h1>Explore Content on SeekER</h1>
-            <div class="content-grid">
-                <!-- Example content items -->
-                <div class="content-item">
-                    <h2>Content Title 1</h2>
-                    <p>Description of the content.</p>
-                    <a href="#" class="btn-explore">Explore</a>
+<!-- Explore Section -->
+<section class="explore">
+    <div class="container">
+        <h1>Explore Content</h1>
+        <!-- Post 1 -->
+        <div class="post">
+            <img src="https://via.placeholder.com/1200x300" alt="Post 1">
+            <div class="post-content">
+                <h2 class="post-title">Post Title 1</h2>
+                <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                <div class="post-actions">
+                    <a href="#">View Profile</a>
+                    <button>Send Message</button>
                 </div>
-                <div class="content-item">
-                    <h2>Content Title 2</h2>
-                    <p>Description of the content.</p>
-                    <a href="#" class="btn-explore">Explore</a>
-                </div>
-                <div class="content-item">
-                    <h2>Content Title 3</h2>
-                    <p>Description of the content.</p>
-                    <a href="#" class="btn-explore">Explore</a>
-                </div>
-                <!-- Add more content items dynamically as needed -->
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 SeekER. All rights reserved.</p>
         </div>
-    </footer>
+        <!-- Post 2 -->
+        <div class="post">
+            <img src="https://via.placeholder.com/1200x300" alt="Post 2">
+            <div class="post-content">
+                <h2 class="post-title">Post Title 2</h2>
+                <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                <div class="post-actions">
+                    <a href="#">View Profile</a>
+                    <button>Send Message</button>
+                </div>
+            </div>
+        </div>
+        <!-- Post 3 -->
+        <div class="post">
+            <img src="https://via.placeholder.com/1200x300" alt="Post 3">
+            <div class="post-content">
+                <h2 class="post-title">Post Title 3</h2>
+                <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                <div class="post-actions">
+                    <a href="#">View Profile</a>
+                    <button>Send Message</button>
+                </div>
+            </div>
+        </div>
+        <!-- Post 4 -->
+        <div class="post">
+            <img src="https://via.placeholder.com/1200x300" alt="Post 4">
+            <div class="post-content">
+                <h2 class="post-title">Post Title 4</h2>
+                <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
+                <div class="post-actions">
+                    <a href="#">View Profile</a>
+                    <button>Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Add your custom scripts if needed -->
-    <script src="scripts.js"></script>
 </body>
 </html>
