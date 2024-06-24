@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnlyFans - Home</title>
+    <title>SeekER - Home</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* Additional styles specific to home.html */
@@ -136,6 +136,114 @@
         .community-buttons a:hover {
             background-color: #555;
         }
+
+        .search-bar {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #555;
+        }
+
+        .testimonials {
+            background-color: #f0f0f0;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .testimonial {
+            margin: 20px 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        .testimonial span {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .newsletter {
+            background-color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .newsletter form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .newsletter input[type="email"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .newsletter button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .newsletter button:hover {
+            background-color: #555;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer .social-media a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer .social-media a:hover {
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
@@ -143,10 +251,16 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <h1>Welcome to OnlyFans</h1>
+        <h1>Welcome to SeekER</h1>
         <p>Explore exclusive content from your favorite creators</p>
         <a href="#featured-creators" class="cta-button">Get Started</a>
     </div>
+</section>
+
+<!-- Search Bar -->
+<section class="search-bar">
+    <input type="text" placeholder="Search for creators...">
+    <button>Search</button>
 </section>
 
 <!-- Featured Creators Section -->
@@ -209,10 +323,45 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer>
+<!-- Testimonials Section -->
+<section class="testimonials">
     <div class="container">
-        <p>&copy; 2024 OnlyFans. All rights reserved.</p>
+        <h2>What Our Users Say</h2>
+        <div class="testimonial">
+            "SeekER has allowed me to connect with my fans in a way I never thought possible."
+            <span>- User 1</span>
+        </div>
+        <div class="testimonial">
+            "I've discovered so many amazing creators here!"
+            <span>- User 2</span>
+        </div>
+        <div class="testimonial">
+            "The best platform for exclusive content."
+            <span>- User 3</span>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter">
+    <div class="container">
+        <h2>Stay Updated</h2>
+        <form>
+            <input type="email" placeholder="Enter your email">
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 SeekER. All rights reserved.</p>
+        <div class="social-media">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+        </div>
     </div>
 </footer>
 
