@@ -46,14 +46,25 @@
 </head>
 <body>
     <div class="sidebar">
-        <!-- Sidebar content (as previously defined) -->
-        <!-- Include your profile section and navigation links here -->
+        <!-- Sidebar content -->
+        <div class="profile">
+            <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
+            <span id="creatorName" class="creator-name"></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard-creator.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="messages.html"><i class="fas fa-envelope"></i> Messages</a></li>
+            <li><a href="content.html"><i class="fas fa-photo-video"></i> Content</a></li>
+            <li><a href="analytics.html"><i class="fas fa-chart-line"></i> Analytics</a></li>
+            <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
     </div>
+
     <div class="main-content">
         <header>
             <div class="logo">Your Platform</div>
-            <!-- Header content (as previously defined) -->
         </header>
+
         <main>
             <section class="content">
                 <h2>Subscribers</h2>
@@ -62,8 +73,11 @@
                 </div>
             </section>
         </main>
+
         <footer>
-            <!-- Footer content (as previously defined) -->
+            <div class="footer-content">
+                <p>&copy; 2024 Your Company. All rights reserved.</p>
+            </div>
         </footer>
     </div>
 
