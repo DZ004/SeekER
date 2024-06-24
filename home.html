@@ -3,77 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Introducing OnlyFans-like Page</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="style2.css"> <!-- Assuming this is your combined CSS file -->
+    <!-- Ensure style.css contains the necessary styles for the introducing page -->
+    <style>
+        /* Additional specific styles for introducing page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        
+        .introducing-content {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .signup-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .signup-button:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
 
-<header>
-    <div class="container">
-        <div class="logo">Your Logo</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#">Link 1</a></li>
-                <li><a href="#">Link 2</a></li>
-                <li><a href="#">Link 3</a></li>
-                <li><a href="#">Link 4</a></li>
-                <!-- Add more links as needed -->
-            </ul>
-        </nav>
-        <div class="creator-name">Creator Name</div>
-    </div>
-</header>
-
-<main>
-    <div class="container">
-        <section class="messages">
-            <h2>Messages</h2>
-            <div class="message-container">
-                <!-- Messages content here -->
-                <div class="message">
-                    <strong>Sender Name</strong>
-                    <p>Message content...</p>
-                </div>
-                <!-- More messages as needed -->
-            </div>
-            <div class="message-form">
-                <h2>Send a Message</h2>
-                <form>
-                    <textarea rows="4" placeholder="Type your message here..."></textarea>
-                    <button type="submit" class="btn-primary">Send</button>
-                </form>
-            </div>
-        </section>
-
-        <section class="profile">
-            <h2>Profile Information</h2>
-            <div class="profile-info">
-                <!-- Profile info content here -->
-                <p>Name: John Doe</p>
-                <p>Email: john@example.com</p>
-                <!-- More profile info as needed -->
-            </div>
-            <button class="edit-profile-btn">Edit Profile</button>
-            <div class="edit-profile-form">
-                <h2>Edit Profile</h2>
-                <form>
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" value="John Doe">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" value="john@example.com">
-                    <button type="submit" class="btn-primary">Save Changes</button>
-                </form>
-            </div>
-        </section>
-    </div>
-</main>
-
-<footer>
-    <div class="footer-content">
-        <p>&copy; 2024 Your Company. All rights reserved.</p>
-    </div>
-</footer>
+<div class="introducing-content">
+    <h1>Welcome to OnlyFans</h1>
+    <p>Discover, subscribe, and engage with your favorite creators.</p>
+    <a href="creator-signup.html" class="signup-button">Sign Up as Creator</a>
+</div>
 
 </body>
 </html>
