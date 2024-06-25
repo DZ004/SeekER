@@ -6,12 +6,60 @@
     <title>SeekER - Home</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Additional styles specific to home.html */
+        /* General Reset and Setup */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+            margin-left: 20px;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #555;
         }
 
         /* Hero Section */
@@ -22,6 +70,7 @@
             color: #fff;
             text-align: center;
             padding: 100px 20px;
+            margin-top: 20px;
         }
 
         .hero h1 {
@@ -50,27 +99,22 @@
 
         /* Featured Creators Section */
         .featured-creators {
-            padding: 40px 20px;
             background-color: #fff;
+            padding: 40px 20px;
             text-align: center;
             margin-top: 40px;
         }
 
-        .creators {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
         .creator {
-            flex: 1 1 calc(25% - 20px);
+            display: inline-block;
+            width: calc(25% - 20px);
+            margin: 10px;
             text-align: left;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            background-color: #fff;
             transition: transform 0.3s ease;
+            background-color: #fff;
         }
 
         .creator:hover {
@@ -195,6 +239,7 @@
             color: #fff;
             text-align: center;
             padding: 20px 0;
+            margin-top: 40px;
         }
 
         footer p {
@@ -210,6 +255,47 @@
         footer a:hover {
             opacity: 0.8;
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 80px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 12px 24px;
+            }
+
+            .creator {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .creator {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -220,10 +306,10 @@
         <div class="logo">SeekER</div>
         <ul class="nav-links">
             <li><a href="home.html">Home</a></li>
-            <li><a href="explore.html">Explore</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="signup.html" class="btn-signup">Sign Up</a></li>
+            <li><a href="#">Explore</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#" class="btn-signup">Sign Up</a></li>
         </ul>
     </nav>
 </header>
@@ -232,7 +318,7 @@
 <section class="hero">
     <div class="container">
         <h1>Welcome to SeekER</h1>
-        <p>Explore exclusive content from your favorite creators.</p>
+        <p>Discover exclusive content from your favorite creators.</p>
         <a href="#featured-creators" class="cta-button">Get Started</a>
     </div>
 </section>
@@ -296,17 +382,18 @@
                 <a href="#">Start Creating</a>
             </div>
         </section>
+        
     </div>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <h2>More Features</h2>
+        <h2>Additional Features</h2>
         <ul>
-            <li><a href="#">Exclusive Live Streams</a></li>
-            <li><a href="#">Behind-the-Scenes Access</a></li>
+            <li><a href="#">Content Creation Tools</a></li>
+            <li><a href="#">Community Interaction</a></li>
+            <li><a href="#">Monetization Options</a></li>
+            <li><a href="#">Privacy and Security</a></li>
             <li><a href="#">Special Offers and Discounts</a></li>
-            <li><a href="#">Fan Interaction Tools</a></li>
-            <li><a href="#">Content Monetization Options</a></li>
         </ul>
     </aside>
 </main>
