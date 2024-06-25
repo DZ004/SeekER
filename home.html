@@ -478,7 +478,7 @@
     });
 
     // Function to save post to Firebase
-    function savePost(content) {
+    async function savePost(content) {
         const currentDate = new Date();
         const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
 
@@ -495,9 +495,12 @@
         const updates = {};
         updates['/posts/' + newPostKey] = postData;
 
-        database.ref().update(updates)
-            .then(() => console.log('Post saved successfully'))
-            .catch(error => console.error('Error saving post:', error));
+        try {
+            await database.ref().update(updates);
+            console.log('Post saved successfully');
+        } catch (error) {
+            console.error('Error saving post:', error);
+        }
     }
 
     // Function to load posts from Firebase
