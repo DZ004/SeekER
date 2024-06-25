@@ -275,6 +275,52 @@
             background-color: #593f99; /* Darker purple on hover */
         }
 
+        .post-section {
+            background-color: #fff; /* White background for posts */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .post-form {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .post-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .post-form button {
+            padding: 10px 20px;
+            background-color: #6c49b8; /* Purple post button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-end;
+        }
+
+        .post-form button:hover {
+            background-color: #593f99; /* Darker purple on hover */
+        }
+
         .footer {
             background-color: #4c2c92; /* Dark purple footer background */
             color: #fff;
@@ -371,6 +417,17 @@
                 <input type="email" placeholder="Your email address">
                 <button type="submit">Subscribe</button>
             </form>
+        </div>
+    </section>
+
+    <!-- Post Section -->
+    <section class="post-section">
+        <div class="container">
+            <h2>Post Something</h2>
+            <div class="post-form">
+                <textarea rows="5" placeholder="Write your post here..."></textarea>
+                <button type="submit">Post</button>
+            </div>
         </div>
     </section>
 
