@@ -159,6 +159,39 @@
             background-color: #555;
         }
 
+        .dashboard-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-left: 20px;
+        }
+
+        .dashboard-button:hover {
+            background-color: #45a049;
+        }
+
+        .platform-buttons {
+            margin-top: 20px;
+        }
+
+        .platform-buttons a {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .platform-buttons a:hover {
+            background-color: #555;
+        }
+
         .testimonials {
             background-color: #f0f0f0;
             padding: 40px 20px;
@@ -247,6 +280,7 @@
 <header class="header">
     <div class="container">
         <h1>SeekER - Discover Creators</h1>
+        <a href="#" class="dashboard-button">Dashboard</a>
     </div>
 </header>
 
@@ -315,6 +349,10 @@
             <a href="#">Explore Feed</a>
             <a href="#">Start Creating</a>
         </div>
+        <div class="platform-buttons">
+            <a href="#">Trending</a>
+            <a href="#">Messages</a>
+        </div>
     </div>
 </section>
 
@@ -323,4 +361,40 @@
     <div class="container">
         <h2>What Our Users Say</h2>
         <div class="testimonial">
-            <img src="
+            <img src="https://via.placeholder.com/150" alt="User Avatar">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem, a bibendum eros eleifend sed.</p>
+            <span>- John Doe</span>
+        </div>
+        <div class="testimonial">
+            <img src="https://via.placeholder.com/150" alt="User Avatar">
+            <p>Nullam rutrum nisl ac metus blandit, a tincidunt ex hendrerit. Integer scelerisque ante ac magna varius interdum.</p>
+            <span>- Jane Smith</span>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter">
+    <div class="container">
+        <h2>Subscribe to Our Newsletter</h2>
+        <form action="#">
+            <input type="email" placeholder="Enter your email...">
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 SeekER. All rights reserved.</p>
+        <div class="social-media">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
