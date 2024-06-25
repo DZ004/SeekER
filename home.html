@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeekER - Home</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-GCjKR2Gvn98nqNLZwtyusg6FkVfEesK8J9mSHT+yr+jh7WbCH+jtH4f7J4OvC9N2n/LSqB0lIqBS+YrkU4i3IQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
     <style>
@@ -99,11 +100,19 @@
             background-color: #555;
         }
 
+        /* Main Content */
+        main {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
         /* Post Section */
         .post-section {
+            flex: 2;
             background-color: #fff;
             padding: 20px;
-            margin-top: 40px;
+            margin-top: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
@@ -118,6 +127,8 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             resize: none;
+            font-size: 1rem;
+            margin-bottom: 10px;
         }
 
         .post-form button {
@@ -159,10 +170,19 @@
 
         /* Featured Creators Section */
         .featured-creators {
+            flex: 1;
             background-color: #fff;
-            padding: 40px 20px;
+            padding: 20px;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .featured-creators h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         .creators {
@@ -232,7 +252,10 @@
             background-color: #f9f9f9;
             padding: 40px 20px;
             text-align: center;
-            margin-top: 40px;
+            margin-top: 20px;
+            flex: 1;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         .community h2 {
@@ -270,7 +293,7 @@
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .sidebar h2 {
@@ -304,7 +327,7 @@
             color: #fff;
             text-align: center;
             padding: 20px 0;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         footer p {
@@ -389,43 +412,40 @@
 </section>
 
 <!-- Main Content -->
-<main>
-    <div class="container">
+<main class="container">
 
-        <!-- Post Section -->
-        <section class="post-section">
-            <div class="post-form">
-                <form id="postForm">
-                    <textarea id="postContent" placeholder="Write something..."></textarea>
-                    <br>
-                    <button type="submit">Post</button>
-                </form>
-            </div>
+    <!-- Post Section -->
+    <section class="post-section">
+        <div class="post-form">
+            <form id="postForm">
+                <textarea id="postContent" placeholder="Write something..."></textarea>
+                <br>
+                <button type="submit">Post</button>
+            </form>
+        </div>
 
-            <div class="posts">
-                <!-- Posts will be dynamically added here -->
-            </div>
-        </section>
+        <div class="posts">
+            <!-- Posts will be dynamically added here -->
+        </div>
+    </section>
 
-        <!-- Featured Creators Section -->
-        <section id="featured-creators" class="featured-creators">
-            <h2>Featured Creators</h2>
-            <div class="creators">
-                <!-- Featured creators content -->
-            </div>
-        </section>
+    <!-- Featured Creators Section -->
+    <section id="featured-creators" class="featured-creators">
+        <h2>Featured Creators</h2>
+        <div class="creators">
+            <!-- Featured creators content -->
+        </div>
+    </section>
 
-        <!-- Community Section -->
-        <section class="community">
-            <h2>Join Our Community</h2>
-            <div class="community-buttons">
-                <a href="#">Explore Feed</a>
-                <a href="#">Start Creating</a>
-            </div>
-        </section>
-        
-    </div>
-
+    <!-- Community Section -->
+    <section class="community">
+        <h2>Join Our Community</h2>
+        <div class="community-buttons">
+            <a href="#">Explore Feed</a>
+            <a href="#">Start Creating</a>
+        </div>
+    </section>
+    
     <!-- Sidebar -->
     <aside class="sidebar">
         <h2>Additional Features</h2>
@@ -446,6 +466,7 @@
     </div>
 </footer>
 
+<!-- Firebase Configuration and Scripts -->
 <script>
     // Initialize Firebase
     const firebaseConfig = {
