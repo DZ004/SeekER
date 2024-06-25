@@ -11,8 +11,8 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            display: flex; /* Added to make body a flex container */
-            flex-direction: column; /* Stack children vertically */
+            display: flex;
+            flex-direction: column;
         }
 
         .header {
@@ -32,23 +32,23 @@
             max-width: 1200px;
             margin: auto;
             padding: 20px;
-            display: flex; /* Added to align items in center */
-            justify-content: space-between; /* Space between header items */
-            align-items: center; /* Align items vertically center */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .sidebar {
             background-color: #333;
             color: #fff;
             padding: 20px;
-            display: flex; /* Stack buttons vertically */
+            display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align items to start */
-            min-height: 100vh; /* Full height sidebar */
-            width: 200px; /* Fixed width for sidebar */
-            position: fixed; /* Fixed positioning */
-            top: 0; /* Top of viewport */
-            left: 0; /* Align to left */
+            align-items: flex-start;
+            min-height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
 
         .sidebar a {
@@ -58,7 +58,7 @@
             text-decoration: none;
             border-radius: 5px;
             margin-bottom: 10px;
-            display: block; /* Block level links */
+            display: block;
             transition: background-color 0.3s ease;
         }
 
@@ -67,8 +67,8 @@
         }
 
         .content {
-            flex: 1; /* Fill remaining vertical space */
-            padding-left: 220px; /* Adjust for sidebar width */
+            flex: 1;
+            padding-left: 220px;
         }
 
         .search-bar {
@@ -296,7 +296,7 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <h1>SeekER - Discover Creators</h1>
+            <h1>SeekER</h1>
         </div>
     </header>
 
@@ -351,6 +351,35 @@
                         <div class="creator-actions">
                             <button class="subscribe-button">Subscribe</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feed Section -->
+    <section class="feed">
+        <div class="container">
+            <h2>Feed</h2>
+            <div class="post">
+                <img src="https://via.placeholder.com/150" alt="User Avatar">
+                <div class="post-content">
+                    <h3 class="post-title">Post Title</h3>
+                    <p class="post-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem, a bibendum eros eleifend sed.</p>
+                    <div class="post-actions">
+                        <button class="like-button">Like</button>
+                        <button class="comment-button">Comment</button>
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <img src="https://via.placeholder.com/150" alt="User Avatar">
+                <div class="post-content">
+                    <h3 class="post-title">Post Title</h3>
+                    <p class="post-text">Nullam rutrum nisl ac metus blandit, a tincidunt ex hendrerit. Integer scelerisque ante ac magna varius interdum.</p>
+                    <div class="post-actions">
+                        <button class="like-button">Like</button>
+                        <button class="comment-button">Comment</button>
                     </div>
                 </div>
             </div>
