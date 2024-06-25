@@ -8,18 +8,20 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #fafafa; /* Light gray background */
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
         .header {
-            background-color: #333;
+            background-color: #333; /* Dark header background */
             color: #fff;
             padding: 20px 0;
             text-align: center;
+            width: 100%;
         }
 
         .header h1 {
@@ -28,17 +30,14 @@
         }
 
         .container {
-            width: 80%;
+            width: 100%;
             max-width: 1200px;
-            margin: auto;
             padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            box-sizing: border-box;
         }
 
         .sidebar {
-            background-color: #333;
+            background-color: #333; /* Dark sidebar background */
             color: #fff;
             padding: 20px;
             display: flex;
@@ -53,7 +52,7 @@
 
         .sidebar a {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #4CAF50; /* Green sidebar links */
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
@@ -63,22 +62,28 @@
         }
 
         .sidebar a:hover {
-            background-color: #45a049;
+            background-color: #45a049; /* Darker green on hover */
         }
 
         .content {
-            flex: 1;
-            padding-left: 220px;
+            margin-left: 200px; /* Adjusted for sidebar width */
+            width: calc(100% - 200px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
 
         .search-bar {
             text-align: center;
             margin: 20px 0;
+            width: 100%;
+            max-width: 600px;
         }
 
         .search-bar input[type="text"] {
             padding: 10px;
-            width: 60%;
+            width: 70%;
             max-width: 400px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -87,24 +92,27 @@
 
         .search-bar button {
             padding: 10px 20px;
-            background-color: #333;
+            background-color: #333; /* Dark search button */
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
             margin-left: 10px;
+            transition: background-color 0.3s ease;
         }
 
         .search-bar button:hover {
-            background-color: #555;
+            background-color: #555; /* Darker on hover */
         }
 
         .featured-creators {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            margin-top: 40px;
         }
 
         .creator {
@@ -114,7 +122,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            background-color: #fff;
+            background-color: #fff; /* White background for creators */
             transition: transform 0.3s ease;
         }
 
@@ -137,12 +145,12 @@
         .creator-name {
             font-size: 1.2rem;
             margin-bottom: 10px;
-            color: #333;
+            color: #333; /* Dark text color */
         }
 
         .creator-description {
             font-size: 1rem;
-            color: #666;
+            color: #666; /* Gray description text */
             line-height: 1.4;
         }
 
@@ -153,7 +161,7 @@
 
         .subscribe-button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #4CAF50; /* Green subscribe button */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -162,19 +170,20 @@
         }
 
         .subscribe-button:hover {
-            background-color: #45a049;
+            background-color: #45a049; /* Darker green on hover */
         }
 
         .community {
-            background-color: #f9f9f9;
+            background-color: #f9f9f9; /* Light gray community section */
             padding: 40px 20px;
             text-align: center;
+            width: 100%;
         }
 
         .community h2 {
             font-size: 2rem;
             margin-bottom: 20px;
-            color: #333;
+            color: #333; /* Dark title color */
         }
 
         .community-buttons {
@@ -187,7 +196,7 @@
         .community-buttons a {
             display: inline-block;
             padding: 12px 30px;
-            background-color: #333;
+            background-color: #333; /* Dark buttons */
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
@@ -195,50 +204,53 @@
         }
 
         .community-buttons a:hover {
-            background-color: #555;
+            background-color: #555; /* Darker on hover */
         }
 
         .testimonials {
-            background-color: #f0f0f0;
+            background-color: #f0f0f0; /* Light gray testimonials section */
             padding: 40px 20px;
             text-align: center;
+            width: 100%;
         }
 
         .testimonials h2 {
             font-size: 2rem;
             margin-bottom: 20px;
-            color: #333;
+            color: #333; /* Dark title color */
         }
 
         .testimonial {
             margin: 20px 0;
             font-style: italic;
-            color: #666;
+            color: #666; /* Gray testimonial text */
         }
 
         .testimonial span {
             display: block;
             margin-top: 10px;
             font-weight: bold;
-            color: #333;
+            color: #333; /* Dark name color */
         }
 
         .newsletter {
-            background-color: #fff;
+            background-color: #fff; /* White newsletter section */
             padding: 40px 20px;
             text-align: center;
+            width: 100%;
         }
 
         .newsletter h2 {
             font-size: 2rem;
             margin-bottom: 20px;
-            color: #333;
+            color: #333; /* Dark title color */
         }
 
         .newsletter form {
             display: flex;
             justify-content: center;
             gap: 10px;
+            margin-top: 20px;
         }
 
         .newsletter input[type="email"] {
@@ -246,26 +258,29 @@
             width: 300px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 1rem;
         }
 
         .newsletter button {
             padding: 10px 20px;
-            background-color: #333;
+            background-color: #333; /* Dark subscribe button */
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .newsletter button:hover {
-            background-color: #555;
+            background-color: #555; /* Darker on hover */
         }
 
         .footer {
-            background-color: #333;
+            background-color: #333; /* Dark footer background */
             color: #fff;
             padding: 20px;
             text-align: center;
+            width: 100%;
         }
 
         .footer .social-media a {
@@ -276,7 +291,7 @@
         }
 
         .footer .social-media a:hover {
-            color: #aaa;
+            color: #aaa; /* Lighter on hover */
         }
     </style>
 </head>
@@ -351,35 +366,6 @@
                         <div class="creator-actions">
                             <button class="subscribe-button">Subscribe</button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Feed Section -->
-    <section class="feed">
-        <div class="container">
-            <h2>Feed</h2>
-            <div class="post">
-                <img src="https://via.placeholder.com/150" alt="User Avatar">
-                <div class="post-content">
-                    <h3 class="post-title">Post Title</h3>
-                    <p class="post-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem, a bibendum eros eleifend sed.</p>
-                    <div class="post-actions">
-                        <button class="like-button">Like</button>
-                        <button class="comment-button">Comment</button>
-                    </div>
-                </div>
-            </div>
-            <div class="post">
-                <img src="https://via.placeholder.com/150" alt="User Avatar">
-                <div class="post-content">
-                    <h3 class="post-title">Post Title</h3>
-                    <p class="post-text">Nullam rutrum nisl ac metus blandit, a tincidunt ex hendrerit. Integer scelerisque ante ac magna varius interdum.</p>
-                    <div class="post-actions">
-                        <button class="like-button">Like</button>
-                        <button class="comment-button">Comment</button>
                     </div>
                 </div>
             </div>
