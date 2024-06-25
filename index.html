@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SeekER - Welcome</title>
+    <title>ExclusiveContent - Discover Exclusive Creators</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* General styles */
@@ -14,6 +14,7 @@
             padding: 0;
         }
 
+        /* Hero Section */
         .hero {
             background-image: url('https://via.placeholder.com/1500x600');
             background-size: cover;
@@ -47,36 +48,9 @@
             background-color: #555;
         }
 
-        .search-bar {
-            text-align: center;
-            padding: 20px;
-            background-color: #fff;
-        }
-
-        .search-bar input[type="text"] {
-            padding: 10px;
-            width: 80%;
-            max-width: 600px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .search-bar button {
-            padding: 10px 20px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .search-bar button:hover {
-            background-color: #555;
-        }
-
+        /* Featured Creators Section */
         .featured-creators {
             padding: 40px 20px;
-            background-color: #fff;
             text-align: center;
         }
 
@@ -121,7 +95,7 @@
 
         .subscribe-button {
             padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #ff5c5c;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -130,9 +104,71 @@
         }
 
         .subscribe-button:hover {
+            background-color: #ff4141;
+        }
+
+        /* Exclusive Content Section */
+        .exclusive-content {
+            background-color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .exclusive-content h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .content-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .content-item-text {
+            text-align: left;
+        }
+
+        .content-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .content-item p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .content-item .action-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .content-item .action-button:hover {
             background-color: #45a049;
         }
 
+        /* Community Section */
         .community {
             background-color: #f9f9f9;
             padding: 40px 20px;
@@ -166,6 +202,7 @@
             background-color: #555;
         }
 
+        /* Testimonials Section */
         .testimonials {
             background-color: #f0f0f0;
             padding: 40px 20px;
@@ -191,6 +228,7 @@
             color: #333;
         }
 
+        /* Newsletter Section */
         .newsletter {
             background-color: #fff;
             padding: 40px 20px;
@@ -229,6 +267,7 @@
             background-color: #555;
         }
 
+        /* Footer */
         .footer {
             background-color: #333;
             color: #fff;
@@ -253,16 +292,10 @@
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <h1>Welcome to SeekER</h1>
-        <p>Explore exclusive content from your favorite creators</p>
+        <h1>Discover Exclusive Creators</h1>
+        <p>Explore unique content and support your favorite creators</p>
         <a href="#featured-creators" class="cta-button">Get Started</a>
     </div>
-</section>
-
-<!-- Search Bar -->
-<section class="search-bar">
-    <input type="text" placeholder="Search for creators...">
-    <button>Search</button>
 </section>
 
 <!-- Featured Creators Section -->
@@ -271,7 +304,7 @@
         <h2>Featured Creators</h2>
         <div class="creators">
             <div class="creator">
-                <img src="https://via.placeholder.com/400x200" alt="Creator 1">
+                <img src="https://via.placeholder.com/400x400" alt="Creator 1">
                 <div class="creator-info">
                     <h3 class="creator-name">Creator Name</h3>
                     <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
@@ -280,95 +313,28 @@
                     </div>
                 </div>
             </div>
-            <div class="creator">
-                <img src="https://via.placeholder.com/400x200" alt="Creator 2">
-                <div class="creator-info">
-                    <h3 class="creator-name">Creator Name</h3>
-                    <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
-                    <div class="creator-actions">
-                        <button class="subscribe-button">Subscribe</button>
-                    </div>
-                </div>
-            </div>
-            <div class="creator">
-                <img src="https://via.placeholder.com/400x200" alt="Creator 3">
-                <div class="creator-info">
-                    <h3 class="creator-name">Creator Name</h3>
-                    <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
-                    <div class="creator-actions">
-                        <button class="subscribe-button">Subscribe</button>
-                    </div>
-                </div>
-            </div>
-            <div class="creator">
-                <img src="https://via.placeholder.com/400x200" alt="Creator 4">
-                <div class="creator-info">
-                    <h3 class="creator-name">Creator Name</h3>
-                    <p class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan sodales lorem.</p>
-                    <div class="creator-actions">
-                        <button class="subscribe-button">Subscribe</button>
-                    </div>
-                </div>
+            <!-- Repeat for other creators -->
+        </div>
+    </div>
+</section>
+
+<!-- Exclusive Content Section -->
+<section class="exclusive-content">
+    <div class="container">
+        <h2>Exclusive Content</h2>
+        <div class="content-item">
+            <img src="https://via.placeholder.com/200" alt="Exclusive Content">
+            <div class="content-item-text">
+                <h3>Exclusive Photoshoot BTS</h3>
+                <p>Get a behind-the-scenes look at our latest photoshoot.</p>
+                <button class="action-button">Unlock</button>
             </div>
         </div>
+        <!-- Add more content items as needed -->
     </div>
 </section>
 
 <!-- Community Section -->
 <section class="community">
     <div class="container">
-        <h2>Join Our Community</h2>
-        <div class="community-buttons">
-            <a href="#">Explore Feed</a>
-            <a href="creator-signup.html">Start Creating</a>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials">
-    <div class="container">
-        <h2>What Our Users Say</h2>
-        <div class="testimonial">
-            <img src="https://via.placeholder.com/100" alt="User 1">
-            "SeekER has allowed me to connect with my fans in a way I never thought possible."
-            <span>- User 1</span>
-        </div>
-        <div class="testimonial">
-            <img src="https://via.placeholder.com/100" alt="User 2">
-            "I've discovered so many amazing creators here!"
-            <span>- User 2</span>
-        </div>
-        <div class="testimonial">
-            <img src="https://via.placeholder.com/100" alt="User 3">
-            "The best platform for exclusive content."
-            <span>- User 3</span>
-        </div>
-    </div>
-</section>
-
-<!-- Newsletter Section -->
-<section class="newsletter">
-    <div class="container">
-        <h2>Stay Updated</h2>
-        <form>
-            <input type="email" placeholder="Enter your email">
-            <button type="submit">Subscribe</button>
-        </form>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2024 SeekER. All rights reserved.</p>
-        <div class="social-media">
-            <a href="#"><img src="https://via.placeholder.com/30" alt="Facebook"></a>
-            <a href="#"><img src="https://via.placeholder.com/30" alt="Twitter"></a>
-            <a href="#"><img src="https://via.placeholder.com/30" alt="Instagram"></a>
-        </div>
-    </div>
-</footer>
-
-</body>
-</html>
+        <h2>Join Our Community</h
