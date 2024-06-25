@@ -329,7 +329,7 @@
     <div class="container">
         <h1>Discover Exclusive Creators</h1>
         <p>Explore unique content and support your favorite creators</p>
-        <a href="#featured-creators" class="cta-button">Get Started</a>
+        <a href="#" class="cta-button" onclick="getStartedClicked()">Get Started</a>
     </div>
 </section>
 
@@ -456,6 +456,19 @@
         });
     }
 
+    // Function to handle 'Get Started' button click
+    function getStartedClicked() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is logged in, redirect to home.html
+                window.location.href = 'home.html';
+            } else {
+                // User is not logged in, redirect to login.html
+                window.location.href = 'login.html';
+            }
+        });
+    }
+
     // Add click event listener to loginSignupButton
     loginSignupButton.addEventListener('click', () => {
         // Redirect to login or signup page or show modal
@@ -464,7 +477,9 @@
     });
 
     // Call checkAuthState when the page loads
-    window.onload = checkAuthState;
+    window.onload = () => {
+        checkAuthState();
+    };
 </script>
 
 </body>
