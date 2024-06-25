@@ -368,7 +368,16 @@
             <button>Search</button>
         </div>
     </section>
-
+            <!-- Post Form -->
+        <section class="post-form">
+            <div class="container">
+                <h2>Create a New Post</h2>
+                <form id="postForm" onsubmit="submitPost(event)">
+                    <textarea id="postContent" placeholder="Write your post here..." rows="4"></textarea>
+                        <button type="submit">Post</button>
+                    </form>
+                </div>
+        </section>
     <!-- Featured Creators Section -->
     <section class="featured-creators">
         <div class="creator">
@@ -444,6 +453,29 @@
     </footer>
 
 </div>
+<!-- JavaScript -->
+<script>
+    function submitPost(event) {
+        event.preventDefault(); // Prevent form submission to server (for demonstration)
+        
+        // Get the post content from the textarea
+        const postContent = document.getElementById('postContent').value;
+
+        // Create a new post element
+        const newPost = document.createElement('div');
+        newPost.classList.add('post');
+        newPost.innerHTML = `
+            <p>${postContent}</p>
+        `;
+
+        // Insert the new post at the beginning of the feed
+        const feedSection = document.querySelector('.featured-creators');
+        feedSection.insertBefore(newPost, feedSection.firstChild);
+
+        // Clear the textarea after posting
+        document.getElementById('postContent').value = '';
+    }
+</script>
 
 </body>
 </html>
