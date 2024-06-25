@@ -364,7 +364,6 @@
     </style>
 </head>
 <body>
-
 <!-- Header -->
 <header>
     <nav>
@@ -446,6 +445,7 @@
     </div>
 </footer>
 
+<!-- Firebase Script and Custom JavaScript -->
 <script>
     // Initialize Firebase
     const firebaseConfig = {
@@ -460,37 +460,44 @@
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
+    // DOM elements
+    const postForm = document.getElementById('postForm');
+    const postContent = document.getElementById('postContent');
+    const postsContainer = document.querySelector('.posts');
+
     // Event listener for form submission
-    document.getElementById('postForm').addEventListener('submit', function(event) {
+    postForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        let postContent = document.getElementById('postContent').value;
-        if (postContent.trim() !== '') {
-            savePost(postContent);
-            document.getElementById('postForm').reset();
-        } else {
+        const content = postContent.value.trim();
+        if (content === '') {
             alert('Please enter some content to post.');
+            return;
         }
+        savePost(content);
+        postForm.reset();
     });
 
     // Function to save post to Firebase
     function savePost(content) {
-        let currentDate = new Date();
-        let formattedDate = ${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()};
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
 
         // Generate a new post key
         const newPostKey = database.ref().child('posts').push().key;
 
         // Create the data object to be saved
-        let postData = {
+        const postData = {
             content: content,
             date: formattedDate
         };
 
         // Write the new post's data simultaneously in the posts list
-        let updates = {};
+        const updates = {};
         updates['/posts/' + newPostKey] = postData;
 
-        return database.ref().update(updates);
+        database.ref().update(updates)
+            .then(() => console.log('Post saved successfully'))
+            .catch(error => console.error('Error saving post:', error));
     }
 
     // Function to load posts from Firebase
@@ -499,13 +506,13 @@
 
         postsRef.on('child_added', function(data) {
             const post = data.val();
-            const postHTML = 
+            const postHTML = `
                 <div class="post">
                     <p class="post-content">${post.content}</p>
                     <p class="post-date">Posted on ${post.date}</p>
                 </div>
-            ;
-            document.querySelector('.posts').insertAdjacentHTML('afterbegin', postHTML);
+            `;
+            postsContainer.insertAdjacentHTML('afterbegin', postHTML);
         });
     }
 
