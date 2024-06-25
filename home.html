@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeekER - Home</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
     <style>
         /* General Reset and Setup */
         * {
@@ -445,28 +447,70 @@
 </footer>
 
 <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+        authDomain: "seeker-928e7.firebaseapp.com",
+        projectId: "seeker-928e7",
+        storageBucket: "seeker-928e7.appspot.com",
+        messagingSenderId: "652562231057",
+        appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Event listener for form submission
     document.getElementById('postForm').addEventListener('submit', function(event) {
         event.preventDefault();
         let postContent = document.getElementById('postContent').value;
         if (postContent.trim() !== '') {
-            createPost(postContent);
+            savePost(postContent);
             document.getElementById('postForm').reset();
         } else {
             alert('Please enter some content to post.');
         }
     });
 
-    function createPost(content) {
+    // Function to save post to Firebase
+    function savePost(content) {
         let currentDate = new Date();
         let formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
-        let postHTML = `
-            <div class="post">
-                <p class="post-content">${content}</p>
-                <p class="post-date">Posted on ${formattedDate}</p>
-            </div>
-        `;
-        document.querySelector('.posts').insertAdjacentHTML('afterbegin', postHTML);
+
+        // Generate a new post key
+        const newPostKey = database.ref().child('posts').push().key;
+
+        // Create the data object to be saved
+        let postData = {
+            content: content,
+            date: formattedDate
+        };
+
+        // Write the new post's data simultaneously in the posts list
+        let updates = {};
+        updates['/posts/' + newPostKey] = postData;
+
+        return database.ref().update(updates);
     }
+
+    // Function to load posts from Firebase
+    function loadPosts() {
+        const postsRef = database.ref('posts');
+
+        postsRef.on('child_added', function(data) {
+            const post = data.val();
+            const postHTML = `
+                <div class="post">
+                    <p class="post-content">${post.content}</p>
+                    <p class="post-date">Posted on ${post.date}</p>
+                </div>
+            `;
+            document.querySelector('.posts').insertAdjacentHTML('afterbegin', postHTML);
+        });
+    }
+
+    // Load posts initially
+    loadPosts();
 </script>
 
 </body>
