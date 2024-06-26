@@ -214,39 +214,16 @@
         <main>
             <section class="content-grid">
                 <h2>Content Library</h2>
-                <div class="content-items">
-                    <!-- Sample content items, replace with dynamic data -->
-                    <div class="content-item">
-                        <img src="content1.jpg" alt="Content 1">
-                        <div class="content-details">
-                            <h3>Title of Content 1</h3>
-                            <p>Description of Content 1</p>
-                        </div>
-                    </div>
-                    <div class="content-item">
-                        <img src="content2.jpg" alt="Content 2">
-                        <div class="content-details">
-                            <h3>Title of Content 2</h3>
-                            <p>Description of Content 2</p>
-                        </div>
-                    </div>
-                    <div class="content-item">
-                        <img src="content3.jpg" alt="Content 3">
-                        <div class="content-details">
-                            <h3>Title of Content 3</h3>
-                            <p>Description of Content 3</p>
-                        </div>
-                    </div>
-                    <!-- Add more content items as needed -->
-
-                    <!-- Upload Form -->
-                    <div class="content-item upload-form">
-                        <h3>Upload New Content</h3>
-                        <input type="file" id="fileInput">
-                        <button onclick="uploadImage()">Upload Image</button>
-                        <div id="progress"></div>
-                        <div id="imageURL"></div>
-                    </div>
+                <div class="content-items" id="contentItems">
+                    <!-- Dynamic content items will be added here -->
+                </div>
+                <!-- Upload Form -->
+                <div class="content-item upload-form">
+                    <h3>Upload New Content</h3>
+                    <input type="file" id="fileInput">
+                    <button onclick="uploadImage()">Upload Image</button>
+                    <div id="progress"></div>
+                    <div id="imageURL"></div>
                 </div>
             </section>
         </main>
@@ -271,6 +248,7 @@
 
         firebase.initializeApp(firebaseConfig);
         const storage = firebase.storage();
+        const db = firebase.firestore();
 
         // Function to handle file upload
         function uploadImage() {
@@ -292,11 +270,60 @@
                 () => {
                     // Upload completed successfully, get download URL
                     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                        document.getElementById('imageURL').innerHTML = `<img src="${downloadURL}" alt="Uploaded Image">`;
+                        // Save content data to Firestore
+                        saveContentData(file.name, downloadURL);
                     });
                 }
             );
         }
+
+        // Function to save content data to Firestore
+        function saveContentData(fileName, downloadURL) {
+            db.collection("content").add({
+                name: fileName,
+                url: downloadURL,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then((docRef) => {
+                console.log("Document written with ID: ", docRef.id);
+                // Reset upload form after successful upload
+                document.getElementById('progress').innerHTML = '';
+                document.getElementById('fileInput').value = '';
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        }
+
+        // Function to fetch and display content items from Firestore
+        function fetchContent() {
+            const contentItems = document.getElementById('contentItems');
+
+            db.collection("content")
+                .orderBy("createdAt", "desc")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        const content = doc.data();
+                        const contentItem = document.createElement('div');
+                        contentItem.classList.add('content-item');
+                        contentItem.innerHTML = `
+                            <img src="${content.url}" alt="${content.name}">
+                            <div class="content-details">
+                                <h3>${content.name}</h3>
+                                <p>Uploaded on ${new Date(content.createdAt.toMillis()).toLocaleDateString()}</p>
+                            </div>
+                        `;
+                        contentItems.appendChild(contentItem);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching content: ", error);
+                });
+        }
+
+        // Call fetchContent initially to load existing content
+        fetchContent();
 
         // Function to logout (replace with your existing logout function)
         function logout() {
