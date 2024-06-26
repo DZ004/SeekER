@@ -22,7 +22,8 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            flex-direction: column; /* Adjusted to column layout */
+            justify-content: space-between;
+            align-items: center;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
@@ -30,8 +31,8 @@
         }
 
         .left {
-            padding: 40px;
             flex: 1;
+            padding: 40px;
         }
 
         .left h1 {
@@ -82,25 +83,35 @@
             color: #ff416c;
             text-decoration: none;
             font-weight: bold;
+            margin-right: 10px;
         }
 
-        .middle {
-            flex: 2; /* Adjusted to take more space */
-            overflow-y: auto; /* Enable vertical scrolling */
+        .left p a:hover {
+            text-decoration: underline;
+        }
+
+        .right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 40px;
+            background: linear-gradient(to bottom right, #ff416c, #ff4b2b);
+            color: #fff;
+            text-align: center;
         }
 
-        .middle img {
+        .right img {
             width: 150px;
             margin-bottom: 20px;
         }
 
-        .middle h2 {
+        .right h2 {
             font-size: 2rem;
             margin-bottom: 20px;
         }
 
-        .middle p {
+        .right p {
             font-size: 1.2rem;
             line-height: 1.6;
             max-width: 400px;
@@ -168,7 +179,7 @@
             text-align: center;
             padding: 20px 0;
             font-size: 0.8rem;
-            margin-top: auto; /* Pushes footer to the bottom */
+            margin-top: 40px;
         }
 
         .footer a {
@@ -198,9 +209,12 @@
             <p>Forgot your password? <a href="#">Reset here</a></p>
             <p>New to SeekER? <a href="#">Sign up here</a></p>
             <p>Or sign in with:</p>
-            <p><a href="#">X Account</a> | <a href="#">Google Account</a></p>
+            <p>
+                <a href="#" id="xAccount">X Account</a> |
+                <a href="#" id="googleAccount">Google Account</a>
+            </p>
         </div>
-        <div class="middle">
+        <div class="right">
             <img src="https://via.placeholder.com/150" alt="SeekER Logo">
             <h2>Join SeekER</h2>
             <p>
@@ -218,36 +232,36 @@
                     <p><a href="#">@creator2</a> in the studio with Comedian X...</p>
                     <a href="#" class="play-btn">Watch Video</a>
                 </div>
-                <!-- Additional posts can be added here -->
-            </div>
-        </div>
-        <div class="footer">
-            <div class="container">
-                <p>©2024 SeekER. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#">Contact</a>
-                    <a href="#">English</a>
-                    <a href="#">Help</a>
-                    <a href="#">About</a>
-                    <a href="#">Blog</a>
-                    <a href="#">Branding</a>
-                    <a href="#">Store</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Privacy</a>
-                    <a href="#">Complaints Policy</a>
-                    <a href="#">Cookie Notice</a>
-                    <a href="#">DMCA</a>
-                    <a href="#">USC 2257</a>
-                    <a href="#">Standard Contract</a>
-                    <a href="#">Safety & Transparency</a>
-                    <a href="#">Acceptable Use Policy</a>
-                </div>
             </div>
         </div>
     </div>
 
+    <footer class="footer">
+        <div class="container">
+            <p>©2024 SeekER. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Contact</a>
+                <a href="#">English</a>
+                <a href="#">Help</a>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+                <a href="#">Branding</a>
+                <a href="#">Store</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy</a>
+                <a href="#">Complaints Policy</a>
+                <a href="#">Cookie Notice</a>
+                <a href="#">DMCA</a>
+                <a href="#">USC 2257</a>
+                <a href="#">Standard Contract</a>
+                <a href="#">Safety & Transparency</a>
+                <a href="#">Acceptable Use Policy</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // JavaScript for handling form submission
+        // JavaScript for handling form submission and button clicks
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
@@ -256,7 +270,7 @@
             let password = document.getElementById('password').value;
 
             // Simulate form submission to backend
-            fetch('http://your-backend-api-url/login', {
+            fetch('https://your-backend-api-url/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -277,6 +291,19 @@
                 console.error('Error:', error); // Log error to console
                 alert('An error occurred, please try again later'); // Display generic error message
             });
+        });
+
+        // Handle X Account and Google Account clicks
+        document.getElementById('xAccount').addEventListener('click', function(event) {
+            event.preventDefault();
+            // Replace with actual link or functionality for X Account login
+            console.log('X Account clicked');
+        });
+
+        document.getElementById('googleAccount').addEventListener('click', function(event) {
+            event.preventDefault();
+            // Replace with actual link or functionality for Google Account login
+            console.log('Google Account clicked');
         });
     </script>
 </body>
