@@ -22,8 +22,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column; /* Adjusted to column layout */
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
@@ -31,8 +30,8 @@
         }
 
         .left {
-            flex: 1;
             padding: 40px;
+            flex: 1;
         }
 
         .left h1 {
@@ -85,28 +84,23 @@
             font-weight: bold;
         }
 
-        .right {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .middle {
+            flex: 2; /* Adjusted to take more space */
+            overflow-y: auto; /* Enable vertical scrolling */
             padding: 40px;
-            background: linear-gradient(to bottom right, #ff416c, #ff4b2b);
-            color: #fff;
-            text-align: center;
         }
 
-        .right img {
+        .middle img {
             width: 150px;
             margin-bottom: 20px;
         }
 
-        .right h2 {
+        .middle h2 {
             font-size: 2rem;
             margin-bottom: 20px;
         }
 
-        .right p {
+        .middle p {
             font-size: 1.2rem;
             line-height: 1.6;
             max-width: 400px;
@@ -174,7 +168,7 @@
             text-align: center;
             padding: 20px 0;
             font-size: 0.8rem;
-            margin-top: 40px;
+            margin-top: auto; /* Pushes footer to the bottom */
         }
 
         .footer a {
@@ -206,7 +200,7 @@
             <p>Or sign in with:</p>
             <p><a href="#">X Account</a> | <a href="#">Google Account</a></p>
         </div>
-        <div class="right">
+        <div class="middle">
             <img src="https://via.placeholder.com/150" alt="SeekER Logo">
             <h2>Join SeekER</h2>
             <p>
@@ -224,33 +218,33 @@
                     <p><a href="#">@creator2</a> in the studio with Comedian X...</p>
                     <a href="#" class="play-btn">Watch Video</a>
                 </div>
+                <!-- Additional posts can be added here -->
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <p>©2024 SeekER. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Contact</a>
+                    <a href="#">English</a>
+                    <a href="#">Help</a>
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Branding</a>
+                    <a href="#">Store</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Complaints Policy</a>
+                    <a href="#">Cookie Notice</a>
+                    <a href="#">DMCA</a>
+                    <a href="#">USC 2257</a>
+                    <a href="#">Standard Contract</a>
+                    <a href="#">Safety & Transparency</a>
+                    <a href="#">Acceptable Use Policy</a>
+                </div>
             </div>
         </div>
     </div>
-
-    <footer class="footer">
-        <div class="container">
-            <p>©2024 SeekER. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Contact</a>
-                <a href="#">English</a>
-                <a href="#">Help</a>
-                <a href="#">About</a>
-                <a href="#">Blog</a>
-                <a href="#">Branding</a>
-                <a href="#">Store</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Privacy</a>
-                <a href="#">Complaints Policy</a>
-                <a href="#">Cookie Notice</a>
-                <a href="#">DMCA</a>
-                <a href="#">USC 2257</a>
-                <a href="#">Standard Contract</a>
-                <a href="#">Safety & Transparency</a>
-                <a href="#">Acceptable Use Policy</a>
-            </div>
-        </div>
-    </footer>
 
     <script>
         // JavaScript for handling form submission
