@@ -12,6 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script> <!-- Added Firestore -->
     <style>
         /* General body styling */
         body {
@@ -253,6 +254,7 @@
         // Function to handle file upload
         function uploadImage() {
             const file = document.getElementById('fileInput').files[0];
+
             if (!file) {
                 console.error('No file selected');
                 return;
@@ -272,7 +274,6 @@
                 (error) => {
                     console.error('Error uploading image:', error);
                     alert('Error uploading image. Please try again.');
-                    document.getElementById('progress').innerHTML = '';
                 },
                 () => {
                     // Upload completed successfully, get download URL
@@ -293,10 +294,10 @@
             })
             .then((docRef) => {
                 console.log("Document written with ID: ", docRef.id);
-                // Reset upload form after successful upload
-                document.getElementById('progress').innerHTML = '';
-                document.getElementById('fileInput').value = '';
-                fetchContent(); // Update content list after upload
+                document.getElementById('progress').innerHTML = ''; // Clear progress
+                document.getElementById('fileInput').value = ''; // Clear input file selection
+                fetchContent(); // Fetch updated content list
+                alert('Content uploaded successfully!');
             })
             .catch((error) => {
                 console.error("Error adding document: ", error);
@@ -332,6 +333,27 @@
                     alert('Error fetching content. Please try again.');
                 });
         }
+
+        // Real-time listener for new content additions
+        db.collection("content")
+            .orderBy("createdAt", "desc")
+            .onSnapshot((snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        const content = change.doc.data();
+                        const contentItem = document.createElement('div');
+                        contentItem.classList.add('content-item');
+                        contentItem.innerHTML = `
+                            <img src="${content.url}" alt="${content.name}">
+                            <div class="content-details">
+                                <h3>${content.name}</h3>
+                                <p>Uploaded on ${new Date(content.createdAt.toMillis()).toLocaleDateString()}</p>
+                            </div>
+                        `;
+                        contentItems.prepend(contentItem); // Prepend new content at the beginning
+                    }
+                });
+            });
 
         // Call fetchContent initially to load existing content
         fetchContent();
