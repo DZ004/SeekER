@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeekER - Sign in to support your favorite creators</title>
     <style>
+        /* CSS Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
@@ -192,38 +193,37 @@
                 <input type="password" id="password" placeholder="Password" required>
                 <button type="submit">LOG IN</button>
             </form>
-            <p>Forgot password? <a href="#">Reset here</a></p>
-            <p>Sign up for SeekER</p>
-            <p><a href="#">SIGN IN WITH X</a></p>
-            <p><a href="#">SIGN IN WITH GOOGLE</a></p>
-            <p><a href="#">PASSWORDLESS SIGN IN</a></p>
+            <p>Forgot your password? <a href="#">Reset here</a></p>
+            <p>New to SeekER? <a href="#">Sign up here</a></p>
+            <p>Or sign in with:</p>
+            <p><a href="#">X Account</a> | <a href="#">Google Account</a></p>
+        </div>
+        <div class="right">
+            <img src="https://via.placeholder.com/150" alt="SeekER Logo">
+            <h2>Join SeekER</h2>
+            <p>
+                Discover exclusive content and support your favorite creators.
+            </p>
+            <div class="featured-posts">
+                <div class="post">
+                    <h3>Latest Featured Posts</h3>
+                    <p>@seeker 2 hours ago</p>
+                    <p><a href="#">@creator1</a> has dedicated the last 90 days to self-improvement...</p>
+                    <a href="#" class="play-btn">Watch Video</a>
+                </div>
+                <div class="post">
+                    <p>@seeker 9 hours ago</p>
+                    <p><a href="#">@creator2</a> in the studio with Comedian X...</p>
+                    <a href="#" class="play-btn">Watch Video</a>
+                </div>
+            </div>
         </div>
     </div>
 
     <footer class="footer">
         <div class="container">
-            <div class="right">
-                <img src="https://via.placeholder.com/150" alt="SeekER Logo">
-                <h2>Sign up to support your favorite creators</h2>
-                <p>
-                    Join the SeekER community and explore exclusive content from creators worldwide.
-                </p>
-                <div class="featured-posts">
-                    <div class="post">
-                        <h3>Latest featured posts</h3>
-                        <p>@seeker 2 hours ago</p>
-                        <p><a href="#">@creator1</a> dedicated the last 90 days to fully focusing on self-improvement from the inside out...</p>
-                        <a href="#" class="play-btn">Play Video</a>
-                    </div>
-                    <div class="post">
-                        <p>@seeker 9 hours ago</p>
-                        <p><a href="#">@creator2</a> is joined in the studio by the talented comedian Comedian X...</p>
-                        <a href="#" class="play-btn">Play Video</a>
-                    </div>
-                </div>
-            </div>
+            <p>©2024 SeekER. All rights reserved.</p>
             <div class="footer-links">
-                <p>©2024 SeekER</p>
                 <a href="#">Contact</a>
                 <a href="#">English</a>
                 <a href="#">Help</a>
@@ -237,18 +237,19 @@
                 <a href="#">Cookie Notice</a>
                 <a href="#">DMCA</a>
                 <a href="#">USC 2257</a>
-                <a href="#">Standard Contract between Fan and Creator</a>
-                <a href="#">SeekER Safety & Transparency Center</a>
+                <a href="#">Standard Contract</a>
+                <a href="#">Safety & Transparency</a>
                 <a href="#">Acceptable Use Policy</a>
             </div>
         </div>
     </footer>
 
     <script>
+        // JavaScript for handling form submission
         document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault(); // Prevent default form submission
 
-            // Fetch the form data
+            // Fetch input values
             let email = document.getElementById('email').value;
             let password = document.getElementById('password').value;
 
@@ -262,19 +263,17 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Assuming backend returns a JSON response
+                // Handle response from backend
                 if (data.success) {
-                    // Handle successful login
-                    alert('Login successful');
-                    // Redirect or perform additional actions
+                    alert('Login successful'); // Display success message
+                    window.location.href = 'home.html'; // Redirect to home.html on success
                 } else {
-                    // Handle unsuccessful login
-                    alert('Login failed');
+                    alert('Login failed'); // Display failure message
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred, please try again later');
+                console.error('Error:', error); // Log error to console
+                alert('An error occurred, please try again later'); // Display generic error message
             });
         });
     </script>
