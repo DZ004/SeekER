@@ -3,204 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ExclusiveContent - Discover Exclusive Creators</title>
-    <link rel="stylesheet" href="style.css">
+    <title>OnlyFans - Sign up to support your favorite creators</title>
     <style>
-        /* General styles */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        /* Header */
-        header {
-            background-color: #fff;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            text-transform: uppercase;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-info img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-left: 10px;
-        }
-
-        .user-info span {
-            margin-right: 10px;
-        }
-
-        .cta-button {
-            padding: 10px 20px;
-            background-color: #ff5c5c;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background-color: #ff4141;
-        }
-
-        /* Hero Section */
-        .hero {
-            background-image: url('https://via.placeholder.com/1500x600');
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            text-align: center;
-            padding: 100px 20px;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Featured Creators Section */
-        .featured-creators {
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .creators {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .creator {
-            width: calc(33.333% - 20px);
-            margin: 10px;
-            text-align: left;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
             background-color: #fff;
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .creator:hover {
-            transform: translateY(-10px);
+        .left {
+            flex: 1;
+            padding: 40px;
         }
 
-        .creator img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-        }
-
-        .creator-info {
-            padding: 20px;
-        }
-
-        .creator-name {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+        .left h1 {
+            font-size: 2.5rem;
             color: #333;
-            font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .creator-description {
+        .left form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left form input {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             font-size: 1rem;
-            color: #666;
-            line-height: 1.5;
         }
 
-        .creator-actions {
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .subscribe-button {
-            padding: 10px 20px;
-            background-color: #ff5c5c;
+        .left form button {
+            padding: 15px;
+            background-color: #ff416c;
             color: #fff;
             border: none;
             border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .subscribe-button:hover {
-            background-color: #ff4141;
+        .left form button:hover {
+            background-color: #ff4b2b;
         }
 
-        /* Exclusive Content Section */
-        .exclusive-content {
-            background-color: #fff;
-            padding: 40px 20px;
-            text-align: center;
+        .left p {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
         }
 
-        .content-item {
+        .left p a {
+            color: #ff416c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .right {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-        }
-
-        .content-item img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-right: 20px;
-        }
-
-        .content-item-text {
-            text-align: left;
-        }
-
-        .content-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .content-item p {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .action-button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            padding: 40px;
+            background: linear-gradient(to bottom right, #ff416c, #ff4b2b);
             color: #fff;
-           
+            text-align: center;
+        }
+
+        .right img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .right h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .right p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+
+        .right .featured-posts {
+            text-align: left;
+            margin-top: 40px;
+        }
+
+        .post {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .post:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .post h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .post p {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .post a {
+            color: #ffdc7d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .post a:hover {
+            text-decoration: underline;
+        }
+
+        .post .play-btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #ff416c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .post .play-btn:hover {
+            background-color: #ff4b2b;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.8rem;
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>OnlyFans</h1>
+            <form action="#">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">LOG IN</button>
+            </form>
+            <p>Forgot password? <a href="#">Reset here</a></p>
+            <p>Sign up for OnlyFans</p>
+            <p><a href="#">SIGN IN WITH X</a></p>
+            <p><a href="#">SIGN IN WITH GOOGLE</a></p>
+            <p><a href="#">PASSWORDLESS SIGN IN</a></p>
+        </div>
+        <div class="right">
+            <div>
+                <img src="https://via.placeholder.com/150" alt="OnlyFans Logo">
+                <h2>Sign up to support your favorite creators</h2>
+                <p>
+                    Join the OnlyFans community and explore exclusive content from creators worldwide.
+                </p>
+                <div class="featured-posts">
+                    <div class="post">
+                        <h3>Latest featured posts</h3>
+                        <p>@onlyfans 2 hours ago</p>
+                        <p><a href="#">@mamamiasayoko</a> dedicated the last 90 days to fully focusing on self-improvement from the inside out...</p>
+                        <a href="#" class="play-btn">Play Video</a>
+                    </div>
+                    <div class="post">
+                        <p>@onlyfans 9 hours ago</p>
+                        <p><a href="#">@silviasaige</a> is joined in the studio by the talented comedian Che Durena...</p>
+                        <a href="#" class="play-btn">Play Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>
+            <p>©2024 OnlyFans</p>
+            <a href="#">Contact</a>
+            <a href="#">English</a>
+            <a href="#">Help</a>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Branding</a>
+            <a href="#">Store</a>
+        </div>
+        <div>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy</a>
+            <a href="#">Complaints Policy</a>
+            <a href="#">Cookie Notice</a>
+            <a href="#">DMCA</a>
+            <a href="#">USC 2257</a>
+        </div>
+        <div>
+            <a href="#">Standard Contract between Fan and Creator</a>
+            <a href="#">OnlyFans Safety & Transparency Center</a>
+            <a href="#">Anti-Slavery and Anti-Trafficking Statement</a>
+            <a href="#">Acceptable Use Policy</a>
+        </div>
+    </footer>
+</body>
+</html>
