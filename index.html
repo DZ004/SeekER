@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeekER - Sign in to support your favorite creators</title>
     <style>
-        /* CSS Styles */
+        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
@@ -14,7 +14,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         .container {
@@ -30,6 +30,7 @@
             overflow: hidden;
         }
 
+        /* Left Side */
         .left {
             flex: 1;
             padding: 40px;
@@ -81,9 +82,11 @@
             font-weight: bold;
         }
 
+        /* Right Side */
         .right {
             flex: 1;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 40px;
@@ -164,6 +167,7 @@
             background-color: #ff4b2b;
         }
 
+        /* Footer */
         .footer {
             background-color: #333;
             color: #fff;
@@ -186,6 +190,7 @@
 </head>
 <body>
     <div class="container">
+        <!-- Left Side: Login Form -->
         <div class="left">
             <h1>SeekER</h1>
             <form id="loginForm">
@@ -198,6 +203,8 @@
             <p>Or sign in with:</p>
             <p><a href="#">X Account</a> | <a href="#">Google Account</a></p>
         </div>
+
+        <!-- Right Side: Join SeekER -->
         <div class="right">
             <img src="https://via.placeholder.com/150" alt="SeekER Logo">
             <h2>Join SeekER</h2>
@@ -220,6 +227,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>©2024 SeekER. All rights reserved.</p>
@@ -244,8 +252,8 @@
         </div>
     </footer>
 
+    <!-- JavaScript for Form Submission -->
     <script>
-        // JavaScript for handling form submission
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
