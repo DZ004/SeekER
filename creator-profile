@@ -10,40 +10,51 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            color: #333;
         }
         .profile-header {
-            background-color: #333;
+            background-color: #1a1a1a;
             color: white;
             text-align: center;
-            padding: 20px 0;
+            padding: 30px 0;
+            position: relative;
         }
         .profile-header img {
             border-radius: 50%;
             width: 150px;
             height: 150px;
             object-fit: cover;
+            border: 5px solid white;
         }
         .profile-info {
             text-align: center;
             margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .profile-info h1 {
             margin: 10px 0;
+            font-size: 24px;
+            color: #444;
         }
         .profile-info p {
             color: #666;
             margin: 10px 0;
+            font-size: 16px;
         }
         .social-links a {
             margin: 0 10px;
             color: #333;
             text-decoration: none;
+            font-size: 18px;
         }
         .content-preview {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             margin: 20px 0;
+            padding: 20px;
         }
         .content-preview .item {
             background-color: white;
@@ -51,16 +62,22 @@
             border-radius: 10px;
             overflow: hidden;
             margin: 10px;
-            width: 200px;
+            width: 250px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .content-preview .item:hover {
+            transform: scale(1.05);
         }
         .content-preview img {
             width: 100%;
             height: auto;
         }
         .content-preview .description {
-            padding: 10px;
+            padding: 15px;
             text-align: center;
+            font-size: 16px;
+            color: #444;
         }
     </style>
 </head>
