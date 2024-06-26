@@ -403,32 +403,31 @@
                 });
         }
 
-        // Real-time listener for new content additions
+        // Real-time listener for new content additions and deletions
         db.collection("content")
             .orderBy("createdAt", "desc")
             .onSnapshot((snapshot) => {
                 snapshot.docChanges().forEach((change) => {
+                    const content = change.doc.data();
+                    const contentItem = document.querySelector(`[data-id='${change.doc.id}']`);
+
                     if (change.type === "added") {
-                        const content = change.doc.data();
-                        const contentItem = document.createElement('div');
-                        contentItem.classList.add('content-item');
-                        contentItem.setAttribute('data-id', change.doc.id); // Set data-id attribute for deletion
-                        contentItem.innerHTML = `
-                            <img src="${content.url}" alt="${content.name}">
-                            <div class="content-details">
-                                <h3>${content.name}</h3>
-                                <p>Uploaded on ${new Date(content.createdAt.toMillis()).toLocaleDateString()}</p>
-                                <button onclick="openModal('${change.doc.id}')">Delete</button>
-                            </div>
-                        `;
-                        contentItems.prepend(contentItem); // Prepend new content at the beginning
-                    }
-                    if (change.type === "removed") {
-                        // Remove content item from UI
-                        const deletedContent = document.querySelector(`[data-id='${change.doc.id}']`);
-                        if (deletedContent) {
-                            deletedContent.remove();
+                        if (!contentItem) {
+                            const newContentItem = document.createElement('div');
+                            newContentItem.classList.add('content-item');
+                            newContentItem.setAttribute('data-id', change.doc.id);
+                            newContentItem.innerHTML = `
+                                <img src="${content.url}" alt="${content.name}">
+                                <div class="content-details">
+                                    <h3>${content.name}</h3>
+                                    <p>Uploaded on ${new Date(content.createdAt.toMillis()).toLocaleDateString()}</p>
+                                    <button onclick="openModal('${change.doc.id}')">Delete</button>
+                                </div>
+                            `;
+                            contentItems.prepend(newContentItem); // Prepend new content at the beginning
                         }
+                    } else if (change.type === "removed" && contentItem) {
+                        contentItem.remove(); // Remove deleted content from UI
                     }
                 });
             });
