@@ -297,6 +297,19 @@
             .creator {
                 width: calc(50% - 20px);
             }
+
+            .navbar-toggler {
+                display: block;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                display: none;
+            }
+
+            .collapse.show .nav-links {
+                display: flex;
+            }
         }
 
         @media (max-width: 480px) {
@@ -327,246 +340,113 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="nav-links nav navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Explore</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                <li class="nav-item"><a class="nav-link btn-signup" href="#">Sign Up</a></li>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#" class="btn-signup">Sign Up</a></li>
             </ul>
         </div>
     </nav>
 </header>
 
-    /* Sample styling for responsiveness and navbar toggler */
-    .navbar-toggler {
-        display: none;
-        border: none;
-        background: transparent;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-
-    .navbar-toggler-icon {
-        display: inline-block;
-        width: 1.5em;
-        height: 1.5em;
-        vertical-align: middle;
-        content: "";
-        background: url('data:image/svg+xml;base64,...') no-repeat center center / contain;
-    }
-
-    @media (max-width: 768px) {
-        .navbar-toggler {
-            display: block;
-        }
-
-        .nav-links {
-            flex-direction: column;
-            display: none;
-        }
-
-        .collapse.show .nav-links {
-            display: flex;
-        }
-    }
-
-    .nav-link.active {
-        font-weight: bold;
-    }
-
-    .btn-signup {
-        background-color: #28a745;
-        color: #fff;
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-</style>
-
-<script>
-    // JavaScript for toggling navbar on smaller screens
-    document.querySelector('.navbar-toggler').addEventListener('click', function() {
-        document.querySelector('.collapse').classList.toggle('show');
-    });
-</script>
-
-
-
 <!-- Hero Section -->
 <section class="hero">
-    <div class="container">
-        <h1>Welcome to SeekER</h1>
-        <p>Discover exclusive content from your favorite creators.</p>
-        <a href="#featured-creators" class="cta-button">Get Started</a>
-    </div>
+    <h1>Welcome to SeekER</h1>
+    <p>Your go-to platform for discovering and engaging with amazing content creators.</p>
+    <a href="#" class="cta-button">Get Started</a>
 </section>
 
 <!-- Main Content -->
-<main class="container">
-    <!-- Post Section -->
-    <section class="post-section">
-        <h2>Create a Post</h2>
-        <div class="post-form">
-            <form id="postForm">
-                <textarea id="postContent" placeholder="Write something..."></textarea>
-                <br>
-                <button type="submit">Post</button>
+<div class="container">
+    <div class="row">
+        <!-- Post Section -->
+        <div class="col-md-8 post-section">
+            <h2>Post Something</h2>
+            <form>
+                <textarea id="post-textarea" rows="4" placeholder="What's on your mind?"></textarea>
+                <button type="button" id="post-button">Post</button>
             </form>
+            <div id="posts" class="posts"></div>
         </div>
 
-        <div class="posts">
-            <!-- Posts will be dynamically added here -->
-        </div>
-    </section>
-
-    <!-- Featured Creators Section -->
-    <section id="featured-creators" class="featured-creators">
-        <h2>Featured Creators</h2>
-        <div class="creators">
-            <!-- Featured creators content -->
-        </div>
-    </section>
-
-    <!-- Become a Creator Section -->
-<section class="become-creator">
-    <div class="container">
-        <h2>Want to become a creator?</h2>
-        <p>Join our platform and start sharing exclusive content with your fans. As a creator, you can monetize your content and build a community.</p>
-        <div class="creator-buttons">
-            <a href="explore.html" class="btn btn-primary">Explore Feed</a>
-            <a href="creator-signup.html" class="btn btn-success">Become A Creator</a>
+        <!-- Sidebar -->
+        <div class="col-md-4 sidebar">
+            <h2>Sidebar</h2>
+            <ul>
+                <li><a href="#">Trending Topics</a></li>
+                <li><a href="#">New Creators</a></li>
+                <li><a href="#">Top Posts</a></li>
+                <li><a href="#">Community Guidelines</a></li>
+            </ul>
         </div>
     </div>
-</section>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <h2>Additional Features</h2>
-        <ul>
-            <li><a href="#">Content Creation Tools</a></li>
-            <li><a href="#">Community Interaction</a></li>
-            <li><a href="#">Monetization Options</a></li>
-            <li><a href="#">Privacy and Security</a></li>
-            <li><a href="#">Special Offers and Discounts</a></li>
-        </ul>
-    </aside>
-</main>
+    <!-- Featured Creators -->
+    <div class="featured-creators">
+        <h2>Featured Creators</h2>
+        <div class="creators">
+            <div class="creator">
+                <img src="https://via.placeholder.com/300" alt="Creator 1">
+                <div class="creator-info">
+                    <div class="creator-name">Creator 1</div>
+                    <div class="creator-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                    <div class="creator-actions">
+                        <button class="subscribe-button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="creator">
+                <img src="https://via.placeholder.com/300" alt="Creator 2">
+                <div class="creator-info">
+                    <div class="creator-name">Creator 2</div>
+                    <div class="creator-description">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                    <div class="creator-actions">
+                        <button class="subscribe-button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more creator cards as needed -->
+        </div>
+    </div>
+
+    <!-- Community Section -->
+    <div class="community">
+        <h2>Join the Community</h2>
+        <div class="community-buttons">
+            <a href="#">Join Now</a>
+            <a href="#">Learn More</a>
+        </div>
+    </div>
+</div>
 
 <!-- Footer -->
 <footer>
     <div class="container">
-        <p>&copy; 2024 SeekER. All rights reserved.</p>
+        <p>&copy; 2024 SeekER. All rights reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
 </footer>
 
-<!-- Firebase Script and Custom JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
 <script>
-    // Initialize Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
-        authDomain: "seeker-928e7.firebaseapp.com",
-        projectId: "seeker-928e7",
-        storageBucket: "seeker-928e7.appspot.com",
-        messagingSenderId: "652562231057",
-        appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
-    };
+    document.addEventListener('DOMContentLoaded', () => {
+        const postButton = document.getElementById('post-button');
+        const postTextarea = document.getElementById('post-textarea');
+        const postsContainer = document.getElementById('posts');
 
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    // DOM elements
-    const postForm = document.getElementById('postForm');
-    const postContent = document.getElementById('postContent');
-    const postsContainer = document.querySelector('.posts');
-
-    // Event listener for form submission
-    postForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const content = postContent.value.trim();
-        if (content === '') {
-            alert('Please enter some content to post.');
-            return;
-        }
-        savePost(content);
-        postForm.reset();
-    });
-
-    // Function to save post to Firebase
-    async function savePost(content) {
-        const currentDate = new Date();
-        const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
-
-        // Generate a new post key
-        const newPostKey = database.ref().child('posts').push().key;
-
-        // Create the data object to be saved
-        const postData = {
-            content: content,
-            date: formattedDate
-        };
-
-        // Write the new post's data simultaneously in the posts list
-        const updates = {};
-        updates['/posts/' + newPostKey] = postData;
-
-        try {
-            await database.ref().update(updates);
-            console.log('Post saved successfully');
-        } catch (error) {
-            console.error('Error saving post:', error);
-        }
-    }
-
-    // Function to load posts from Firebase
-    function loadPosts() {
-        const postsRef = database.ref('posts');
-
-        postsRef.on('child_added', function(data) {
-            const post = data.val();
-            const postHTML = `
-                <div class="post">
-                    <p class="post-content">${post.content}</p>
-                    <p class="post-date">Posted on ${post.date}</p>
-                </div>
+        postButton.addEventListener('click', () => {
+            const postContent = postTextarea.value;
+            if (postContent.trim() === '') return;
+            const postDiv = document.createElement('div');
+            postDiv.classList.add('post');
+            postDiv.innerHTML = `
+                <div class="post-content">${postContent}</div>
+                <div class="post-date">${new Date().toLocaleString()}</div>
             `;
-            postsContainer.insertAdjacentHTML('afterbegin', postHTML);
-        });
-    }
-
-    // Load posts initially
-    loadPosts();
-
-    // Initialize slick slider
-    $(document).ready(function(){
-        $('.creators').slick({
-            dots: true,
-            infinite: true,
-            speed: 300,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        infinite: true,
-                        dots: true
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
-                }
-            ]
+            postsContainer.appendChild(postDiv);
+            postTextarea.value = '';
         });
     });
 </script>
