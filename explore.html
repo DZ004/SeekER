@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SeekER - Explore</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <!-- Custom CSS -->
     <style>
-        /* Additional styles specific to explore.html */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
@@ -89,6 +90,28 @@
 </head>
 <body>
 
+<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a href="#" class="navbar-brand logo">SeekER</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav nav-links">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="explore.html">Explore</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link btn-signup" href="signup.html">Signup</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
 <!-- Explore Section -->
 <section class="explore">
     <div class="container">
@@ -104,7 +127,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
 <script>
-    // Your web app's Firebase configuration
+    // Your Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
         authDomain: "seeker-928e7.firebaseapp.com",
@@ -149,6 +172,9 @@
     // Load posts on page load
     fetchAndDisplayPosts();
 </script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
