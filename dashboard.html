@@ -20,6 +20,42 @@
             padding: 20px;
         }
 
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+            margin-left: 20px;
+        }
+
+        .navbar-nav {
+            list-style-type: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .navbar-nav li {
+            margin-left: 20px;
+        }
+
+        .navbar-nav a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav a:hover {
+            color: #555;
+        }
+
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -132,6 +168,23 @@
 </head>
 <body>
 
+<!-- Header -->
+<header>
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">SeekER</a>
+            <ul class="navbar-nav">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Explore</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Signup</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
 <div class="container">
     <!-- Dashboard Header -->
     <div class="dashboard-header">
@@ -232,4 +285,3 @@
 
 </body>
 </html>
-
