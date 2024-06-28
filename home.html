@@ -325,15 +325,75 @@
         <div class="logo">
             <a href="home.html">SeekER</a>
         </div>
-        <ul class="nav-links d-flex align-items-center">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="explore.html">Explore</a></li>
-            <li><a href="pricing.html">Pricing</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="signup.html" class="btn btn-signup">Sign Up</a></li>
-        </ul>
+        <button class="navbar-toggler" type="button" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav-links d-flex align-items-center">
+                <li><a href="home.html" class="nav-link active">Home</a></li>
+                <li><a href="explore.html" class="nav-link">Explore</a></li>
+                <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+                <li><a href="login.html" class="nav-link">Login</a></li>
+                <li><a href="signup.html" class="btn btn-signup">Sign Up</a></li>
+            </ul>
+        </div>
     </nav>
 </header>
+
+<style>
+    /* Sample styling for responsiveness and navbar toggler */
+    .navbar-toggler {
+        display: none;
+        border: none;
+        background: transparent;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .navbar-toggler-icon {
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+        content: "";
+        background: url('data:image/svg+xml;base64,...') no-repeat center center / contain;
+    }
+
+    @media (max-width: 768px) {
+        .navbar-toggler {
+            display: block;
+        }
+
+        .nav-links {
+            flex-direction: column;
+            display: none;
+        }
+
+        .collapse.show .nav-links {
+            display: flex;
+        }
+    }
+
+    .nav-link.active {
+        font-weight: bold;
+    }
+
+    .btn-signup {
+        background-color: #28a745;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+</style>
+
+<script>
+    // JavaScript for toggling navbar on smaller screens
+    document.querySelector('.navbar-toggler').addEventListener('click', function() {
+        document.querySelector('.collapse').classList.toggle('show');
+    });
+</script>
+
 
 
 <!-- Hero Section -->
