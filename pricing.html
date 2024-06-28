@@ -174,7 +174,7 @@
                 <li>No exclusive features</li>
                 <li>Basic community support</li>
             </ul>
-            <a href="#" class="btn-subscribe">Get Free</a>
+            <button class="btn-subscribe" data-price-id="price_1">Get Free</button>
         </div>
 
         <!-- Fan Package -->
@@ -187,7 +187,7 @@
                 <li>Exclusive community features</li>
                 <li>Enhanced support</li>
             </ul>
-            <a href="#" class="btn-subscribe">Subscribe</a>
+            <button class="btn-subscribe" data-price-id="price_2">Subscribe</button>
         </div>
 
         <!-- VIP Package -->
@@ -200,7 +200,7 @@
                 <li>Priority customer support</li>
                 <li>Special VIP community benefits</li>
             </ul>
-            <a href="#" class="btn-subscribe">Join VIP</a>
+            <button class="btn-subscribe" data-price-id="price_3">Join VIP</button>
         </div>
     </section>
 </main>
@@ -214,5 +214,34 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<!-- Stripe JS library -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    // Replace with your own Stripe publishable key
+    const stripe = Stripe('YOUR_STRIPE_PUBLISHABLE_KEY');
+
+    // Handle subscription button clicks
+    const subscribeButtons = document.querySelectorAll('.btn-subscribe');
+    subscribeButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const priceId = button.getAttribute('data-price-id');
+            try {
+                const { error } = await stripe.redirectToCheckout({
+                    mode: 'subscription',
+                    lineItems: [{ price: priceId, quantity: 1 }],
+                    successUrl: 'https://your-website.com/success',
+                    cancelUrl: 'https://your-website.com/canceled',
+                });
+                if (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+</script>
 </body>
 </html>
