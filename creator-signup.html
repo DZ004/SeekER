@@ -27,6 +27,9 @@
 
         // Function to handle creator signup
         const creatorSignupForm = document.querySelector('#creatorSignupForm');
+        const signupSuccessMessage = document.querySelector('#signupSuccessMessage');
+        const creatorSignupError = document.querySelector('#creatorSignupError');
+
         creatorSignupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = creatorSignupForm['creatorEmail'].value;
@@ -57,20 +60,18 @@
 
                 console.log('Successfully signed up as creator:', userCredential.user);
 
-                // Clear form fields
+                // Clear form fields and show success message
                 creatorSignupForm.reset();
-
-                // Show success message to user
-                document.querySelector('#creatorSignupError').textContent = '';
-                document.querySelector('#signupSuccessMessage').textContent = 'Sign up successful! Please check your email to verify your account.';
+                creatorSignupError.textContent = '';
+                signupSuccessMessage.textContent = 'Sign up successful! Please check your email to verify your account.';
 
                 // Redirect to creator dashboard or desired page after successful signup
                 setTimeout(() => {
                     window.location.assign('dashboard-creator.html');
                 }, 3000); // Redirect after 3 seconds (optional)
             } catch (error) {
-                document.querySelector('#creatorSignupError').textContent = error.message;
-                document.querySelector('#signupSuccessMessage').textContent = '';
+                creatorSignupError.textContent = error.message;
+                signupSuccessMessage.textContent = '';
             }
         });
 
