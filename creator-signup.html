@@ -8,6 +8,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script> <!-- Include Firestore -->
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -22,7 +23,7 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth(app);
-        const db = firebase.firestore();
+        const db = firebase.firestore(app); // Initialize Firestore
 
         // Function to handle creator signup
         const creatorSignupForm = document.querySelector('#creatorSignupForm');
