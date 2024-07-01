@@ -8,7 +8,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script> <!-- Include Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -23,7 +23,7 @@
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth(app);
-        const db = firebase.firestore(app); // Initialize Firestore
+        const db = firebase.firestore(app);
 
         // Function to handle creator signup
         const creatorSignupForm = document.querySelector('#creatorSignupForm');
@@ -39,6 +39,9 @@
                 // Create user with email and password
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 
+                // Send email verification
+                await userCredential.user.sendEmailVerification();
+
                 // Save additional creator info to Firestore
                 const userId = userCredential.user.uid;
                 await db.collection('creators').doc(userId).set({
@@ -48,6 +51,9 @@
                 });
 
                 console.log('Successfully signed up as creator:', userCredential.user);
+
+                // Show success message to user
+                document.querySelector('#creatorSignupError').textContent = '';
 
                 // Redirect to creator dashboard or desired page
                 window.location.assign('dashboard-creator.html');
