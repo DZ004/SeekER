@@ -64,10 +64,8 @@
                 document.querySelector('#creatorSignupError').textContent = '';
                 document.querySelector('#signupSuccessMessage').textContent = 'Sign up successful! Please check your email to verify your account.';
 
-                // Redirect to creator dashboard or desired page after successful signup
-                setTimeout(() => {
-                    window.location.assign('dashboard-creator.html');
-                }, 3000); // Redirect after 3 seconds (optional)
+                // Redirect to creator dashboard after successful signup
+                window.location.assign('dashboard-creator.html');
             } catch (error) {
                 document.querySelector('#creatorSignupError').textContent = error.message;
                 document.querySelector('#signupSuccessMessage').textContent = '';
@@ -92,7 +90,7 @@
 
                 console.log('Successfully logged in as creator:', userCredential.user);
 
-                // Redirect to creator dashboard or desired page after successful login
+                // Redirect to creator dashboard after successful login
                 window.location.assign('dashboard-creator.html');
             } catch (error) {
                 document.querySelector('#creatorLoginError').textContent = error.message;
@@ -117,7 +115,7 @@
             firebase.auth().signOut().then(() => {
                 // Sign-out successful
                 console.log('User signed out.');
-                // Redirect to home page or login page after logout
+                // Redirect to home page after logout
                 window.location.assign('index.html');
             }).catch((error) => {
                 // An error happened
