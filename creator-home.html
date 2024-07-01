@@ -26,6 +26,55 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Function to check if user is logged in and fetch profile data
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                console.log('User is logged in:', user);
+
+                // Fetch additional user details from Firestore
+                db.collection('creators').doc(user.uid).get()
+                    .then(doc => {
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            displayUserProfile(userData);
+                        } else {
+                            console.log('No such document!');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user document:', error);
+                    });
+
+            } else {
+                // User is not logged in, redirect to login page
+                console.log('User is not logged in.');
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Function to display user profile data
+        function displayUserProfile(userData) {
+            const profileDisplayName = document.getElementById('profileDisplayName');
+            const profileBio = document.getElementById('profileBio');
+            const profilePicture = document.getElementById('profilePicture');
+            const mainProfilePicture = document.getElementById('mainProfilePicture');
+            const creatorName = document.getElementById('creatorName');
+
+            profileDisplayName.textContent = userData.displayName;
+            profileBio.textContent = userData.bio;
+            creatorName.textContent = userData.displayName;
+
+            // Set profile picture (you can replace with actual URL logic)
+            profilePicture.src = userData.profilePictureURL || 'default-profile.png';
+            mainProfilePicture.src = userData.profilePictureURL || 'default-profile.png';
+
+            // Display subscription plan access
+            const subscriptionPlan = document.getElementById('subscriptionPlan');
+            subscriptionPlan.textContent = userData.subscriptionPlan || 'Free Plan';
+        }
 
         // Logout function
         function logout() {
@@ -39,6 +88,39 @@
                 console.error("Sign out error", error);
             });
         }
+
+        // Toggle Edit Profile Form
+        function toggleEditProfile() {
+            const editProfileForm = document.getElementById('editProfileForm');
+            editProfileForm.style.display = editProfileForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Cancel Edit Profile
+        function cancelEditProfile() {
+            toggleEditProfile();
+        }
+
+        // Handle Edit Profile Form Submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const user = auth.currentUser;
+            if (user) {
+                const displayName = document.getElementById('editDisplayName').value;
+                const bio = document.getElementById('editBio').value;
+
+                db.collection('creators').doc(user.uid).set({
+                    displayName: displayName,
+                    bio: bio,
+                }, { merge: true }).then(() => {
+                    console.log('Profile updated successfully');
+                    displayUserProfile({ displayName, bio });
+                    toggleEditProfile();
+                }).catch(error => {
+                    console.error('Error updating profile:', error);
+                });
+            }
+        });
     </script>
     <style>
         /* General body styling */
@@ -202,6 +284,7 @@
 
         /* Edit profile form styling */
         #editProfileForm {
+            display: none;
             background: #ffffff;
             padding: 20px;
             border-radius: 8px;
@@ -256,66 +339,53 @@
     <div class="sidebar">
         <div class="profile">
             <img id="profilePicture" src="default-profile.png" alt="Profile Picture">
-            <span id="creatorName" class="creator-name">Username</span>
+            <div>
+                <h3 id="profileDisplayName">Loading...</h3>
+                <p id="profileBio">Loading...</p>
+            </div>
         </div>
         <ul class="nav-links">
-            <li><a href="creator-home"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="messages"><i class="fas fa-envelope"></i> Messages</a></li>
-            <li><a href="content"><i class="fas fa-photo-video"></i> Content</a></li>
-            <li><a href="analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
-            <li><a href="subscribers"><i class="fas fa-users"></i> Subscribers</a></li>
-            <li><a href="earnings"><i class="fas fa-dollar-sign"></i> Earnings</a></li>
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-video"></i> My Videos</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
             <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            <li><a href="dashboard-creator"><i class="fas fa-tachometer-alt"></i> Creator Dashboard</a></li>
         </ul>
     </div>
-
     <div class="main-content">
-        <header>
-            <div class="logo">Your Platform</div>
-        </header>
-
-        <main>
-            <section class="profile-header">
-                <div class="profile-info">
-                    <div class="profile-picture">
-                        <img src="default-profile.png" alt="Profile Picture" id="mainProfilePicture">
-                    </div>
-                    <div class="profile-details">
-                        <h2 id="profileDisplayName">Display Name</h2>
-                        <p id="profileBio">Bio description goes here.</p>
-                    </div>
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="profile-picture">
+                    <img id="mainProfilePicture" src="default-profile.png" alt="Profile Picture">
                 </div>
-                <div class="edit-profile-button">
-                    <button onclick="toggleEditProfile()">Edit Profile</button>
-                </div>
-            </section>
-
-            <div id="editProfileForm" style="display: none;">
-                <form id="profileForm">
-                    <label for="editDisplayName">Display Name:</label>
-                    <input type="text" id="editDisplayName" name="displayName" required><br>
-                    <label for="editBio">Bio:</label>
-                    <textarea id="editBio" name="bio" rows="4"></textarea><br>
-                    <button type="submit">Save Changes</button>
-                    <button type="button" onclick="cancelEditProfile()">Cancel</button>
-                </form>
-            </div>
-
-            <div class="content">
-                <h2>Your Content</h2>
-                <div class="content-items">
-                    <!-- Content items dynamically generated here -->
+                <div class="profile-details">
+                    <h2 id="creatorName">Loading...</h2>
+                    <p>Subscription Plan: <span id="subscriptionPlan">Loading...</span></p>
                 </div>
             </div>
-        </main>
+            <button onclick="toggleEditProfile()">Edit Profile</button>
+        </div>
+        <div id="editProfileForm">
+            <h2>Edit Profile</h2>
+            <form id="profileForm">
+                <label for="editDisplayName">Display Name</label>
+                <input type="text" id="editDisplayName" required>
 
-        <footer>
-            &copy; 2024 Your Platform. All rights reserved.
-        </footer>
+                <label for="editBio">Bio</label>
+                <textarea id="editBio" required></textarea>
+
+                <button type="submit">Save Changes</button>
+                <button type="button" onclick="cancelEditProfile()">Cancel</button>
+            </form>
+        </div>
+        <div class="content">
+            <h2>My Content</h2>
+            <div class="content-items">
+                <!-- Content items will go here -->
+            </div>
+        </div>
     </div>
-
-    <!-- Your custom JavaScript file -->
-    <script src="script.js"></script>
+    <footer>
+        &copy; 2024 Creator Platform
+    </footer>
 </body>
 </html>
