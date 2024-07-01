@@ -36,6 +36,11 @@
             const subscriptionPlan = creatorSignupForm['subscriptionPlan'].value;
 
             try {
+                // Basic form validation
+                if (!email || !password || !displayName || !bio) {
+                    throw new Error('All fields are required.');
+                }
+
                 // Create user with email and password
                 const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
                 
@@ -52,13 +57,20 @@
 
                 console.log('Successfully signed up as creator:', userCredential.user);
 
-                // Show success message to user (optional)
-                document.querySelector('#creatorSignupError').textContent = '';
+                // Clear form fields
+                creatorSignupForm.reset();
 
-                // Redirect to creator dashboard or desired page
-                window.location.assign('dashboard-creator.html');
+                // Show success message to user
+                document.querySelector('#creatorSignupError').textContent = '';
+                document.querySelector('#signupSuccessMessage').textContent = 'Sign up successful! Please check your email to verify your account.';
+
+                // Redirect to creator dashboard or desired page after successful signup
+                setTimeout(() => {
+                    window.location.assign('dashboard-creator.html');
+                }, 3000); // Redirect after 3 seconds (optional)
             } catch (error) {
                 document.querySelector('#creatorSignupError').textContent = error.message;
+                document.querySelector('#signupSuccessMessage').textContent = '';
             }
         });
 
@@ -127,6 +139,7 @@
                     </select>
                     <button type="submit" class="btn-primary">Sign Up as Creator</button>
                     <p id="creatorSignupError" class="error-message"></p>
+                    <p id="signupSuccessMessage" class="success-message"></p>
                 </form>
             </div>
         </section>
