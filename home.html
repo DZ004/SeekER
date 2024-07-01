@@ -359,6 +359,7 @@
         <a href="#featured-creators" class="cta-button">Get Started</a>
     </div>
 </section>
+
 <!-- Main Content -->
 <main class="container">
     <!-- Post Section -->
@@ -381,7 +382,7 @@
     <section id="featured-creators" class="featured-creators">
         <h2>Featured Creators</h2>
         <div class="creators">
-            <!-- Featured creators content -->
+            <!-- Featured creators content will be dynamically added here -->
         </div>
     </section>
 
@@ -441,6 +442,7 @@
     const postForm = document.getElementById('postForm');
     const postContent = document.getElementById('postContent');
     const postsContainer = document.querySelector('.posts');
+    const creatorsContainer = document.querySelector('.creators');
 
     // Event listener for form submission
     postForm.addEventListener('submit', function(event) {
@@ -496,8 +498,33 @@
         });
     }
 
-    // Load posts initially
+    // Function to load featured creators from Firebase
+    function loadFeaturedCreators() {
+        const creatorsRef = database.ref('featured_creators');
+
+        creatorsRef.once('value', function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                const creator = childSnapshot.val();
+                const creatorHTML = `
+                    <div class="creator">
+                        <img src="${creator.image}" alt="${creator.name}">
+                        <div class="creator-info">
+                            <h3 class="creator-name">${creator.name}</h3>
+                            <p class="creator-description">${creator.description}</p>
+                            <div class="creator-actions">
+                                <button class="subscribe-button">Subscribe</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                creatorsContainer.insertAdjacentHTML('beforeend', creatorHTML);
+            });
+        });
+    }
+
+    // Load posts and featured creators initially
     loadPosts();
+    loadFeaturedCreators();
 
     // Initialize slick slider
     $(document).ready(function(){
