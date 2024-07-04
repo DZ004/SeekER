@@ -400,9 +400,9 @@
         <div class="container">
             <h2>Join Our Community</h2>
             <div class="community-buttons">
-                <a href="#">Forums</a>
-                <a href="#">Events</a>
-                <a href="#">Groups</a>
+                <a href="explore">Explore</a>
+                <a href="pricing">Pricing</a>
+                <a href="become-a-creator">Become a Creator</a>
             </div>
         </div>
     </section>
@@ -412,7 +412,7 @@
         <div class="container">
             <h2>Resources</h2>
             <ul>
-                <li><a href="#">Help Center</a></li>
+                <li><a href="help-center">Help Center</a></li>
                 <li><a href="#">Terms of Service</a></li>
                 <li><a href="#">Privacy Policy</a></li>
             </ul>
@@ -538,29 +538,29 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a href="#" class="navbar-brand logo">SeekER</a>
+            <a href="home" class="navbar-brand logo">SeekER</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav nav-links">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="explore">Explore</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="creators">Creators</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="pricing">Pricing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="profile">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-signup" href="#" id="signupLink">Sign Up</a>
+                        <a class="nav-link btn-signup" href="signup" id="signupLink">Sign Up</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn-login" href="#" id="loginLink">Login</a>
+                        <a class="nav-link btn-login" href="login" id="loginLink">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn-logout d-none" href="#" id="logoutLink">Logout</a>
@@ -840,4 +840,30 @@
 
 </script>
 </body>
+    <!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Login form -->
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </html>
