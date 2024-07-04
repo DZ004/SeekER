@@ -260,7 +260,7 @@
                 .then((userCredential) => {
                     const user = userCredential.user;
                     alert('Login successful');
-                    window.location.href = 'home.html';
+                    window.location.href = 'home.html'; // Redirect to home page upon successful login
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -277,7 +277,7 @@
                 .then((result) => {
                     const user = result.user;
                     alert('Google Login successful');
-                    window.location.href = 'home.html';
+                    window.location.href = 'home.html'; // Redirect to home page upon successful login
                 })
                 .catch((error) => {
                     console.error('Error:', error);
