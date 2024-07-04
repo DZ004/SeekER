@@ -268,14 +268,27 @@
                 });
         });
 
-        document.getElementById('xAccount').addEventListener('click', function(event) {
-            event.preventDefault();
-            console.log('X Account clicked');
-        });
-
+        // Handle Google login
         document.getElementById('googleAccount').addEventListener('click', function(event) {
             event.preventDefault();
-            console.log('Google Account clicked');
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    alert('Google Login successful');
+                    window.location.href = 'home.html';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Google Login failed');
+                });
+        });
+
+        // Placeholder for other social logins like 'X Account'
+        document.getElementById('xAccount').addEventListener('click', function(event) {
+            event.preventDefault();
+            alert('X Account login is not implemented yet');
         });
     </script>
 </head>
@@ -294,7 +307,7 @@
                     <button type="submit">LOG IN</button>
                 </form>
                 <p>Forgot your password? <a href="#">Reset here</a></p>
-                <p>New to SeekER? <a href="signup">Sign up here</a></p>
+                <p>New to SeekER? <a href="signup.html">Sign up here</a></p>
                 <p>Or sign in with:</p>
                 <p>
                     <a href="#" id="xAccount">X Account</a> |
