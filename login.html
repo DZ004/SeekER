@@ -22,6 +22,7 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script> <!-- Add Firestore SDK -->
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -37,6 +38,7 @@
 
         // Reference to Firebase Auth service
         const auth = firebase.auth();
+        const firestore = firebase.firestore(); // Initialize Firestore
 
         // Login form submission
         const loginForm = document.getElementById('loginForm');
@@ -52,16 +54,16 @@
                 // Sign in with email and password
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
 
-                // Get user role from Firestore (or Realtime Database)
+                // Get user role from Firestore
                 const user = userCredential.user;
-                const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
+                const userDoc = await firestore.collection('users').doc(user.uid).get();
                 const userData = userDoc.data();
 
                 // Redirect based on user role
                 if (userData && userData.role === 'creator') {
-                    window.location.href = 'creator_dashboard.html';
+                    window.location.href = 'creator-home.html'; // Redirect to creator home page
                 } else {
-                    window.location.href = 'free_user_dashboard.html';
+                    window.location.href = 'home.html'; // Redirect to free user home page
                 }
             } catch (error) {
                 // Handle errors
