@@ -534,30 +534,310 @@
             dots: true,
             infinite: true,
             speed: 300,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        infinite: true,
-                        dots: true
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        infinite: true,
-                        dots: true
-                    }
-                }
-            ]
+<!-- Header -->
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a href="#" class="navbar-brand logo">SeekER</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav nav-links">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-signup" href="#" id="signupLink">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-login" href="#" id="loginLink">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-logout d-none" href="#" id="logoutLink">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Welcome to SeekER</h1>
+        <p>Your platform for discovering and supporting content creators.</p>
+        <a href="#" class="cta-button">Get Started</a>
+    </div>
+</section>
+
+<!-- Main Content -->
+<main class="container">
+    <!-- Post Section -->
+    <section class="post-section">
+        <h2>Create a Post</h2>
+        <form id="postForm">
+            <textarea id="postContent" placeholder="Write something..."></textarea>
+            <br>
+            <button type="submit">Post</button>
+        </form>
+
+        <div class="posts">
+            <!-- Posts will be dynamically added here -->
+        </div>
+    </section>
+
+    <!-- Featured Creators Section -->
+    <section class="featured-creators">
+        <div class="container">
+            <h2>Featured Creators</h2>
+            <div class="creators">
+                <!-- Featured creators content will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community">
+        <div class="container">
+            <h2>Join Our Community</h2>
+            <div class="community-buttons">
+                <a href="#">Forums</a>
+                <a href="#">Events</a>
+                <a href="#">Groups</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="container">
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </aside>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2024 SeekER. All rights reserved. Designed by You.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+    </div>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Login form -->
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js"></script>
+<script>
+    // Firebase configuration and initialization
+    const firebaseConfig = {
+        apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+        authDomain: "seeker-928e7.firebaseapp.com",
+        projectId: "seeker-928e7",
+        storageBucket: "seeker-928e7.appspot.com",
+        messagingSenderId: "652562231057",
+        appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const firestore = firebase.firestore();
+    const auth = firebase.auth(); // Initialize Firebase Auth
+
+    // DOM elements
+    const postForm = document.getElementById('postForm');
+    const postContent = document.getElementById('postContent');
+    const postsContainer = document.querySelector('.posts');
+    const creatorsContainer = document.querySelector('.creators');
+    const signupLink = document.getElementById('signupLink');
+    const loginLink = document.getElementById('loginLink');
+    const logoutLink = document.getElementById('logoutLink');
+
+    // Event listener for form submission
+    postForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const content = postContent.value.trim();
+        if (content === '') {
+            alert('Please enter some content to post.');
+            return;
+        }
+        savePost(content);
+        postForm.reset();
+    });
+
+    // Function to save post to Firestore
+    async function savePost(content) {
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
+
+        try {
+            // Add a new document with a generated ID to the "posts" collection
+            await firestore.collection('posts').add({
+                content: content,
+                date: formattedDate
+            });
+            console.log('Post saved successfully');
+        } catch (error) {
+            console.error('Error saving post:', error);
+        }
+    }
+
+    // Function to load posts from Firestore
+    function loadPosts() {
+        firestore.collection('posts').orderBy('date', 'desc').onSnapshot(function(snapshot) {
+            postsContainer.innerHTML = ''; // Clear existing posts
+            snapshot.forEach(function(doc) {
+                const post = doc.data();
+                const postHTML = `
+                    <div class="post">
+                        <p class="post-content">${post.content}</p>
+                        <p class="post-date">Posted on ${post.date}</p>
+                    </div>
+                `;
+                postsContainer.insertAdjacentHTML('afterbegin', postHTML);
+            });
+        });
+    }
+
+    // Function to load featured creators from Firestore
+    function loadFeaturedCreators() {
+        firestore.collection('creators').where('featured', '==', true).get()
+            .then(function(querySnapshot) {
+                creatorsContainer.innerHTML = ''; // Clear existing creators
+                querySnapshot.forEach(function(doc) {
+                    const creator = doc.data();
+                    const creatorHTML = `
+                        <div class="creator">
+                            <h3>${creator.name}</h3>
+                            <p>${creator.bio}</p>
+                            <a href="${creator.website}" target="_blank">Visit Website</a>
+                        </div>
+                    `;
+                    creatorsContainer.insertAdjacentHTML('beforeend', creatorHTML);
+                });
+            })
+            .catch(function(error) {
+                console.error('Error loading featured creators:', error);
+            });
+    }
+
+    // Event listener for login link click
+    loginLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        $('#loginModal').modal('show'); // Show login modal
+    });
+
+    // Event listener for signup link click
+    signupLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        // Implement your signup functionality here
+        alert('Signup functionality will be implemented soon.');
+    });
+
+    // Event listener for logout link click
+    logoutLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        auth.signOut().then(function() {
+            console.log('User signed out');
+            showLoginLinks();
+        }).catch(function(error) {
+            console.error('Error signing out:', error);
         });
     });
+
+    // Function to show login and signup links
+    function showLoginLinks() {
+        loginLink.classList.remove('d-none');
+        signupLink.classList.remove('d-none');
+        logoutLink.classList.add('d-none');
+    }
+
+    // Function to show logout link and hide login and signup links
+    function showLogoutLink() {
+        loginLink.classList.add('d-none');
+        signupLink.classList.add('d-none');
+        logoutLink.classList.remove('d-none');
+    }
+
+    // Check if user is logged in
+    auth.onAuthStateChanged(function(user) {
+        if (user) {
+            console.log('User is logged in:', user.email);
+            showLogoutLink();
+            loadPosts();
+            loadFeaturedCreators();
+        } else {
+            console.log('User is logged out');
+            showLoginLinks();
+        }
+    });
+
+    // Event listener for login form submission
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = loginEmail.value;
+        const password = loginPassword.value;
+        
+        // Sign in user with email and password
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log('User signed in:', user.email);
+                $('#loginModal').modal('hide'); // Hide the login modal after successful login
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error('Error signing in:', errorMessage);
+                alert(errorMessage); // Display error message
+            });
+    });
+
 </script>
 </body>
 </html>
