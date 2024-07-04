@@ -339,12 +339,21 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav nav-links">
-                    <li class="nav-item"><a class="nav-link" href="home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="explore">Explore</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pricing">Pricing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link btn-signup" href="signup">Signup</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-signup" href="#">Sign Up</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -355,8 +364,8 @@
 <section class="hero">
     <div class="container">
         <h1>Welcome to SeekER</h1>
-        <p>Discover exclusive content from your favorite creators.</p>
-        <a href="#featured-creators" class="cta-button">Get Started</a>
+        <p>Your platform for discovering and supporting content creators.</p>
+        <a href="#" class="cta-button">Get Started</a>
     </div>
 </section>
 
@@ -365,13 +374,11 @@
     <!-- Post Section -->
     <section class="post-section">
         <h2>Create a Post</h2>
-        <div class="post-form">
-            <form id="postForm">
-                <textarea id="postContent" placeholder="Write something..."></textarea>
-                <br>
-                <button type="submit">Post</button>
-            </form>
-        </div>
+        <form id="postForm">
+            <textarea id="postContent" placeholder="Write something..."></textarea>
+            <br>
+            <button type="submit">Post</button>
+        </form>
 
         <div class="posts">
             <!-- Posts will be dynamically added here -->
@@ -379,42 +386,45 @@
     </section>
 
     <!-- Featured Creators Section -->
-    <section id="featured-creators" class="featured-creators">
-        <h2>Featured Creators</h2>
-        <div class="creators">
-            <!-- Featured creators content will be dynamically added here -->
+    <section class="featured-creators">
+        <div class="container">
+            <h2>Featured Creators</h2>
+            <div class="creators">
+                <!-- Featured creators content will be dynamically added here -->
+            </div>
         </div>
     </section>
 
-    <!-- Become a Creator Section -->
-    <section class="become-creator">
+    <!-- Community Section -->
+    <section class="community">
         <div class="container">
-            <h2>Want to become a creator?</h2>
-            <p>Join our platform and start sharing exclusive content with your fans. As a creator, you can monetize your content and build a community.</p>
-            <div class="creator-buttons">
-                <a href="explore.html" class="btn btn-primary">Explore Feed</a>
-                <a href="creator-signup.html" class="btn btn-success">Become A Creator</a>
+            <h2>Join Our Community</h2>
+            <div class="community-buttons">
+                <a href="#">Forums</a>
+                <a href="#">Events</a>
+                <a href="#">Groups</a>
             </div>
         </div>
     </section>
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <h2>Additional Features</h2>
-        <ul>
-            <li><a href="#">Content Creation Tools</a></li>
-            <li><a href="#">Community Interaction</a></li>
-            <li><a href="#">Monetization Options</a></li>
-            <li><a href="#">Privacy and Security</a></li>
-            <li><a href="#">Special Offers and Discounts</a></li>
-        </ul>
+        <div class="container">
+            <h2>Resources</h2>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+        </div>
     </aside>
 </main>
 
 <!-- Footer -->
 <footer>
     <div class="container">
-        <p>&copy; 2024 SeekER. All rights reserved.</p>
+        <p>&copy; 2024 SeekER. All rights reserved. Designed by You.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
     </div>
 </footer>
 
@@ -424,7 +434,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js"></script>
 <script>
     // Firebase configuration and initialization
     const firebaseConfig = {
@@ -436,7 +446,7 @@
         appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
     };
     firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+    const firestore = firebase.firestore();
 
     // DOM elements
     const postForm = document.getElementById('postForm');
@@ -456,55 +466,45 @@
         postForm.reset();
     });
 
-    // Function to save post to Firebase
+    // Function to save post to Firestore
     async function savePost(content) {
         const currentDate = new Date();
         const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()} ${currentDate.getHours()}:${currentDate.getMinutes()}`;
 
-        // Generate a new post key
-        const newPostKey = database.ref().child('posts').push().key;
-
-        // Create the data object to be saved
-        const postData = {
-            content: content,
-            date: formattedDate
-        };
-
-        // Write the new post's data simultaneously in the posts list
-        const updates = {};
-        updates['/posts/' + newPostKey] = postData;
-
         try {
-            await database.ref().update(updates);
+            // Add a new document with a generated ID to the "posts" collection
+            await firestore.collection('posts').add({
+                content: content,
+                date: formattedDate
+            });
             console.log('Post saved successfully');
         } catch (error) {
             console.error('Error saving post:', error);
         }
     }
 
-    // Function to load posts from Firebase
+    // Function to load posts from Firestore
     function loadPosts() {
-        const postsRef = database.ref('posts');
-
-        postsRef.on('child_added', function(data) {
-            const post = data.val();
-            const postHTML = `
-                <div class="post">
-                    <p class="post-content">${post.content}</p>
-                    <p class="post-date">Posted on ${post.date}</p>
-                </div>
-            `;
-            postsContainer.insertAdjacentHTML('afterbegin', postHTML);
+        firestore.collection('posts').orderBy('date', 'desc').onSnapshot(function(snapshot) {
+            postsContainer.innerHTML = ''; // Clear existing posts
+            snapshot.forEach(function(doc) {
+                const post = doc.data();
+                const postHTML = `
+                    <div class="post">
+                        <p class="post-content">${post.content}</p>
+                        <p class="post-date">Posted on ${post.date}</p>
+                    </div>
+                `;
+                postsContainer.insertAdjacentHTML('afterbegin', postHTML);
+            });
         });
     }
 
-    // Function to load featured creators from Firebase
+    // Function to load featured creators from Firestore
     function loadFeaturedCreators() {
-        const creatorsRef = database.ref('featured_creators');
-
-        creatorsRef.once('value', function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-                const creator = childSnapshot.val();
+        firestore.collection('featured_creators').get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                const creator = doc.data();
                 const creatorHTML = `
                     <div class="creator">
                         <img src="${creator.image}" alt="${creator.name}">
@@ -519,6 +519,8 @@
                 `;
                 creatorsContainer.insertAdjacentHTML('beforeend', creatorHTML);
             });
+        }).catch(function(error) {
+            console.error('Error loading featured creators:', error);
         });
     }
 
@@ -548,7 +550,9 @@
                     breakpoint: 768,
                     settings: {
                         slidesToShow: 1,
-                        slidesToScroll: 1
+                        slidesToScroll: 1,
+                        infinite: true,
+                        dots: true
                     }
                 }
             ]
