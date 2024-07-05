@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SeekER</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Main stylesheet -->
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
     <style>
+        /* Add your custom styles here */
+        /* Example: */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f2f2f2;
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,17 +21,15 @@
 
         .container {
             background-color: #fff;
-            padding: 40px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
+            width: 300px;
             text-align: center;
         }
 
         h1 {
             color: #333;
-            margin-bottom: 20px;
         }
 
         label {
@@ -41,57 +41,30 @@
         input[type="email"],
         input[type="password"] {
             width: calc(100% - 20px);
-            padding: 10px;
+            padding: 8px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 4px;
             box-sizing: border-box;
         }
 
         button[type="submit"] {
-            background-color: #333;
-            color: #fff;
+            background-color: #4CAF50;
+            color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         button[type="submit"]:hover {
-            background-color: #555;
+            background-color: #45a049;
         }
 
         .error-message {
             color: red;
             margin-top: 10px;
-        }
-
-        .password-container {
-            position: relative;
-        }
-
-        .password-toggle {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-
-        .links {
-            margin-top: 15px;
-        }
-
-        .links a {
-            color: #333;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-
-        .links a:hover {
-            color: #555;
         }
     </style>
 </head>
@@ -102,9 +75,9 @@
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <label for="password">Password:</label>
-            <div class="password-container">
+            <div style="position: relative;">
                 <input type="password" id="password" name="password" required>
-                <span class="password-toggle" onclick="togglePasswordVisibility()">
+                <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;" onclick="togglePasswordVisibility()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16" id="eyeIcon">
                         <path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                     </svg>
@@ -113,17 +86,16 @@
             <button type="submit">Login</button>
         </form>
         <p id="loginError" class="error-message"></p>
-        <div class="links">
-            <a href="forgot-password.html">Forgot Password?</a>
-            <a href="signup.html">Sign Up</a>
-        </div>
+        <p><a href="forgot-password.html">Forgot Password?</a></p>
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
     </div>
-
+    
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script>
+        // Firebase configuration and login logic
         const firebaseConfig = {
             apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
             authDomain: "seeker-928e7.firebaseapp.com",
@@ -132,10 +104,9 @@
             messagingSenderId: "652562231057",
             appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
         };
-
+        
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const firestore = firebase.firestore();
 
         function togglePasswordVisibility() {
             const passwordInput = document.getElementById('password');
@@ -143,7 +114,7 @@
             
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                eyeIcon.innerHTML = '<path d="M8 5.5A3.5 3.5 0 1 1 4.5 9 3.5 3.5 0 0 1 8 5.5zm0-1A4.5 4.5 0 1 0 12.5 9 4.5 4.5 0 0 0 8 4.5z"/><path d="M8 3a6 6 0 0 0-4.596 10.657L3.75 12.5H4a5.978 5.978 0 0 0 2.646-.646l1.5 1.5A6 6 0 0 0 8 3zm3.354 5.354a.5.5 0 1 1-.708.708l-6-6a.5.5 0 0 1 .708-.708z"/>';
+                eyeIcon.innerHTML = '<path fill-rule="evenodd" d="M1.646 7.646a.5.5 0 0 1 0-.707l.708-.708a.5.5 0 0 1 .707 0l12 12a.5.5 0 0 1 0 .707l-.708.708a.5.5 0 0 1-.707 0l-12-12a.5.5 0 0 1 0-.707z"/><path fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM7 6a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>';
             } else {
                 passwordInput.type = 'password';
                 eyeIcon.innerHTML = '<path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>';
@@ -164,7 +135,7 @@
                 const user = userCredential.user;
 
                 // Redirect based on user role
-                const userDoc = await firestore.collection('users').doc(user.uid).get();
+                const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
                 const userData = userDoc.data();
 
                 if (userData && userData.role === 'creator') {
