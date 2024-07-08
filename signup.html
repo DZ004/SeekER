@@ -38,7 +38,10 @@
         }
 
         input[type="email"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="text"],
+        input[type="date"],
+        textarea {
             width: calc(100% - 20px);
             padding: 8px;
             margin-bottom: 15px;
@@ -71,6 +74,8 @@
     <div class="container">
         <h1>Sign Up</h1>
         <form id="signupForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <label for="password">Password:</label>
@@ -82,6 +87,10 @@
                     </svg>
                 </span>
             </div>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" rows="3"></textarea>
             <button type="submit">Sign Up</button>
         </form>
         <p id="signupError" class="error-message"></p>
@@ -128,14 +137,20 @@
 
             const email = signupForm.email.value;
             const password = signupForm.password.value;
+            const username = signupForm.username.value;
+            const dob = signupForm.dob.value;
+            const bio = signupForm.bio.value;
 
             try {
                 const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
 
-                // Add user to Firestore with role 'free-user'
+                // Add user to Firestore with additional fields
                 await db.collection('users').doc(user.uid).set({
                     email: user.email,
+                    username: username,
+                    dob: dob,
+                    bio: bio,
                     role: 'free-user'
                 });
 
