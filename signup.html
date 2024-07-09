@@ -50,6 +50,16 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        textarea:focus,
+        input[type="file"]:focus {
+            border-color: #4CAF50;
         }
 
         button[type="submit"] {
@@ -76,22 +86,21 @@
         .tooltip {
             position: relative;
             display: inline-block;
-            text-align: left;
         }
 
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 160px;
+            width: 200px;
             background-color: #555;
             color: #fff;
             text-align: center;
             border-radius: 6px;
-            padding: 5px 0;
+            padding: 5px;
             position: absolute;
             z-index: 1;
-            top: -30px;
+            bottom: 125%; 
             left: 50%;
-            margin-left: -80px;
+            margin-left: -100px;
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -140,47 +149,41 @@
             border-color: red;
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
+        /* Password strength indicator */
+        .password-strength {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
         }
 
-        .password-toggle svg {
-            width: 16px;
-            height: 16px;
-            fill: #333;
+        .password-strength .strength-text {
+            flex: 1;
         }
 
-        .password-toggle svg:hover {
-            fill: #666;
-        }
-
-        .strength-indicator {
-            margin-top: 5px;
-            text-align: left;
-        }
-
-        .strength-indicator span {
-            display: inline-block;
-            width: 10px;
+        .password-strength .strength-bar {
             height: 10px;
-            margin-right: 3px;
-            border-radius: 50%;
-            background-color: lightgray;
+            border-radius: 4px;
+            overflow: hidden;
+            flex: 3;
         }
 
-        .strength-indicator .weak {
+        .password-strength .bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .password-strength .weak {
             background-color: red;
         }
 
-        .strength-indicator .medium {
+        .password-strength .medium {
             background-color: orange;
         }
 
-        .strength-indicator .strong {
+        .password-strength .strong {
             background-color: green;
         }
     </style>
@@ -212,14 +215,19 @@
                     <input type="password" id="password" name="password" required>
                     <span class="tooltiptext">Password must be at least 8 characters long.</span>
                     <div class="error-message" id="passwordError">Password is required.</div>
-                    <span class="password-toggle" onclick="togglePasswordVisibility()">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" id="eyeIcon">
-                            <path fill-rule="evenodd" d="M7.379 1.771c.326-.256.82-.256 1.146 0l6 4.5c.396.297.505.85.25 1.281l-3.375 6c-.251.45-.76.594-1.188.344l-3.722-2.129c-.428-.245-.917-.245-1.345 0l-3.722 2.129c-.428.245-.937.101-1.188-.344l-3.375-6c-.255-.431-.146-.984.25-1.281l6-4.5zM8 5.125a3.007 3.007 0 0 1 1.732 5.37A3 3 0 1 1 8 5.125zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                    <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;" onclick="togglePasswordVisibility()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16" id="eyeIcon">
+                            <path d="M7.379 1.771c.326-.256.82-.256 1.146 0l6 4.5c.396.297.505.85.25 1.281l-3.375 6c-.251.45-.76.594-1.188.344l-3.722-2.129c-.428-.245-.917-.245-1.345 0l-3.722 2.129c-.428.245-.937.101-1.188-.344l-3.375-6c-.255-.431-.146-.984.25-1.281l6-4.5zM8 5.125a3.007 3.007 0 0 1 1.732 5.37A3 3 0 1 1 8 5.125zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
                         </svg>
                     </span>
                 </div>
-                <div class="strength-indicator" id="passwordStrength">
-                    Password strength: <span class="weak"></span><span class="medium"></span><span class="strong"></span>
+                <div class="password-strength">
+                    <div class="strength-text">Password Strength:</div>
+                    <div class="strength-bar">
+                        <div class="bar weak"></div>
+                        <div class="bar medium"></div>
+                        <div class="bar strong"></div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -287,41 +295,54 @@
                 eyeIcon.innerHTML = '<path fill-rule="evenodd" d="M7.379 1.771c.326-.256.82-.256 1.146 0l6 4.5c.396.297.505.85.25 1.281l-3.375 6c-.251.45-.76.594-1.188.344l-3.722-2.129c-.428-.245-.917-.245-1.345 0l-3.722 2.129c-.428.245-.937.101-1.188-.344l-3.375-6c-.255-.431-.146-.984.25-1.281l6-4.5zM8 5.125a3.007 3.007 0 0 1 1.732 5.37A3 3 0 1 1 8 5.125zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>';
             } else {
                 passwordInput.type = 'password';
-                eyeIcon.innerHTML = '<path fill-rule="evenodd" d="M1.646 7.646a.5.5 0 0 1 0-.707l.708-.708a.5.5 0 0 1 .707 0l12 12a.5.5 0 0 1 0 .707l-.708.708a.5.5 0 0 1-.707 0l-12-12a.5.5 0 0 1 0-.707z"/><path fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>';
+                eyeIcon.innerHTML = '<path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>';
             }
         }
 
         function validatePasswordStrength(password) {
-            const strengthIndicator = document.getElementById('passwordStrength');
-            const weak = strengthIndicator.querySelector('.weak');
-            const medium = strengthIndicator.querySelector('.medium');
-            const strong = strengthIndicator.querySelector('.strong');
+            const strengthIndicator = document.querySelector('.password-strength');
+            const bar = strengthIndicator.querySelector('.bar');
 
-            if (password.length === 0) {
-                weak.style.backgroundColor = 'lightgray';
-                medium.style.backgroundColor = 'lightgray';
-                strong.style.backgroundColor = 'lightgray';
-                return;
+            let strength = 0;
+            if (password.length >= 8) {
+                strength++;
+            }
+            if (password.match(/[a-z]/)) {
+                strength++;
+            }
+            if (password.match(/[A-Z]/)) {
+                strength++;
+            }
+            if (password.match(/[0-9]/)) {
+                strength++;
+            }
+            if (password.match(/[^a-zA-Z0-9]/)) {
+                strength++;
             }
 
-            if (password.length < 8) {
-                weak.style.backgroundColor = 'red';
-                medium.style.backgroundColor = 'lightgray';
-                strong.style.backgroundColor = 'lightgray';
-            } else if (password.length < 12) {
-                weak.style.backgroundColor = 'orange';
-                medium.style.backgroundColor = 'orange';
-                strong.style.backgroundColor = 'lightgray';
-            } else {
-                weak.style.backgroundColor = 'green';
-                medium.style.backgroundColor = 'green';
-                strong.style.backgroundColor = 'green';
+            switch (strength) {
+                case 0:
+                case 1:
+                case 2:
+                    bar.style.width = '30%';
+                    bar.className = 'bar weak';
+                    break;
+                case 3:
+                    bar.style.width = '60%';
+                    bar.className = 'bar medium';
+                    break;
+                case 4:
+                case 5:
+                    bar.style.width = '100%';
+                    bar.className = 'bar strong';
+                    break;
+                default:
+                    break;
             }
         }
 
         document.getElementById('password').addEventListener('input', (e) => {
-            const password = e.target.value;
-            validatePasswordStrength(password);
+            validatePasswordStrength(e.target.value);
         });
 
         function showError(inputId, message) {
@@ -352,13 +373,6 @@
 
             if (!email) {
                 showError('email', 'Email is required.');
-                isValid = false;
-            } else {
-                clearError('email');
-            }
-
-            if (!/\S+@\S+\.\S+/.test(email)) {
-                showError('email', 'Enter a valid email address.');
                 isValid = false;
             } else {
                 clearError('email');
@@ -463,7 +477,6 @@
             } catch (error) {
                 signupError.textContent = error.message;
                 loadingSpinner.style.display = 'none';
-                console.error('Signup error:', error);
             }
         });
     </script>
