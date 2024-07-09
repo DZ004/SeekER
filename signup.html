@@ -149,7 +149,6 @@
             border-color: red;
         }
 
-        /* Password strength indicator */
         .password-strength {
             margin-top: 10px;
             display: flex;
@@ -217,7 +216,7 @@
                     <div class="error-message" id="passwordError">Password is required.</div>
                     <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;" onclick="togglePasswordVisibility()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16" id="eyeIcon">
-                            <path d="M7.379 1.771c.326-.256.82-.256 1.146 0l6 4.5c.396.297.505.85.25 1.281l-3.375 6c-.251.45-.76.594-1.188.344l-3.722-2.129c-.428-.245-.917-.245-1.345 0l-3.722 2.129c-.428.245-.937.101-1.188-.344l-3.375-6c-.255-.431-.146-.984.25-1.281l6-4.5zM8 5.125a3.007 3.007 0 0 1 1.732 5.37A3 3 0 1 1 8 5.125zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                            <path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                         </svg>
                     </span>
                 </div>
@@ -265,220 +264,140 @@
         <p>Already have an account? <a href="login.html">Login</a></p>
     </div>
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
     <script>
-        // Firebase configuration and signup logic
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
-            authDomain: "seeker-928e7.firebaseapp.com",
-            projectId: "seeker-928e7",
-            storageBucket: "seeker-928e7.appspot.com",
-            messagingSenderId: "652562231057",
-            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
-        };
-        
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const storage = firebase.storage();
+        const form = document.getElementById('signupForm');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const dob = document.getElementById('dob');
+        const terms = document.getElementById('terms');
+        const signupError = document.getElementById('signupError');
+        const eyeIcon = document.getElementById('eyeIcon');
 
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('password');
-            const eyeIcon = document.getElementById('eyeIcon');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            loadingSpinner.style.display = 'block';
             
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.innerHTML = '<path fill-rule="evenodd" d="M7.379 1.771c.326-.256.82-.256 1.146 0l6 4.5c.396.297.505.85.25 1.281l-3.375 6c-.251.45-.76.594-1.188.344l-3.722-2.129c-.428-.245-.917-.245-1.345 0l-3.722 2.129c-.428.245-.937.101-1.188-.344l-3.375-6c-.255-.431-.146-.984.25-1.281l6-4.5zM8 5.125a3.007 3.007 0 0 1 1.732 5.37A3 3 0 1 1 8 5.125zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>';
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.innerHTML = '<path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>';
-            }
-        }
+            let valid = true;
 
-        function validatePasswordStrength(password) {
-            const strengthIndicator = document.querySelector('.password-strength');
-            const bar = strengthIndicator.querySelector('.bar');
+            if (!username.value) {
+                document.getElementById('usernameError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('usernameError').style.display = 'none';
+            }
+
+            if (!email.value || !validateEmail(email.value)) {
+                document.getElementById('emailError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('emailError').style.display = 'none';
+            }
+
+            if (!password.value) {
+                document.getElementById('passwordError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+            }
+
+            if (password.value !== confirmPassword.value) {
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('confirmPasswordError').style.display = 'none';
+            }
+
+            if (!dob.value) {
+                document.getElementById('dobError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('dobError').style.display = 'none';
+            }
+
+            if (!terms.checked) {
+                document.getElementById('termsError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('termsError').style.display = 'none';
+            }
+
+            if (valid) {
+                setTimeout(() => {
+                    loadingSpinner.style.display = 'none';
+                    alert('Sign up successful!');
+                    form.reset();
+                }, 2000);
+            } else {
+                loadingSpinner.style.display = 'none';
+                signupError.textContent = 'Please correct the errors in the form.';
+            }
+        });
+
+        password.addEventListener('input', function() {
+            const passwordValue = password.value;
+            const strengthText = document.querySelector('.password-strength .strength-text');
+            const strengthBar = document.querySelector('.password-strength .strength-bar .bar');
 
             let strength = 0;
-            if (password.length >= 8) {
+            if (passwordValue.length >= 8) {
                 strength++;
             }
-            if (password.match(/[a-z]/)) {
+            if (/[A-Z]/.test(passwordValue)) {
                 strength++;
             }
-            if (password.match(/[A-Z]/)) {
+            if (/[a-z]/.test(passwordValue)) {
                 strength++;
             }
-            if (password.match(/[0-9]/)) {
+            if (/[0-9]/.test(passwordValue)) {
                 strength++;
             }
-            if (password.match(/[^a-zA-Z0-9]/)) {
+            if (/[^A-Za-z0-9]/.test(passwordValue)) {
                 strength++;
             }
 
             switch (strength) {
-                case 0:
                 case 1:
                 case 2:
-                    bar.style.width = '30%';
-                    bar.className = 'bar weak';
+                    strengthText.textContent = 'Weak';
+                    strengthBar.className = 'bar weak';
+                    strengthBar.style.width = '33%';
                     break;
                 case 3:
-                    bar.style.width = '60%';
-                    bar.className = 'bar medium';
-                    break;
                 case 4:
+                    strengthText.textContent = 'Medium';
+                    strengthBar.className = 'bar medium';
+                    strengthBar.style.width = '66%';
+                    break;
                 case 5:
-                    bar.style.width = '100%';
-                    bar.className = 'bar strong';
+                    strengthText.textContent = 'Strong';
+                    strengthBar.className = 'bar strong';
+                    strengthBar.style.width = '100%';
                     break;
                 default:
+                    strengthText.textContent = 'Very Weak';
+                    strengthBar.className = 'bar weak';
+                    strengthBar.style.width = '0';
                     break;
             }
-        }
-
-        document.getElementById('password').addEventListener('input', (e) => {
-            validatePasswordStrength(e.target.value);
         });
 
-        function showError(inputId, message) {
-            const formGroup = document.getElementById(inputId).closest('.form-group');
-            formGroup.classList.add('error');
-            formGroup.querySelector('.error-message').textContent = message;
+        function togglePasswordVisibility() {
+            if (password.type === 'password') {
+                password.type = 'text';
+                eyeIcon.innerHTML = '<path d="M1.5 8a6.5 6.5 0 0 1 11.6-4.3l1.4 1.4A8.5 8.5 0 0 0 0 8a8.5 8.5 0 0 0 14.5 4.9l-1.4-1.4A6.5 6.5 0 0 1 1.5 8z"/>';
+            } else {
+                password.type = 'password';
+                eyeIcon.innerHTML = '<path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>';
+            }
         }
 
-        function clearError(inputId) {
-            const formGroup = document.getElementById(inputId).closest('.form-group');
-            formGroup.classList.remove('error');
-            formGroup.querySelector('.error-message').textContent = '';
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
         }
-
-        async function isUsernameTaken(username) {
-            const usersRef = db.collection('users');
-            const querySnapshot = await usersRef.where('username', '==', username).get();
-            return !querySnapshot.empty;
-        }
-
-        function validateForm() {
-            let isValid = true;
-            const email = signupForm.email.value;
-            const password = signupForm.password.value;
-            const confirmPassword = signupForm.confirmPassword.value;
-            const username = signupForm.username.value;
-            const dob = signupForm.dob.value;
-
-            if (!email) {
-                showError('email', 'Email is required.');
-                isValid = false;
-            } else {
-                clearError('email');
-            }
-
-            if (!password) {
-                showError('password', 'Password is required.');
-                isValid = false;
-            } else if (password.length < 8) {
-                showError('password', 'Password must be at least 8 characters.');
-                isValid = false;
-            } else {
-                clearError('password');
-            }
-
-            if (password !== confirmPassword) {
-                showError('confirmPassword', 'Passwords must match.');
-                isValid = false;
-            } else {
-                clearError('confirmPassword');
-            }
-
-            if (!username) {
-                showError('username', 'Username is required.');
-                isValid = false;
-            } else {
-                clearError('username');
-            }
-
-            if (!dob) {
-                showError('dob', 'Date of birth is required.');
-                isValid = false;
-            } else {
-                clearError('dob');
-            }
-
-            return isValid;
-        }
-
-        const signupForm = document.getElementById('signupForm');
-        const signupError = document.getElementById('signupError');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-
-        signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            if (!validateForm()) {
-                return;
-            }
-
-            const email = signupForm.email.value;
-            const password = signupForm.password.value;
-            const username = signupForm.username.value;
-            const dob = signupForm.dob.value;
-            const bio = signupForm.bio.value;
-            const profilePicture = signupForm.profilePicture.files[0];
-            const terms = signupForm.terms.checked;
-
-            if (!terms) {
-                showError('terms', 'You must agree to the terms and conditions.');
-                return;
-            } else {
-                clearError('terms');
-            }
-
-            loadingSpinner.style.display = 'block';
-
-            try {
-                if (await isUsernameTaken(username)) {
-                    signupError.textContent = 'Username is already taken.';
-                    loadingSpinner.style.display = 'none';
-                    return;
-                }
-
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-
-                let profilePictureUrl = '';
-                if (profilePicture) {
-                    const storageRef = storage.ref();
-                    const profilePictureRef = storageRef.child(`profilePictures/${user.uid}`);
-                    await profilePictureRef.put(profilePicture);
-                    profilePictureUrl = await profilePictureRef.getDownloadURL();
-                }
-
-                // Add user to Firestore with additional fields
-                await db.collection('users').doc(user.uid).set({
-                    email: user.email,
-                    username: username,
-                    dob: dob,
-                    bio: bio,
-                    profilePicture: profilePictureUrl,
-                    role: 'free-user'
-                });
-
-                // Reset form and hide loading spinner
-                signupForm.reset();
-                loadingSpinner.style.display = 'none';
-
-                // Redirect to home page or any other page
-                window.location.href = 'home.html';
-            } catch (error) {
-                signupError.textContent = error.message;
-                loadingSpinner.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
