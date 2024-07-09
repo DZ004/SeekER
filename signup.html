@@ -225,41 +225,107 @@
             color: #45a049;
         }
 
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+        .modal-body {
+            padding: 10px;
+        }
+
+        .modal-footer {
+            padding: 2px 16px;
+            background-color: #5cb85c;
+            color: white;
+            text-align: right;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        .modal-footer button {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .modal-footer button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Sign Up</h1>
-        <div class="loading-spinner" id="loadingSpinner"></div>
         <form id="signupForm">
             <div class="form-group">
                 <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <div class="error-message" id="usernameError">Username is required.</div>
                 <div class="tooltip">
-                    <input type="text" id="username" name="username" required>
                     <span class="tooltiptext">Choose a unique username.</span>
-                    <div class="error-message" id="usernameError">Username is required.</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <div class="tooltip">
-                    <input type="email" id="email" name="email" required>
-                    <span class="tooltiptext">Enter a valid email address.</span>
-                    <div class="error-message" id="emailError">Valid email is required.</div>
-                </div>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="emailError">Email is invalid.</div>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <div class="tooltip" style="position: relative;">
-                    <input type="password" id="password" name="password" required>
-                    <span class="tooltiptext">Password must be at least 8 characters long.</span>
-                    <div class="error-message" id="passwordError">Password is required.</div>
-                    <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;" onclick="togglePasswordVisibility()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16" id="eyeIcon">
-                            <path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                        </svg>
-                    </span>
-                </div>
+                <input type="password" id="password" name="password" required>
+                <div class="error-message" id="passwordError">Password is required.</div>
                 <div class="password-strength">
                     <div class="strength-text">Password Strength:</div>
                     <div class="strength-bar">
@@ -271,11 +337,8 @@
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password:</label>
-                <div class="tooltip">
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                    <span class="tooltiptext">Re-enter your password.</span>
-                    <div class="error-message" id="confirmPasswordError">Passwords must match.</div>
-                </div>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="error-message" id="confirmPasswordError">Passwords must match.</div>
             </div>
             <div class="form-group">
                 <label for="dob">Date of Birth:</label>
@@ -289,16 +352,35 @@
             <div class="form-group">
                 <label for="profilePicture">Profile Picture:</label>
                 <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                <div id="profilePicturePreview"></div>
             </div>
             <div class="form-group">
                 <label>
                     <input type="checkbox" id="terms" name="terms" required>
-                    I agree to the <a href="#">terms and conditions</a>.
+                    I agree to the <a href="#" id="termsLink">terms and conditions</a>.
                 </label>
                 <div class="error-message" id="termsError">You must agree to the terms.</div>
             </div>
             <button type="submit">Sign Up</button>
         </form>
+        <div class="loading-spinner" id="loadingSpinner"></div>
+    </div>
+
+    <!-- Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Terms and Conditions</h2>
+            </div>
+            <div class="modal-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero ac tellus ultricies, nec pretium ex volutpat. Nulla facilisi. Nullam porttitor fermentum quam, a vestibulum turpis.</p>
+                <p>Phasellus dictum, metus nec tempor laoreet, sapien erat placerat odio, et venenatis nulla urna at mauris.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="modalCloseBtn" class="close">Close</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -317,6 +399,11 @@
         const dobError = document.getElementById('dobError');
         const termsError = document.getElementById('termsError');
         const strengthBars = document.querySelectorAll('.strength-bar .bar');
+        const profilePicture = document.getElementById('profilePicture');
+        const profilePicturePreview = document.getElementById('profilePicturePreview');
+        const termsModal = document.getElementById('termsModal');
+        const termsLink = document.getElementById('termsLink');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -326,32 +413,38 @@
             document.querySelectorAll('.form-group').forEach(group => group.classList.remove('error'));
 
             if (!username.value) {
-                username.parentElement.parentElement.classList.add('error');
+                username.parentElement.classList.add('error');
+                usernameError.style.display = 'block';
                 isValid = false;
             }
 
             if (!email.value || !validateEmail(email.value)) {
-                email.parentElement.parentElement.classList.add('error');
+                email.parentElement.classList.add('error');
+                emailError.style.display = 'block';
                 isValid = false;
             }
 
             if (!password.value) {
-                password.parentElement.parentElement.classList.add('error');
+                password.parentElement.classList.add('error');
+                passwordError.style.display = 'block';
                 isValid = false;
             }
 
             if (password.value !== confirmPassword.value) {
-                confirmPassword.parentElement.parentElement.classList.add('error');
+                confirmPassword.parentElement.classList.add('error');
+                confirmPasswordError.style.display = 'block';
                 isValid = false;
             }
 
             if (!dob.value) {
-                dob.parentElement.parentElement.classList.add('error');
+                dob.parentElement.classList.add('error');
+                dobError.style.display = 'block';
                 isValid = false;
             }
 
             if (!terms.checked) {
-                terms.parentElement.parentElement.classList.add('error');
+                terms.parentElement.classList.add('error');
+                termsError.style.display = 'block';
                 isValid = false;
             }
 
@@ -366,7 +459,45 @@
             }
         });
 
+        username.addEventListener('input', checkUsernameAvailability);
+        email.addEventListener('input', validateEmailInput);
         password.addEventListener('input', updatePasswordStrength);
+        profilePicture.addEventListener('change', previewProfilePicture);
+        termsLink.addEventListener('click', openTermsModal);
+        modalCloseBtn.addEventListener('click', closeTermsModal);
+
+        function checkUsernameAvailability() {
+            // Simulate checking username availability
+            // Replace with actual logic here (e.g., AJAX request)
+            const usernameValue = username.value.trim();
+            if (usernameValue.length > 0) {
+                // Example: Checking if the username is already taken
+                const isUsernameAvailable = !['admin', 'user', 'test'].includes(usernameValue.toLowerCase());
+
+                if (!isUsernameAvailable) {
+                    username.parentElement.classList.add('error');
+                    usernameError.textContent = 'Username is not available.';
+                    usernameError.style.display = 'block';
+                } else {
+                    username.parentElement.classList.remove('error');
+                    usernameError.style.display = 'none';
+                }
+            } else {
+                username.parentElement.classList.remove('error');
+                usernameError.style.display = 'none';
+            }
+        }
+
+        function validateEmailInput() {
+            const emailValue = email.value.trim();
+            if (emailValue.length > 0 && !validateEmail(emailValue)) {
+                email.parentElement.classList.add('error');
+                emailError.style.display = 'block';
+            } else {
+                email.parentElement.classList.remove('error');
+                emailError.style.display = 'none';
+            }
+        }
 
         function validateEmail(email) {
             const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -392,12 +523,31 @@
             });
         }
 
-        function togglePasswordVisibility() {
-            const type = password.type === 'password' ? 'text' : 'password';
-            password.type = type;
-            confirmPassword.type = type;
-            const eyeIcon = document.getElementById('eyeIcon');
-            eyeIcon.classList.toggle('bi-eye-slash');
+        function previewProfilePicture() {
+            const file = profilePicture.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '200px'; // Adjust as needed
+                    profilePicturePreview.innerHTML = '';
+                    profilePicturePreview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            } else {
+                profilePicturePreview.innerHTML = '';
+            }
+        }
+
+        function openTermsModal(event) {
+            event.preventDefault();
+            termsModal.style.display = 'block';
+        }
+
+        function closeTermsModal() {
+            termsModal.style.display = 'none';
         }
     </script>
 </body>
