@@ -6,7 +6,6 @@
     <title>Sign Up</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Add your custom styles here */
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
@@ -43,7 +42,8 @@
         input[type="text"],
         input[type="date"],
         textarea,
-        input[type="file"] {
+        input[type="file"],
+        input[type="checkbox"] {
             width: calc(100% - 20px);
             padding: 8px;
             margin-bottom: 15px;
@@ -69,14 +69,7 @@
         .error-message {
             color: red;
             margin-top: 10px;
-        }
-
-        .password-strength {
-            font-size: 0.8em;
-            color: #888;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            text-align: left;
+            font-size: 0.9em;
         }
 
         .tooltip {
@@ -124,6 +117,26 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .input-error {
+            border-color: red;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group .error-message {
+            display: none;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .form-group.error input {
+            border-color: red;
+        }
     </style>
 </head>
 <body>
@@ -131,40 +144,64 @@
         <h1>Sign Up</h1>
         <div class="loading-spinner" id="loadingSpinner"></div>
         <form id="signupForm">
-            <label for="username">Username:</label>
-            <div class="tooltip">
-                <input type="text" id="username" name="username" required>
-                <span class="tooltiptext">Choose a unique username.</span>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <div class="tooltip">
+                    <input type="text" id="username" name="username" required>
+                    <span class="tooltiptext">Choose a unique username.</span>
+                    <div class="error-message" id="usernameError">Username is required.</div>
+                </div>
             </div>
-            <label for="email">Email:</label>
-            <div class="tooltip">
-                <input type="email" id="email" name="email" required>
-                <span class="tooltiptext">Enter a valid email address.</span>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <div class="tooltip">
+                    <input type="email" id="email" name="email" required>
+                    <span class="tooltiptext">Enter a valid email address.</span>
+                    <div class="error-message" id="emailError">Valid email is required.</div>
+                </div>
             </div>
-            <label for="password">Password:</label>
-            <div style="position: relative;" class="tooltip">
-                <input type="password" id="password" name="password" required>
-                <span class="tooltiptext">Password must be at least 8 characters long.</span>
-                <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;" onclick="togglePasswordVisibility()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16" id="eyeIcon">
-                        <path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                    </svg>
-                </span>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="tooltip" style="position: relative;">
+                    <input type="password" id="password" name="password" required>
+                    <span class="tooltiptext">Password must be at least 8 characters long.</span>
+                    <div class="error-message" id="passwordError">Password is required.</div>
+                    <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;" onclick="togglePasswordVisibility()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16" id="eyeIcon">
+                            <path d="M14.65 7.35a8 8 0 0 0-12.8 0l1.5 1.5a5.5 5.5 0 0 1 9.8 0l1.5-1.5zM8 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                        </svg>
+                    </span>
+                </div>
             </div>
-            <div class="password-strength" id="passwordStrength"></div>
-            <label for="dob">Date of Birth:</label>
-            <div class="tooltip">
-                <input type="date" id="dob" name="dob" required>
-                <span class="tooltiptext">You must be at least 18 years old.</span>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="error-message" id="confirmPasswordError">Passwords must match.</div>
             </div>
-            <label for="bio">Bio:</label>
-            <textarea id="bio" name="bio" rows="3"></textarea>
-            <label for="profilePicture">Profile Picture:</label>
-            <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
-            <label>
-                <input type="checkbox" id="terms" name="terms" required>
-                I agree to the <a href="terms.html" target="_blank">terms and conditions</a>
-            </label>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <div class="tooltip">
+                    <input type="date" id="dob" name="dob" required>
+                    <span class="tooltiptext">You must be at least 18 years old.</span>
+                    <div class="error-message" id="dobError">Date of birth is required.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio:</label>
+                <textarea id="bio" name="bio" rows="3"></textarea>
+                <div class="error-message" id="bioError">Bio is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="profilePicture">Profile Picture:</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="terms" name="terms" required>
+                    I agree to the <a href="terms.html" target="_blank">terms and conditions</a>
+                </label>
+                <div class="error-message" id="termsError">You must agree to the terms and conditions.</div>
+            </div>
             <button type="submit">Sign Up</button>
         </form>
         <p id="signupError" class="error-message"></p>
@@ -223,10 +260,71 @@
             validatePasswordStrength(e.target.value);
         });
 
+        function showError(inputId, message) {
+            const formGroup = document.getElementById(inputId).closest('.form-group');
+            formGroup.classList.add('error');
+            formGroup.querySelector('.error-message').textContent = message;
+        }
+
+        function clearError(inputId) {
+            const formGroup = document.getElementById(inputId).closest('.form-group');
+            formGroup.classList.remove('error');
+            formGroup.querySelector('.error-message').textContent = '';
+        }
+
         async function isUsernameTaken(username) {
             const usersRef = db.collection('users');
             const querySnapshot = await usersRef.where('username', '==', username).get();
             return !querySnapshot.empty;
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const email = signupForm.email.value;
+            const password = signupForm.password.value;
+            const confirmPassword = signupForm.confirmPassword.value;
+            const username = signupForm.username.value;
+            const dob = signupForm.dob.value;
+
+            if (!email) {
+                showError('email', 'Email is required.');
+                isValid = false;
+            } else {
+                clearError('email');
+            }
+
+            if (!password) {
+                showError('password', 'Password is required.');
+                isValid = false;
+            } else if (password.length < 8) {
+                showError('password', 'Password must be at least 8 characters.');
+                isValid = false;
+            } else {
+                clearError('password');
+            }
+
+            if (password !== confirmPassword) {
+                showError('confirmPassword', 'Passwords must match.');
+                isValid = false;
+            } else {
+                clearError('confirmPassword');
+            }
+
+            if (!username) {
+                showError('username', 'Username is required.');
+                isValid = false;
+            } else {
+                clearError('username');
+            }
+
+            if (!dob) {
+                showError('dob', 'Date of birth is required.');
+                isValid = false;
+            } else {
+                clearError('dob');
+            }
+
+            return isValid;
         }
 
         const signupForm = document.getElementById('signupForm');
@@ -235,6 +333,10 @@
 
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
 
             const email = signupForm.email.value;
             const password = signupForm.password.value;
@@ -245,8 +347,10 @@
             const terms = signupForm.terms.checked;
 
             if (!terms) {
-                signupError.textContent = 'You must agree to the terms and conditions.';
+                showError('terms', 'You must agree to the terms and conditions.');
                 return;
+            } else {
+                clearError('terms');
             }
 
             loadingSpinner.style.display = 'block';
