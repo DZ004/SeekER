@@ -15,7 +15,6 @@
             align-items: center;
             height: 100vh;
         }
-
         .container {
             background-color: #fff;
             padding: 20px;
@@ -24,27 +23,35 @@
             width: 300px;
             text-align: center;
         }
-
         h1 {
             color: #333;
         }
-
         label {
             display: block;
             margin-bottom: 5px;
             text-align: left;
         }
-
         input[type="email"],
         input[type="password"] {
-            width: calc(100% - 20px);
+            width: calc(100% - 40px);
             padding: 8px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
         }
-
+        .password-container {
+            display: flex;
+            align-items: center;
+        }
+        .password-container input {
+            flex: 1;
+        }
+        .password-container button {
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
         button[type="submit"] {
             background-color: #4CAF50;
             color: white;
@@ -53,13 +60,15 @@
             border-radius: 4px;
             cursor: pointer;
         }
-
         button[type="submit"]:hover {
             background-color: #45a049;
         }
-
         .error-message {
             color: red;
+            margin-top: 10px;
+        }
+        .loading {
+            display: none;
             margin-top: 10px;
         }
     </style>
@@ -67,67 +76,76 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form id="loginForm">
+        <form id="loginForm" aria-label="Login Form">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" required aria-required="true" aria-label="Email">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required aria-required="true" aria-label="Password">
+                <button type="button" id="togglePassword" aria-label="Toggle Password Visibility">👁️</button>
+            </div>
             <button type="submit">Login</button>
         </form>
         <p id="loginError" class="error-message"></p>
+        <div class="loading" id="loadingIndicator">Logging in...</div>
     </div>
-    
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script> <!-- Add Firestore SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
-            authDomain: "seeker-928e7.firebaseapp.com",
-            projectId: "seeker-928e7",
-            storageBucket: "seeker-928e7.appspot.com",
-            messagingSenderId: "652562231057",
-            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        document.addEventListener('DOMContentLoaded', () => {
+            const firebaseConfig = {
+                apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
+                authDomain: "seeker-928e7.firebaseapp.com",
+                projectId: "seeker-928e7",
+                storageBucket: "seeker-928e7.appspot.com",
+                messagingSenderId: "652562231057",
+                appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+            };
+            firebase.initializeApp(firebaseConfig);
 
-        // Reference to Firebase Auth service
-        const auth = firebase.auth();
-        const firestore = firebase.firestore(); // Initialize Firestore
+            const auth = firebase.auth();
+            const firestore = firebase.firestore();
 
-        // Login form submission
-        const loginForm = document.getElementById('loginForm');
-        const loginError = document.getElementById('loginError');
+            const loginForm = document.getElementById('loginForm');
+            const loginError = document.getElementById('loginError');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const passwordInput = document.getElementById('password');
+            const togglePasswordButton = document.getElementById('togglePassword');
 
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Prevent default form submission
+            togglePasswordButton.addEventListener('click', () => {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                togglePasswordButton.textContent = type === 'password' ? '👁️' : '🙈';
+            });
 
-            const email = loginForm.email.value;
-            const password = loginForm.password.value;
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                loginError.textContent = '';
+                loadingIndicator.style.display = 'block';
 
-            try {
-                // Sign in with email and password
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const email = e.target.email.value;
+                const password = e.target.password.value;
 
-                // Get user role from Firestore
-                const user = userCredential.user;
-                const userDoc = await firestore.collection('users').doc(user.uid).get();
-                const userData = userDoc.data();
+                try {
+                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                    const user = userCredential.user;
+                    const userDoc = await firestore.collection('users').doc(user.uid).get();
 
-                // Redirect based on user role
-                if (userData && userData.role === 'creator') {
-                    window.location.href = 'creator-home.html'; // Redirect to creator home page
-                } else {
-                    window.location.href = 'home.html'; // Redirect to free user home page
+                    if (userDoc.exists) {
+                        const userData = userDoc.data();
+                        const redirectUrl = userData.role === 'creator' ? 'creator-home.html' : 'home.html';
+                        window.location.href = redirectUrl;
+                    } else {
+                        loginError.textContent = 'User data not found.';
+                    }
+                } catch (error) {
+                    loginError.textContent = `Error: ${error.message}`;
+                    console.error('Login error:', error);
+                } finally {
+                    loadingIndicator.style.display = 'none';
                 }
-            } catch (error) {
-                // Handle errors
-                loginError.textContent = error.message;
-                console.error('Login error:', error);
-            }
+            });
         });
     </script>
 </body>
