@@ -302,7 +302,6 @@
             background-color: #45a049;
             transform: translateY(-2px);
         }
-
     </style>
 </head>
 <body>
@@ -320,25 +319,26 @@
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
-                <div class="error-message" id="emailError">Email is invalid.</div>
+                <div class="error-message" id="emailError">Please enter a valid email address.</div>
+                <div class="tooltip">
+                    <span class="tooltiptext">We will not share your email.</span>
+                </div>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
                 <div class="error-message" id="passwordError">Password is required.</div>
                 <div class="password-strength">
-                    <div class="strength-text">Password Strength:</div>
+                    <span class="strength-text" id="strengthText">Strength:</span>
                     <div class="strength-bar">
-                        <div class="bar weak"></div>
-                        <div class="bar medium"></div>
-                        <div class="bar strong"></div>
+                        <div class="bar" id="strengthBar"></div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
-                <div class="error-message" id="confirmPasswordError">Passwords must match.</div>
+                <label for="bio">Short Bio:</label>
+                <textarea id="bio" name="bio" rows="3" required></textarea>
+                <div class="error-message" id="bioError">Bio is required.</div>
             </div>
             <div class="form-group">
                 <label for="dob">Date of Birth:</label>
@@ -346,209 +346,176 @@
                 <div class="error-message" id="dobError">Date of Birth is required.</div>
             </div>
             <div class="form-group">
-                <label for="bio">Bio:</label>
-                <textarea id="bio" name="bio" rows="3"></textarea>
-            </div>
-            <div class="form-group">
                 <label for="profilePicture">Profile Picture:</label>
-                <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
-                <div id="profilePicturePreview"></div>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" required>
+                <div class="error-message" id="profilePictureError">Profile picture is required.</div>
             </div>
             <div class="form-group">
-                <label>
-                    <input type="checkbox" id="terms" name="terms" required>
-                    I agree to the <a href="#" id="termsLink">terms and conditions</a>.
-                </label>
-                <div class="error-message" id="termsError">You must agree to the terms.</div>
+                <label><input type="checkbox" id="terms" name="terms" required> I agree to the Terms and Conditions</label>
+                <div class="error-message" id="termsError">You must agree to the terms and conditions.</div>
             </div>
             <button type="submit">Sign Up</button>
+            <div class="loading-spinner" id="loadingSpinner"></div>
         </form>
-        <div class="loading-spinner" id="loadingSpinner"></div>
+        <p>Already have an account? <a href="/login">Log In</a></p>
+        <p>Looking to become a creator? <a href="#" id="creatorLink">Learn More</a></p>
     </div>
 
     <!-- Modal -->
-    <div id="termsModal" class="modal">
+    <div id="creatorModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close">&times;</span>
-                <h2>Terms and Conditions</h2>
+                <h2>Become a Creator</h2>
             </div>
             <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis libero ac tellus ultricies, nec pretium ex volutpat. Nulla facilisi. Nullam porttitor fermentum quam, a vestibulum turpis.</p>
-                <p>Phasellus dictum, metus nec tempor laoreet, sapien erat placerat odio, et venenatis nulla urna at mauris.</p>
+                <p>Learn more about the benefits of becoming a creator and how to start sharing your content.</p>
+                <p>To become a creator, you need to meet the following requirements:</p>
+                <ul>
+                    <li>Have a verified email address</li>
+                    <li>Provide a short bio and profile picture</li>
+                    <li>Agree to the creator terms and conditions</li>
+                </ul>
             </div>
             <div class="modal-footer">
-                <button id="modalCloseBtn" class="close">Close</button>
+                <button id="learnMoreButton">Learn More</button>
+                <button class="close">Close</button>
             </div>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('signupForm');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirmPassword');
-        const passwordError = document.getElementById('passwordError');
-        const confirmPasswordError = document.getElementById('confirmPasswordError');
-        const username = document.getElementById('username');
-        const email = document.getElementById('email');
-        const dob = document.getElementById('dob');
-        const terms = document.getElementById('terms');
-        const usernameError = document.getElementById('usernameError');
-        const emailError = document.getElementById('emailError');
-        const dobError = document.getElementById('dobError');
-        const termsError = document.getElementById('termsError');
-        const strengthBars = document.querySelectorAll('.strength-bar .bar');
-        const profilePicture = document.getElementById('profilePicture');
-        const profilePicturePreview = document.getElementById('profilePicturePreview');
-        const termsModal = document.getElementById('termsModal');
-        const termsLink = document.getElementById('termsLink');
-        const modalCloseBtn = document.getElementById('modalCloseBtn');
-
-        form.addEventListener('submit', function(event) {
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            let isValid = true;
+            // Example validation logic
+            var valid = true;
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var bio = document.getElementById('bio').value;
+            var dob = document.getElementById('dob').value;
+            var profilePicture = document.getElementById('profilePicture').files.length;
+            var terms = document.getElementById('terms').checked;
 
-            // Clear previous error states
-            document.querySelectorAll('.form-group').forEach(group => group.classList.remove('error'));
-
-            if (!username.value) {
-                username.parentElement.classList.add('error');
-                usernameError.style.display = 'block';
-                isValid = false;
+            if (!username) {
+                valid = false;
+                document.getElementById('usernameError').style.display = 'block';
+            } else {
+                document.getElementById('usernameError').style.display = 'none';
             }
 
-            if (!email.value || !validateEmail(email.value)) {
-                email.parentElement.classList.add('error');
-                emailError.style.display = 'block';
-                isValid = false;
+            if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+                valid = false;
+                document.getElementById('emailError').style.display = 'block';
+            } else {
+                document.getElementById('emailError').style.display = 'none';
             }
 
-            if (!password.value) {
-                password.parentElement.classList.add('error');
-                passwordError.style.display = 'block';
-                isValid = false;
+            if (!password) {
+                valid = false;
+                document.getElementById('passwordError').style.display = 'block';
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
             }
 
-            if (password.value !== confirmPassword.value) {
-                confirmPassword.parentElement.classList.add('error');
-                confirmPasswordError.style.display = 'block';
-                isValid = false;
+            if (!bio) {
+                valid = false;
+                document.getElementById('bioError').style.display = 'block';
+            } else {
+                document.getElementById('bioError').style.display = 'none';
             }
 
-            if (!dob.value) {
-                dob.parentElement.classList.add('error');
-                dobError.style.display = 'block';
-                isValid = false;
+            if (!dob) {
+                valid = false;
+                document.getElementById('dobError').style.display = 'block';
+            } else {
+                document.getElementById('dobError').style.display = 'none';
             }
 
-            if (!terms.checked) {
-                terms.parentElement.classList.add('error');
-                termsError.style.display = 'block';
-                isValid = false;
+            if (!profilePicture) {
+                valid = false;
+                document.getElementById('profilePictureError').style.display = 'block';
+            } else {
+                document.getElementById('profilePictureError').style.display = 'none';
             }
 
-            if (isValid) {
-                loadingSpinner.style.display = 'block';
-                setTimeout(() => {
+            if (!terms) {
+                valid = false;
+                document.getElementById('termsError').style.display = 'block';
+            } else {
+                document.getElementById('termsError').style.display = 'none';
+            }
+
+            if (valid) {
+                document.getElementById('loadingSpinner').style.display = 'block';
+                setTimeout(function() {
+                    document.getElementById('loadingSpinner').style.display = 'none';
                     alert('Form submitted successfully!');
-                    loadingSpinner.style.display = 'none';
-                    form.reset();
-                    updatePasswordStrength();
+                    document.getElementById('signupForm').reset();
                 }, 2000);
             }
         });
 
-        username.addEventListener('input', checkUsernameAvailability);
-        email.addEventListener('input', validateEmailInput);
-        password.addEventListener('input', updatePasswordStrength);
-        profilePicture.addEventListener('change', previewProfilePicture);
-        termsLink.addEventListener('click', openTermsModal);
-        modalCloseBtn.addEventListener('click', closeTermsModal);
-
-        function checkUsernameAvailability() {
-            // Simulate checking username availability
-            // Replace with actual logic here (e.g., AJAX request)
-            const usernameValue = username.value.trim();
-            if (usernameValue.length > 0) {
-                // Example: Checking if the username is already taken
-                const isUsernameAvailable = !['admin', 'user', 'test'].includes(usernameValue.toLowerCase());
-
-                if (!isUsernameAvailable) {
-                    username.parentElement.classList.add('error');
-                    usernameError.textContent = 'Username is not available.';
-                    usernameError.style.display = 'block';
-                } else {
-                    username.parentElement.classList.remove('error');
-                    usernameError.style.display = 'none';
-                }
-            } else {
-                username.parentElement.classList.remove('error');
-                usernameError.style.display = 'none';
-            }
-        }
-
-        function validateEmailInput() {
-            const emailValue = email.value.trim();
-            if (emailValue.length > 0 && !validateEmail(emailValue)) {
-                email.parentElement.classList.add('error');
-                emailError.style.display = 'block';
-            } else {
-                email.parentElement.classList.remove('error');
-                emailError.style.display = 'none';
-            }
-        }
-
-        function validateEmail(email) {
-            const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            return re.test(email);
-        }
-
-        function updatePasswordStrength() {
-            const value = password.value;
-            let strength = 0;
-
-            if (value.length >= 8) strength++;
-            if (/[A-Z]/.test(value)) strength++;
-            if (/[a-z]/.test(value)) strength++;
-            if (/[0-9]/.test(value)) strength++;
-            if (/[^A-Za-z0-9]/.test(value)) strength++;
-
-            strengthBars.forEach((bar, index) => {
-                bar.style.width = (index < strength) ? '100%' : '0%';
-                bar.classList.remove('weak', 'medium', 'strong');
-                if (strength <= 2) bar.classList.add('weak');
-                else if (strength <= 4) bar.classList.add('medium');
-                else bar.classList.add('strong');
-            });
-        }
-
-        function previewProfilePicture() {
-            const file = profilePicture.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = document.createElement('img');
-                    img.src = event.target.result;
-                    img.style.maxWidth = '100%';
-                    img.style.maxHeight = '200px'; // Adjust as needed
-                    profilePicturePreview.innerHTML = '';
-                    profilePicturePreview.appendChild(img);
-                }
-                reader.readAsDataURL(file);
-            } else {
-                profilePicturePreview.innerHTML = '';
-            }
-        }
-
-        function openTermsModal(event) {
+        document.getElementById('creatorLink').addEventListener('click', function(event) {
             event.preventDefault();
-            termsModal.style.display = 'block';
-        }
+            document.getElementById('creatorModal').style.display = 'block';
+        });
 
-        function closeTermsModal() {
-            termsModal.style.display = 'none';
-        }
+        document.querySelectorAll('.close').forEach(function(element) {
+            element.addEventListener('click', function() {
+                document.getElementById('creatorModal').style.display = 'none';
+            });
+        });
+
+        document.getElementById('learnMoreButton').addEventListener('click', function() {
+            alert('You will be redirected to the creator information page.');
+        });
+
+        // Password strength meter
+        document.getElementById('password').addEventListener('input', function() {
+            var password = this.value;
+            var strengthText = document.getElementById('strengthText');
+            var strengthBar = document.getElementById('strengthBar');
+            var strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/)) strength++;
+            if (password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[\W]/)) strength++;
+
+            switch (strength) {
+                case 1:
+                    strengthText.innerText = 'Strength: Very Weak';
+                    strengthBar.style.width = '20%';
+                    strengthBar.className = 'bar weak';
+                    break;
+                case 2:
+                    strengthText.innerText = 'Strength: Weak';
+                    strengthBar.style.width = '40%';
+                    strengthBar.className = 'bar weak';
+                    break;
+                case 3:
+                    strengthText.innerText = 'Strength: Medium';
+                    strengthBar.style.width = '60%';
+                    strengthBar.className = 'bar medium';
+                    break;
+                case 4:
+                    strengthText.innerText = 'Strength: Strong';
+                    strengthBar.style.width = '80%';
+                    strengthBar.className = 'bar strong';
+                    break;
+                case 5:
+                    strengthText.innerText = 'Strength: Very Strong';
+                    strengthBar.style.width = '100%';
+                    strengthBar.className = 'bar strong';
+                    break;
+                default:
+                    strengthText.innerText = 'Strength: Very Weak';
+                    strengthBar.style.width = '0%';
+                    strengthBar.className = 'bar weak';
+            }
+        });
     </script>
 </body>
 </html>
