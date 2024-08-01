@@ -12,15 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
-    <link rel="stylesheet" href="style.css">
     <style>
         :root {
             --primary-color: #4CAF50;
             --secondary-color: #333;
             --background-color: #f2f2f2;
             --text-color: #fff;
-            --error-color: red;
-            --input-border-color: #ccc;
+            --error-color: #e74c3c;
+            --input-border-color: #ddd;
             --input-focus-border-color: var(--primary-color);
             --input-error-border-color: var(--error-color);
         }
@@ -39,27 +38,23 @@
         .container {
             background-color: #fff;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
             text-align: center;
             position: relative;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         h1 {
             color: var(--secondary-color);
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-align: left;
             font-weight: 500;
         }
@@ -71,13 +66,13 @@
         textarea,
         input[type="file"],
         input[type="checkbox"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 15px;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
             border: 1px solid var(--input-border-color);
             border-radius: 6px;
             box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         input[type="email"]:focus,
@@ -87,18 +82,19 @@
         textarea:focus,
         input[type="file"]:focus {
             border-color: var(--input-focus-border-color);
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
         }
 
         button[type="submit"] {
             background-color: var(--primary-color);
             color: var(--text-color);
-            padding: 12px 20px;
+            padding: 14px 20px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s, transform 0.3s;
             font-weight: 500;
+            font-size: 16px;
         }
 
         button[type="submit"]:hover {
@@ -144,9 +140,9 @@
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3498db;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 2s linear infinite;
+            width: 40px;
+            height: 40px;
+            animation: spin 1.5s linear infinite;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -203,29 +199,30 @@
         .password-strength .bar {
             height: 100%;
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.3s;
         }
 
         .password-strength .weak {
-            background-color: red;
+            background-color: #e74c3c;
         }
 
         .password-strength .medium {
-            background-color: orange;
+            background-color: #f39c12;
         }
 
         .password-strength .strong {
-            background-color: green;
+            background-color: #2ecc71;
         }
 
         p {
             margin: 15px 0;
+            font-size: 0.9em;
         }
 
         a {
             color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
 
         a:hover {
@@ -234,24 +231,24 @@
 
         /* Modal styles */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+            display: none;
+            position: fixed;
+            z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
         }
 
         .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
+            background-color: #fff;
+            margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
+            width: 80%;
+            max-width: 600px;
             border-radius: 6px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             position: relative;
@@ -260,22 +257,22 @@
         .close {
             color: #aaa;
             float: right;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             cursor: pointer;
         }
 
         .close:hover,
         .close:focus {
-            color: black;
+            color: #000;
             text-decoration: none;
             cursor: pointer;
         }
 
         .modal-header {
-            padding: 2px 16px;
-            background-color: #5cb85c;
-            color: white;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: #fff;
             border-top-left-radius: 6px;
             border-top-right-radius: 6px;
         }
@@ -285,9 +282,9 @@
         }
 
         .modal-footer {
-            padding: 2px 16px;
-            background-color: #5cb85c;
-            color: white;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: #fff;
             text-align: right;
             border-bottom-left-radius: 6px;
             border-bottom-right-radius: 6px;
@@ -295,12 +292,12 @@
 
         .modal-footer button {
             background-color: var(--primary-color);
-            color: var(--text-color);
-            padding: 8px 12px;
+            color: #fff;
+            padding: 8px 16px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s, transform 0.3s;
             font-weight: 500;
             margin-left: 10px;
         }
@@ -523,3 +520,4 @@
     </script>
 </body>
 </html>
+
