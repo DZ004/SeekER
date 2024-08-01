@@ -281,183 +281,157 @@
     </div>
 
     <div class="main-content">
-        <section class="creator-profile">
-            <div class="profile-header">
-                <div class="profile-info">
-                    <div class="profile-picture">
-                        <img src="default-profile.png" alt="Profile Picture" id="mainProfilePicture">
-                    </div>
-                    <div class="profile-details">
-                        <h2 id="profileDisplayName">Display Name</h2>
-                        <p id="profileBio">Bio description goes here.</p>
-                    </div>
-                </div>
-                <div class="edit-profile-button">
-                    <button onclick="toggleEditProfile()">Edit Profile</button>
-                </div>
+        <div class="profile-header">
+            <div class="profile-picture">
+                <img id="profilePictureHeader" src="default-profile.png" alt="Profile Picture">
             </div>
-
-            <div id="editProfileForm">
-                <form id="profileForm">
-                    <label for="editDisplayName">Display Name:</label>
-                    <input type="text" id="editDisplayName" name="displayName" required><br>
-                    <label for="editBio">Bio:</label>
-                    <textarea id="editBio" name="bio" rows="4"></textarea><br>
-                    <button type="submit">Save Changes</button>
-                    <button type="button" onclick="cancelEditProfile()">Cancel</button>
-                </form>
+            <div class="profile-details">
+                <h2 id="creatorNameHeader"></h2>
+                <p id="creatorEmail"></p>
             </div>
-        </section>
+            <div class="edit-profile-button">
+                <button onclick="toggleEditProfileForm()">Edit Profile</button>
+            </div>
+        </div>
 
-        <section class="content">
+        <div id="editProfileForm">
+            <form onsubmit="updateProfile(event)">
+                <label for="profileName">Name:</label>
+                <input type="text" id="profileName" name="profileName" required>
+
+                <label for="profileBio">Bio:</label>
+                <textarea id="profileBio" name="profileBio" rows="4" required></textarea>
+
+                <label for="profilePictureURL">Profile Picture URL:</label>
+                <input type="url" id="profilePictureURL" name="profilePictureURL">
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
+        <div class="content">
             <h2>Recent Content</h2>
-            <div class="content-items">
-                <!-- Sample content items, replace with dynamic data -->
-                <div class="content-item">
-                    <img src="content1.jpg" alt="Content 1">
-                    <p>Title of Content 1</p>
-                </div>
-                <div class="content-item">
-                    <img src="content2.jpg" alt="Content 2">
-                    <p>Title of Content 2</p>
-                </div>
-                <div class="content-item">
-                    <img src="content3.jpg" alt="Content 3">
-                    <p>Title of Content 3</p>
-                </div>
+            <div id="contentItems" class="content-items">
+                <!-- Dynamic content items will be injected here -->
             </div>
-        </section>
+        </div>
     </div>
 
     <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 Your Company. All rights reserved.</p>
-        </div>
+        &copy; 2024 Your Platform. All rights reserved.
     </footer>
 
     <script>
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
-            authDomain: "seeker-928e7.firebaseapp.com",
-            projectId: "seeker-928e7",
-            storageBucket: "seeker-928e7.appspot.com",
-            messagingSenderId: "652562231057",
-            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
-        };
+       // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
+  authDomain: "ccon-agent.firebaseapp.com",
+  databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "ccon-agent",
+  storageBucket: "ccon-agent.appspot.com",
+  messagingSenderId: "359769265591",
+  appId: "1:359769265591:web:ecff5a5934c60717a3c432"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Function to display creator's name and profile picture in the sidebar and header
-        function displayCreatorInfo(user) {
-            if (user) {
-                const userName = user.displayName || user.email; // Use displayName if available, otherwise email
-                const userProfilePicture = user.photoURL || 'default-profile.png'; // Use photoURL if available, otherwise default
-                document.getElementById('creatorName').textContent = userName;
-                document.getElementById('profilePicture').src = userProfilePicture;
-                document.getElementById('mainProfilePicture').src = userProfilePicture;
-            }
-        }
-
-        // Function to toggle between displaying profile info and edit form
-        function toggleEditProfile() {
-            const profileInfo = document.querySelector('.profile-details');
-            const editProfileForm = document.getElementById('editProfileForm');
-
-            profileInfo.style.display = 'none';
-            editProfileForm.style.display = 'block';
-
-            // Populate edit form with current profile data
-            const profileDisplayName = document.getElementById('profileDisplayName').textContent;
-            const profileBio = document.getElementById('profileBio').textContent;
-
-            document.getElementById('editDisplayName').value = profileDisplayName;
-            document.getElementById('editBio').value = profileBio;
-        }
-
-        // Function to cancel editing profile
-        function cancelEditProfile() {
-            const profileInfo = document.querySelector('.profile-details');
-            const editProfileForm = document.getElementById('editProfileForm');
-
-            profileInfo.style.display = 'flex';
-            editProfileForm.style.display = 'none';
-        }
-
-        // Function to fetch and display creator's profile information
-        function fetchProfileInfo(user) {
+        // Check if user is logged in and fetch profile data
+        auth.onAuthStateChanged(user => {
             if (user) {
                 const userId = user.uid;
-                const profileRef = db.collection('creators').doc(userId);
-
-                profileRef.get().then((doc) => {
+                db.collection('creators').doc(userId).get().then(doc => {
                     if (doc.exists) {
-                        const profileData = doc.data();
-                        document.getElementById('profileDisplayName').textContent = profileData.displayName || '';
-                        document.getElementById('profileBio').textContent = profileData.bio || '';
-                    } else {
-                        console.log('No profile data found');
+                        const data = doc.data();
+                        document.getElementById('creatorName').textContent = data.name;
+                        document.getElementById('creatorNameHeader').textContent = data.name;
+                        document.getElementById('creatorEmail').textContent = data.email;
+                        document.getElementById('profilePicture').src = data.profilePictureURL || 'default-profile.png';
+                        document.getElementById('profilePictureHeader').src = data.profilePictureURL || 'default-profile.png';
+
+                        // Load recent content
+                        loadRecentContent(userId);
                     }
-                }).catch((error) => {
-                    console.error('Error fetching profile:', error);
+                }).catch(error => {
+                    console.error("Error fetching profile data: ", error);
                 });
             } else {
-                console.log('User not logged in');
-            }
-        }
-
-        // Function to save edited profile information
-        const profileForm = document.getElementById('profileForm');
-        profileForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const user = firebase.auth().currentUser;
-
-            if (user) {
-                const userId = user.uid;
-                const displayName = profileForm['displayName'].value;
-                const bio = profileForm['bio'].value;
-
-                const profileRef = db.collection('creators').doc(userId);
-                profileRef.set({
-                    displayName: displayName,
-                    bio: bio
-                }, { merge: true })
-                .then(() => {
-                    console.log('Profile updated successfully');
-                    fetchProfileInfo(user); // Update displayed profile information
-                    cancelEditProfile(); // Hide edit form and show profile info
-                })
-                .catch((error) => {
-                    console.error('Error updating profile:', error);
-                });
-            } else {
-                console.log('User not logged in');
+                window.location.href = 'login.html';
             }
         });
 
-        // Initialize Firebase and fetch profile information on page load
-        window.onload = function() {
-            firebase.auth().onAuthStateChanged((user) => {
-                if (user) {
-                    displayCreatorInfo(user);
-                    fetchProfileInfo(user);
-                } else {
-                    console.log('No user logged in');
-                }
-            });
-        };
+        // Toggle edit profile form visibility
+        function toggleEditProfileForm() {
+            const form = document.getElementById('editProfileForm');
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
 
-        // Function to logout
+        // Update profile information
+        function updateProfile(event) {
+            event.preventDefault();
+            const user = auth.currentUser;
+            if (user) {
+                const userId = user.uid;
+                const profileName = document.getElementById('profileName').value;
+                const profileBio = document.getElementById('profileBio').value;
+                const profilePictureURL = document.getElementById('profilePictureURL').value;
+
+                db.collection('creators').doc(userId).set({
+                    name: profileName,
+                    bio: profileBio,
+                    profilePictureURL: profilePictureURL
+                }, { merge: true }).then(() => {
+                    alert('Profile updated successfully');
+                    toggleEditProfileForm();
+                    location.reload();
+                }).catch(error => {
+                    console.error("Error updating profile: ", error);
+                });
+            }
+        }
+
+        // Load recent content dynamically
+        function loadRecentContent(userId) {
+            db.collection('content').where('creatorId', '==', userId).orderBy('createdAt', 'desc').limit(10).get().then(snapshot => {
+                const contentItems = document.getElementById('contentItems');
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const item = document.createElement('div');
+                    item.classList.add('content-item');
+                    item.innerHTML = `
+                        <img src="${data.thumbnailURL}" alt="Content Thumbnail">
+                        <h3>${data.title}</h3>
+                        <p>${data.description}</p>
+                    `;
+                    contentItems.appendChild(item);
+                });
+            }).catch(error => {
+                console.error("Error loading recent content: ", error);
+            });
+        }
+
+        // Logout function
         function logout() {
             auth.signOut().then(() => {
-                window.location.href = 'login.html'; // Redirect to login page
-            }).catch((error) => {
-                console.error('Logout error:', error);
+                window.location.href = 'login.html';
+            }).catch(error => {
+                console.error("Error signing out: ", error);
             });
         }
     </script>
 </body>
 </html>
+
