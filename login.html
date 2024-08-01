@@ -119,15 +119,19 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
 
         // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1u--AsxPIjmCyzJHECLoHtsHorgi7G2Y",
-            authDomain: "seeker-928e7.firebaseapp.com",
-            projectId: "seeker-928e7",
-            storageBucket: "seeker-928e7.appspot.com",
-            messagingSenderId: "652562231057",
-            appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
+       const firebaseConfig = {
+          apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
+          authDomain: "ccon-agent.firebaseapp.com",
+          databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "ccon-agent",
+          storageBucket: "ccon-agent.appspot.com",
+          messagingSenderId: "359769265591",
+          appId: "1:359769265591:web:ecff5a5934c60717a3c432",
+          measurementId: "G-T7WWXDW08Z"
         };
 
         // Initialize Firebase
