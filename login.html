@@ -139,6 +139,14 @@
         const auth = getAuth(app);
         const firestore = getFirestore(app);
 
+        // Redirect if user is already logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, redirect to home
+                window.location.href = 'home.html';
+            }
+        });
+
         // Handle form submission
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
