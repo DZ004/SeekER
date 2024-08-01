@@ -402,7 +402,7 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // Form validation and submission
+        // Form elements
         const signupForm = document.getElementById('signupForm');
         const username = document.getElementById('username');
         const email = document.getElementById('email');
@@ -416,19 +416,20 @@
         const modalBody = document.getElementById('modalBody');
         const closeFooterButton = document.getElementById('closeFooterButton');
 
-        closeModal.onclick = function() {
+        // Close modal functions
+        closeModal.onclick = () => {
             errorModal.style.display = "none";
-        }
+        };
 
-        closeFooterButton.onclick = function() {
+        closeFooterButton.onclick = () => {
             errorModal.style.display = "none";
-        }
+        };
 
-        window.onclick = function(event) {
-            if (event.target == errorModal) {
+        window.onclick = (event) => {
+            if (event.target === errorModal) {
                 errorModal.style.display = "none";
             }
-        }
+        };
 
         function showErrorModal(message) {
             modalBody.innerHTML = `<p>${message}</p>`;
@@ -441,7 +442,41 @@
 
         function validateForm() {
             let isValid = true;
-            // Validate the form elements and show errors
+
+            // Clear previous error messages
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+            // Validate fields
+            if (!username.value.trim()) {
+                document.getElementById('usernameError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!email.value.trim()) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!password.value.trim()) {
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!dateOfBirth.value) {
+                document.getElementById('dateOfBirthError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!profilePic.files.length) {
+                document.getElementById('profilePicError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!terms.checked) {
+                document.getElementById('termsError').style.display = 'block';
+                isValid = false;
+            }
+
             return isValid;
         }
 
@@ -515,7 +550,7 @@
                 window.location.href = 'success.html';
             } catch (error) {
                 showLoadingSpinner(false);
-                showErrorModal(error.message);
+                showErrorModal(error.message || 'An error occurred, please try again.');
             }
         });
     </script>
