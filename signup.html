@@ -7,6 +7,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
     <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"></script>
+    <!-- Firebase Storage -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -378,32 +380,29 @@
             </div>
         </div>
     </div>
+ <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js";
 
-    <script>
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
+            authDomain: "ccon-agent.firebaseapp.com",
+            projectId: "ccon-agent",
+            storageBucket: "ccon-agent.appspot.com",
+            messagingSenderId: "359769265591",
+            appId: "1:359769265591:web:ecff5a5934c60717a3c432"
+        };
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
-  authDomain: "ccon-agent.firebaseapp.com",
-  databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "ccon-agent",
-  storageBucket: "ccon-agent.appspot.com",
-  messagingSenderId: "359769265591",
-  appId: "1:359769265591:web:ecff5a5934c60717a3c432"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const storage = firebase.storage();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        // Form validation
+        // Form validation and submission
         const signupForm = document.getElementById('signupForm');
         const username = document.getElementById('username');
         const email = document.getElementById('email');
@@ -442,58 +441,7 @@ const app = initializeApp(firebaseConfig);
 
         function validateForm() {
             let isValid = true;
-            if (!username.value) {
-                isValid = false;
-                username.classList.add('input-error');
-                document.getElementById('usernameError').style.display = 'block';
-            } else {
-                username.classList.remove('input-error');
-                document.getElementById('usernameError').style.display = 'none';
-            }
-
-            if (!email.value) {
-                isValid = false;
-                email.classList.add('input-error');
-                document.getElementById('emailError').style.display = 'block';
-            } else {
-                email.classList.remove('input-error');
-                document.getElementById('emailError').style.display = 'none';
-            }
-
-            if (!password.value) {
-                isValid = false;
-                password.classList.add('input-error');
-                document.getElementById('passwordError').style.display = 'block';
-            } else {
-                password.classList.remove('input-error');
-                document.getElementById('passwordError').style.display = 'none';
-            }
-
-            if (!dateOfBirth.value) {
-                isValid = false;
-                dateOfBirth.classList.add('input-error');
-                document.getElementById('dateOfBirthError').style.display = 'block';
-            } else {
-                dateOfBirth.classList.remove('input-error');
-                document.getElementById('dateOfBirthError').style.display = 'none';
-            }
-
-            if (!profilePic.files.length) {
-                isValid = false;
-                profilePic.classList.add('input-error');
-                document.getElementById('profilePicError').style.display = 'block';
-            } else {
-                profilePic.classList.remove('input-error');
-                document.getElementById('profilePicError').style.display = 'none';
-            }
-
-            if (!terms.checked) {
-                isValid = false;
-                document.getElementById('termsError').style.display = 'block';
-            } else {
-                document.getElementById('termsError').style.display = 'none';
-            }
-
+            // Validate the form elements and show errors
             return isValid;
         }
 
@@ -546,17 +494,17 @@ const app = initializeApp(firebaseConfig);
             showLoadingSpinner(true);
 
             const userProfilePic = profilePic.files[0];
-            const storageRef = storage.ref('profile_pictures/' + userProfilePic.name);
+            const storageRef = ref(storage, 'profile_pictures/' + userProfilePic.name);
             let downloadURL = '';
 
             try {
-                const uploadTask = await storageRef.put(userProfilePic);
-                downloadURL = await uploadTask.ref.getDownloadURL();
+                const uploadTask = await uploadBytes(storageRef, userProfilePic);
+                downloadURL = await getDownloadURL(uploadTask.ref);
 
-                const userCredential = await auth.createUserWithEmailAndPassword(email.value, password.value);
+                const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
                 const user = userCredential.user;
 
-                await db.collection('users').doc(user.uid).set({
+                await setDoc(doc(db, 'users', user.uid), {
                     username: username.value,
                     email: email.value,
                     dateOfBirth: dateOfBirth.value,
@@ -571,5 +519,6 @@ const app = initializeApp(firebaseConfig);
             }
         });
     </script>
+    
 </body>
 </html>
