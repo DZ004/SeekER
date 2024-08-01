@@ -109,7 +109,6 @@
             background-color: rgba(0,0,0,0.5); 
             align-items: center;
             justify-content: center;
-            transition: opacity 0.3s ease;
         }
         .modal-content {
             background-color: #fff;
@@ -292,6 +291,7 @@
                     try {
                         await auth.sendPasswordResetEmail(resetEmail);
                         resetError.textContent = 'Password reset email sent. Please check your inbox.';
+                        resetEmailInput.value = ''; // Clear the input
                     } catch (error) {
                         resetError.textContent = `Error: ${error.message}`;
                         console.error('Password reset error:', error);
