@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+<!-- Firebase Authentication -->
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
@@ -517,5 +524,76 @@
             }
         });
     </script>
+    <script>
+    document.getElementById('signupForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Retrieve form data
+        var username = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var bio = document.getElementById('bio').value;
+        var dob = document.getElementById('dob').value;
+        var profilePicture = document.getElementById('profilePicture').files[0];
+        var terms = document.getElementById('terms').checked;
+
+        if (terms) {
+            // Show loading spinner
+            document.getElementById('loadingSpinner').style.display = 'block';
+
+            // Create user with Firebase Authentication
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // User signed in
+                    var user = userCredential.user;
+
+                    // Save additional user data to Firestore
+                    firestore.collection('users').doc(user.uid).set({
+                        username: username,
+                        email: email,
+                        bio: bio,
+                        dob: dob,
+                        profilePicture: profilePicture ? URL.createObjectURL(profilePicture) : null
+                    })
+                    .then(() => {
+                        document.getElementById('loadingSpinner').style.display = 'none';
+                        alert('Registration successful!');
+                        document.getElementById('signupForm').reset();
+                    })
+                    .catch((error) => {
+                        console.error('Error writing document: ', error);
+                        document.getElementById('loadingSpinner').style.display = 'none';
+                        alert('Error saving user data.');
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error creating user: ', error);
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                    alert('Error registering user.');
+                });
+        } else {
+            alert('You must agree to the terms and conditions.');
+        }
+    });
+</script>
+      </script>  
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
+  authDomain: "ccon-agent.firebaseapp.com",
+  databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "ccon-agent",
+  storageBucket: "ccon-agent.appspot.com",
+  messagingSenderId: "359769265591",
+  appId: "1:359769265591:web:ecff5a5934c60717a3c432"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
