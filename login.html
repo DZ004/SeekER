@@ -133,6 +133,16 @@
                 opacity: 0;
             }
         }
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            color: #5563DE;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -154,10 +164,28 @@
                 <button type="button" id="togglePassword" aria-label="Toggle Password Visibility">👁️</button>
             </div>
             <button type="submit">Login</button>
+            <a href="#" id="forgotPassword" class="forgot-password">Forgot Password?</a>
         </form>
         <p id="loginError" class="error-message"></p>
         <div class="loading" id="loadingIndicator">Logging in...</div>
     </div>
+
+    <!-- Modal for password reset -->
+    <div id="resetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" id="closeResetModal">&times;</span>
+                <h2>Reset Password</h2>
+            </div>
+            <div class="modal-body">
+                <p>Enter your email address to reset your password.</p>
+                <input type="email" id="resetEmail" placeholder="Email" required>
+                <p id="resetError" class="error-message"></p>
+                <button id="resetPasswordButton">Send Reset Link</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
@@ -182,6 +210,12 @@
             const loadingIndicator = document.getElementById('loadingIndicator');
             const passwordInput = document.getElementById('password');
             const togglePasswordButton = document.getElementById('togglePassword');
+            const forgotPasswordLink = document.getElementById('forgotPassword');
+            const resetModal = document.getElementById('resetModal');
+            const closeResetModal = document.getElementById('closeResetModal');
+            const resetEmailInput = document.getElementById('resetEmail');
+            const resetError = document.getElementById('resetError');
+            const resetPasswordButton = document.getElementById('resetPasswordButton');
 
             // Toggle password visibility
             togglePasswordButton.addEventListener('click', () => {
@@ -220,6 +254,35 @@
                     console.error('Login error:', error);
                 } finally {
                     loadingIndicator.style.display = 'none';
+                }
+            });
+
+            // Handle forgot password link click
+            forgotPasswordLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                resetModal.style.display = 'block';
+            });
+
+            // Close reset password modal
+            closeResetModal.addEventListener('click', () => {
+                resetModal.style.display = 'none';
+            });
+
+            // Send password reset email
+            resetPasswordButton.addEventListener('click', async () => {
+                const resetEmail = resetEmailInput.value.trim();
+                resetError.textContent = '';
+
+                if (resetEmail) {
+                    try {
+                        await auth.sendPasswordResetEmail(resetEmail);
+                        resetError.textContent = 'Password reset email sent. Please check your inbox.';
+                    } catch (error) {
+                        resetError.textContent = `Error: ${error.message}`;
+                        console.error('Password reset error:', error);
+                    }
+                } else {
+                    resetError.textContent = 'Please enter your email address.';
                 }
             });
         });
