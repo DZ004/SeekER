@@ -317,207 +317,259 @@
                 <input type="text" id="username" name="username" required>
                 <div class="error-message" id="usernameError">Username is required.</div>
                 <div class="tooltip">
-                    <span class="tooltiptext">Choose a unique username.</span>
+                    <span class="tooltiptext">Enter your desired username.</span>
                 </div>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
-                <div class="error-message" id="emailError">Please enter a valid email address.</div>
+                <div class="error-message" id="emailError">Email is required.</div>
                 <div class="tooltip">
-                    <span class="tooltiptext">We will not share your email.</span>
+                    <span class="tooltiptext">Enter a valid email address.</span>
                 </div>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
                 <div class="error-message" id="passwordError">Password is required.</div>
+                <div class="tooltip">
+                    <span class="tooltiptext">Password must be at least 8 characters long and contain a mix of letters and numbers.</span>
+                </div>
                 <div class="password-strength">
-                    <span class="strength-text" id="strengthText">Strength:</span>
+                    <span class="strength-text" id="strengthText">Weak</span>
                     <div class="strength-bar">
                         <div class="bar" id="strengthBar"></div>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="bio">Short Bio:</label>
-                <textarea id="bio" name="bio" rows="3" required></textarea>
-                <div class="error-message" id="bioError">Bio is required.</div>
+                <label for="dateOfBirth">Date of Birth:</label>
+                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                <div class="error-message" id="dateOfBirthError">Date of Birth is required.</div>
             </div>
             <div class="form-group">
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required>
-                <div class="error-message" id="dobError">Date of Birth is required.</div>
+                <label for="profilePic">Profile Picture:</label>
+                <input type="file" id="profilePic" name="profilePic" accept="image/*" required>
+                <div class="error-message" id="profilePicError">Profile Picture is required.</div>
             </div>
             <div class="form-group">
-                <label for="profilePicture">Profile Picture:</label>
-                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" required>
-                <div class="error-message" id="profilePictureError">Profile picture is required.</div>
-            </div>
-            <div class="form-group">
-                <label><input type="checkbox" id="terms" name="terms" required> I agree to the Terms and Conditions</label>
+                <label>
+                    <input type="checkbox" id="terms" name="terms" required> I agree to the <a href="#">terms and conditions</a>
+                </label>
                 <div class="error-message" id="termsError">You must agree to the terms and conditions.</div>
             </div>
             <button type="submit">Sign Up</button>
-            <div class="loading-spinner" id="loadingSpinner"></div>
         </form>
-        <p>Already have an account? <a href="/login">Log In</a></p>
-        <p>Looking to become a creator? <a href="#" id="creatorLink">Learn More</a></p>
+        <div class="loading-spinner" id="loadingSpinner"></div>
     </div>
 
-    <!-- Modal -->
-    <div id="creatorModal" class="modal">
+    <!-- Modal for displaying errors -->
+    <div id="errorModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Become a Creator</h2>
+                <span class="close" id="closeModal">&times;</span>
+                <h2>Error</h2>
             </div>
-            <div class="modal-body">
-                <p>Learn more about the benefits of becoming a creator and how to start sharing your content.</p>
-                <p>To become a creator, you need to meet the following requirements:</p>
-                <ul>
-                    <li>Have a verified email address</li>
-                    <li>Provide a short bio and profile picture</li>
-                    <li>Agree to the creator terms and conditions</li>
-                </ul>
+            <div class="modal-body" id="modalBody">
+                <!-- Error messages will be displayed here -->
             </div>
             <div class="modal-footer">
-                <button id="learnMoreButton">Learn More</button>
-                <button class="close">Close</button>
+                <button id="closeFooterButton">Close</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
-            authDomain: "ccon-agent.firebaseapp.com",
-            databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "ccon-agent",
-            storageBucket: "ccon-agent.appspot.com",
-            messagingSenderId: "359769265591",
-            appId: "1:359769265591:web:ecff5a5934c60717a3c432"
-        };
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAEcU9tuUTT8s5S5ITsqc_WJPJwZlWoirE",
+  authDomain: "ccon-agent.firebaseapp.com",
+  databaseURL: "https://ccon-agent-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "ccon-agent",
+  storageBucket: "ccon-agent.appspot.com",
+  messagingSenderId: "359769265591",
+  appId: "1:359769265591:web:ecff5a5934c60717a3c432"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const firestore = firebase.firestore();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
 
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        // Form validation
+        const signupForm = document.getElementById('signupForm');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const dateOfBirth = document.getElementById('dateOfBirth');
+        const profilePic = document.getElementById('profilePic');
+        const terms = document.getElementById('terms');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const errorModal = document.getElementById('errorModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalBody = document.getElementById('modalBody');
+        const closeFooterButton = document.getElementById('closeFooterButton');
 
-            var valid = true;
-            var username = document.getElementById('username').value;
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-            var bio = document.getElementById('bio').value;
-            var dob = document.getElementById('dob').value;
-            var profilePicture = document.getElementById('profilePicture').files[0];
-            var terms = document.getElementById('terms').checked;
+        closeModal.onclick = function() {
+            errorModal.style.display = "none";
+        }
 
-            // Validate fields
-            if (!username) {
-                valid = false;
+        closeFooterButton.onclick = function() {
+            errorModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == errorModal) {
+                errorModal.style.display = "none";
+            }
+        }
+
+        function showErrorModal(message) {
+            modalBody.innerHTML = `<p>${message}</p>`;
+            errorModal.style.display = "block";
+        }
+
+        function showLoadingSpinner(show) {
+            loadingSpinner.style.display = show ? 'block' : 'none';
+        }
+
+        function validateForm() {
+            let isValid = true;
+            if (!username.value) {
+                isValid = false;
+                username.classList.add('input-error');
                 document.getElementById('usernameError').style.display = 'block';
             } else {
+                username.classList.remove('input-error');
                 document.getElementById('usernameError').style.display = 'none';
             }
 
-            if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-                valid = false;
+            if (!email.value) {
+                isValid = false;
+                email.classList.add('input-error');
                 document.getElementById('emailError').style.display = 'block';
             } else {
+                email.classList.remove('input-error');
                 document.getElementById('emailError').style.display = 'none';
             }
 
-            if (!password) {
-                valid = false;
+            if (!password.value) {
+                isValid = false;
+                password.classList.add('input-error');
                 document.getElementById('passwordError').style.display = 'block';
             } else {
+                password.classList.remove('input-error');
                 document.getElementById('passwordError').style.display = 'none';
             }
 
-            if (!bio) {
-                valid = false;
-                document.getElementById('bioError').style.display = 'block';
+            if (!dateOfBirth.value) {
+                isValid = false;
+                dateOfBirth.classList.add('input-error');
+                document.getElementById('dateOfBirthError').style.display = 'block';
             } else {
-                document.getElementById('bioError').style.display = 'none';
+                dateOfBirth.classList.remove('input-error');
+                document.getElementById('dateOfBirthError').style.display = 'none';
             }
 
-            if (!dob) {
-                valid = false;
-                document.getElementById('dobError').style.display = 'block';
+            if (!profilePic.files.length) {
+                isValid = false;
+                profilePic.classList.add('input-error');
+                document.getElementById('profilePicError').style.display = 'block';
             } else {
-                document.getElementById('dobError').style.display = 'none';
+                profilePic.classList.remove('input-error');
+                document.getElementById('profilePicError').style.display = 'none';
             }
 
-            if (!profilePicture) {
-                valid = false;
-                document.getElementById('profilePictureError').style.display = 'block';
-            } else {
-                document.getElementById('profilePictureError').style.display = 'none';
-            }
-
-            if (!terms) {
-                valid = false;
+            if (!terms.checked) {
+                isValid = false;
                 document.getElementById('termsError').style.display = 'block';
             } else {
                 document.getElementById('termsError').style.display = 'none';
             }
 
-            if (valid) {
-                document.getElementById('loadingSpinner').style.display = 'block';
+            return isValid;
+        }
 
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        var user = userCredential.user;
+        function checkPasswordStrength() {
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            const value = password.value;
+            let strength = 0;
 
-                        // Save additional user data to Firestore
-                        firestore.collection('users').doc(user.uid).set({
-                            username: username,
-                            email: email,
-                            bio: bio,
-                            dob: dob,
-                            profilePicture: profilePicture ? URL.createObjectURL(profilePicture) : null
-                        })
-                        .then(() => {
-                            document.getElementById('loadingSpinner').style.display = 'none';
-                            alert('Registration successful!');
-                            document.getElementById('signupForm').reset();
-                        })
-                        .catch((error) => {
-                            console.error('Error writing document: ', error);
-                            document.getElementById('loadingSpinner').style.display = 'none';
-                            alert('Error saving user data.');
-                        });
-                    })
-                    .catch((error) => {
-                        console.error('Error creating user: ', error);
-                        document.getElementById('loadingSpinner').style.display = 'none';
-                        alert('Error registering user.');
-                    });
+            if (value.length >= 8) strength += 1;
+            if (value.match(/[A-Z]/)) strength += 1;
+            if (value.match(/[0-9]/)) strength += 1;
+            if (value.match(/[^a-zA-Z0-9]/)) strength += 1;
+
+            switch (strength) {
+                case 0:
+                    strengthBar.style.width = '0%';
+                    strengthText.textContent = 'Weak';
+                    strengthBar.className = 'bar';
+                    break;
+                case 1:
+                    strengthBar.style.width = '25%';
+                    strengthText.textContent = 'Weak';
+                    strengthBar.className = 'bar weak';
+                    break;
+                case 2:
+                    strengthBar.style.width = '50%';
+                    strengthText.textContent = 'Medium';
+                    strengthBar.className = 'bar medium';
+                    break;
+                case 3:
+                    strengthBar.style.width = '75%';
+                    strengthText.textContent = 'Medium';
+                    strengthBar.className = 'bar medium';
+                    break;
+                case 4:
+                    strengthBar.style.width = '100%';
+                    strengthText.textContent = 'Strong';
+                    strengthBar.className = 'bar strong';
+                    break;
             }
-        });
+        }
 
-        document.getElementById('creatorLink').addEventListener('click', function() {
-            var modal = document.getElementById('creatorModal');
-            var span = document.getElementsByClassName('close')[0];
+        password.addEventListener('input', checkPasswordStrength);
 
-            modal.style.display = 'block';
+        signupForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            if (!validateForm()) return;
 
-            span.onclick = function() {
-                modal.style.display = 'none';
-            }
+            showLoadingSpinner(true);
 
-            window.onclick = function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
+            const userProfilePic = profilePic.files[0];
+            const storageRef = storage.ref('profile_pictures/' + userProfilePic.name);
+            let downloadURL = '';
+
+            try {
+                const uploadTask = await storageRef.put(userProfilePic);
+                downloadURL = await uploadTask.ref.getDownloadURL();
+
+                const userCredential = await auth.createUserWithEmailAndPassword(email.value, password.value);
+                const user = userCredential.user;
+
+                await db.collection('users').doc(user.uid).set({
+                    username: username.value,
+                    email: email.value,
+                    dateOfBirth: dateOfBirth.value,
+                    profilePicUrl: downloadURL
+                });
+
+                showLoadingSpinner(false);
+                window.location.href = 'success.html';
+            } catch (error) {
+                showLoadingSpinner(false);
+                showErrorModal(error.message);
             }
         });
     </script>
 </body>
 </html>
-
