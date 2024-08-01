@@ -417,18 +417,10 @@
         const closeFooterButton = document.getElementById('closeFooterButton');
 
         // Close modal functions
-        closeModal.onclick = () => {
-            errorModal.style.display = "none";
-        };
-
-        closeFooterButton.onclick = () => {
-            errorModal.style.display = "none";
-        };
-
+        closeModal.onclick = () => errorModal.style.display = "none";
+        closeFooterButton.onclick = () => errorModal.style.display = "none";
         window.onclick = (event) => {
-            if (event.target === errorModal) {
-                errorModal.style.display = "none";
-            }
+            if (event.target === errorModal) errorModal.style.display = "none";
         };
 
         function showErrorModal(message) {
