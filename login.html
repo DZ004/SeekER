@@ -171,6 +171,7 @@
                 messagingSenderId: "652562231057",
                 appId: "1:652562231057:web:a87b53314d0be9e4ae26b0"
             };
+            // Initialize Firebase
             firebase.initializeApp(firebaseConfig);
 
             const auth = firebase.auth();
@@ -182,12 +183,14 @@
             const passwordInput = document.getElementById('password');
             const togglePasswordButton = document.getElementById('togglePassword');
 
+            // Toggle password visibility
             togglePasswordButton.addEventListener('click', () => {
                 const type = passwordInput.type === 'password' ? 'text' : 'password';
                 passwordInput.type = type;
                 togglePasswordButton.textContent = type === 'password' ? '👁️' : '🙈';
             });
 
+            // Handle form submission
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 loginError.textContent = '';
@@ -197,12 +200,16 @@
                 const password = e.target.password.value;
 
                 try {
+                    // Sign in with email and password
                     const userCredential = await auth.signInWithEmailAndPassword(email, password);
                     const user = userCredential.user;
+                    
+                    // Fetch user data from Firestore
                     const userDoc = await firestore.collection('users').doc(user.uid).get();
 
                     if (userDoc.exists) {
                         const userData = userDoc.data();
+                        // Redirect based on user role
                         const redirectUrl = userData.role === 'creator' ? 'creator-home.html' : 'home.html';
                         window.location.href = redirectUrl;
                     } else {
