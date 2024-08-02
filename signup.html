@@ -402,7 +402,6 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        // Form elements
         const signupForm = document.getElementById('signupForm');
         const username = document.getElementById('username');
         const email = document.getElementById('email');
@@ -416,7 +415,6 @@
         const modalBody = document.getElementById('modalBody');
         const closeFooterButton = document.getElementById('closeFooterButton');
 
-        // Close modal functions
         closeModal.onclick = () => errorModal.style.display = "none";
         closeFooterButton.onclick = () => errorModal.style.display = "none";
         window.onclick = (event) => {
@@ -434,11 +432,8 @@
 
         function validateForm() {
             let isValid = true;
-
-            // Clear previous error messages
             document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
 
-            // Validate fields
             if (!username.value.trim()) {
                 document.getElementById('usernameError').style.display = 'block';
                 isValid = false;
@@ -538,8 +533,10 @@
                     profilePicUrl: downloadURL
                 });
 
+                await sendEmailVerification(user);
+
                 showLoadingSpinner(false);
-                window.location.href = 'success.html';
+                showErrorModal("Registration successful! Please check your email for verification.");
             } catch (error) {
                 showLoadingSpinner(false);
                 showErrorModal(error.message || 'An error occurred, please try again.');
